@@ -3,12 +3,6 @@
 
 import { useEffect, useState } from "react";
 import { DESTINATIONS, DestinationStory } from "../data/destinations";
-// Swiper imports
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Autoplay, Mousewheel } from 'swiper/modules';
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/free-mode';
 
 export default function GlobalPresence() {
   const [destinations, setDestinations] = useState<DestinationStory[]>([]);
