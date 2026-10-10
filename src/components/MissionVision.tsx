@@ -78,12 +78,8 @@ export default function MissionVision() {
     }, (context) => {
       const { isMobile } = context.conditions as { isMobile?: boolean };
 
-      // We animate the Mission card scaling down AS the Vision card scrolls over it.
+      // We animate the Mission card scaling slightly as the Vision card scrolls over it.
       // Native CSS 'sticky' handles the actual stacking physics with ZERO artificial gaps.
-    
-      gsap.set(visionTextRef.current, { opacity: 0.3 });
-    
-      // Calculate the top offset based on sticky position to perfectly sync the animation
       const topOffset = isMobile ? "32px" : "48px";
 
       const tl = gsap.timeline({
@@ -95,17 +91,12 @@ export default function MissionVision() {
         }
       });
 
-      // Animate Mission Card pushing BACK natively under the stacking Vision card.
+      // Animate Mission Card pushing BACK natively under the stacking Vision card (scale only, zero opacity dimming!)
       tl.to(missionRef.current, {
         scale: isMobile ? 0.96 : 0.92,
         yPercent: isMobile ? -1 : -2,
-        opacity: isMobile ? 0.75 : 0.5,
         ease: "none"
-      }, 0)
-    
-      // Crossfade headers smoothly based on Vision card position
-      .to(missionTextRef.current, { opacity: 0.3, ease: "none" }, 0)
-      .to(visionTextRef.current, { opacity: 1, ease: "none" }, 0);
+      }, 0);
     });
 
     return () => mm.revert();
@@ -124,15 +115,19 @@ export default function MissionVision() {
           <div className="text-center relative">
             <h2 className="font-sans font-bold text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-4 md:gap-6 justify-center w-full">
               <button 
+                type="button"
                 ref={missionTextRef}
-                className="text-primary-600 dark:text-primary-400 relative transition-opacity duration-300"
+                onClick={() => missionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
+                className="text-[#4e993d] dark:text-[#68b955] relative font-extrabold hover:brightness-110 transition-all cursor-pointer opacity-100 drop-shadow-xs"
               >
                 Our Mission
               </button>
-              <span className="text-gray-200 dark:text-gray-800 font-light opacity-50">/</span>
+              <span className="text-slate-400 dark:text-slate-500 font-light select-none opacity-100">/</span>
               <button 
+                type="button"
                 ref={visionTextRef}
-                className="text-secondary-600 dark:text-secondary-400 relative transition-opacity duration-300"
+                onClick={() => visionWrapperRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
+                className="text-[#e08d18] dark:text-[#fbaf35] relative font-extrabold hover:brightness-110 transition-all cursor-pointer opacity-100 drop-shadow-xs"
               >
                 Our Vision
               </button>
@@ -150,19 +145,19 @@ export default function MissionVision() {
           >
             <div 
               ref={missionRef}
-              className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-8 items-center rounded-2xl md:rounded-[2.5rem] will-change-transform origin-top p-4 xs:p-6 md:p-8 lg:p-12 transition-all duration-500 overflow-hidden relative bg-primary-50/80 dark:bg-primary-950/85 backdrop-blur-xl border border-primary-200/70 dark:border-primary-800/60 shadow-[inset_0_2px_4px_0_rgba(255,255,255,0.9),0_25px_65px_-10px_rgba(45,65,100,0.25)] dark:shadow-[inset_0_1.5px_2px_0_rgba(255,255,255,0.25),0_30px_75px_-10px_rgba(15,23,42,0.85)]"
+              className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-8 items-center rounded-2xl md:rounded-[2.5rem] will-change-transform origin-top p-4 xs:p-6 md:p-8 lg:p-12 transition-all duration-500 overflow-hidden relative bg-[#f3f9f1] dark:bg-[#0c1f0a] border-2 border-[#68b955]/40 dark:border-[#68b955]/60 shadow-[0_20px_50px_-10px_rgba(78,153,61,0.25)] dark:shadow-[0_25px_65px_-10px_rgba(0,0,0,0.9)] opacity-100"
             >
               {/* Top Glass Rim Specular Highlight */}
-              <div className="absolute inset-x-8 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-white dark:via-white/40 to-transparent pointer-events-none rounded-full" />
+              <div className="absolute inset-x-8 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#68b955]/40 dark:via-[#68b955]/70 to-transparent pointer-events-none rounded-full" />
               {/* Text Content (Left) */}
               <div className="flex flex-col items-start justify-center h-full relative z-10">
                 <div className="font-sans font-medium text-base xs:text-lg sm:text-xl lg:text-[2rem] leading-snug lg:leading-[1.3] tracking-tight text-balance">
-                  <span className="inline-block text-primary-600 dark:text-primary-400 mb-2">
-                    Our mission is to empower <strong className="font-bold">local businesses</strong> with <strong className="font-bold">high-visibility digital marketing</strong>, <strong className="font-bold">local SEO</strong>, and <strong className="font-bold">customer acquisition systems</strong>.
+                  <span className="inline-block text-[#2b5024] dark:text-[#a7d396] font-bold mb-2">
+                    Our mission is to empower <strong className="font-extrabold text-[#1a3815] dark:text-white underline decoration-[#68b955]/40 underline-offset-4">local businesses</strong> with <strong className="font-extrabold text-[#1a3815] dark:text-white">high-visibility digital marketing</strong>, <strong className="font-extrabold text-[#1a3815] dark:text-white">local SEO</strong>, and <strong className="font-extrabold text-[#1a3815] dark:text-white">customer acquisition systems</strong>.
                   </span>
                   <br/>
-                  <span className="inline-block text-gray-900 dark:text-white mt-4">
-                    We provide businesses with strategies that are <strong className="font-bold">creative</strong>, <strong className="font-bold">practical</strong>, <strong className="font-bold">data-driven</strong>, and tailored to their <strong className="font-bold">local growth goals</strong>.
+                  <span className="inline-block text-slate-900 dark:text-slate-100 mt-4 font-normal">
+                    We provide businesses with strategies that are <strong className="font-bold text-black dark:text-white">creative</strong>, <strong className="font-bold text-black dark:text-white">practical</strong>, <strong className="font-bold text-black dark:text-white">data-driven</strong>, and tailored to their <strong className="font-bold text-black dark:text-white">local growth goals</strong>.
                   </span>
                 </div>
               </div>
@@ -257,10 +252,10 @@ export default function MissionVision() {
           {/* Also sticky! Naturally scrolls over the base card and sticks, before they both scroll away together */}
           <div 
             ref={visionWrapperRef}
-            className="sticky top-8 md:top-12 z-20 w-full rounded-2xl md:rounded-[2.5rem] overflow-hidden p-4 xs:p-6 md:p-8 lg:p-12 transition-all duration-500 relative bg-secondary-50/80 dark:bg-secondary-950/85 backdrop-blur-xl border border-secondary-200/70 dark:border-secondary-800/60 shadow-[inset_0_2px_4px_0_rgba(255,255,255,0.9),0_25px_65px_-10px_rgba(0,128,128,0.2)] dark:shadow-[inset_0_1.5px_2px_0_rgba(255,255,255,0.3),0_30px_75px_-10px_rgba(4,47,46,0.85)]"
+            className="sticky top-8 md:top-12 z-20 w-full rounded-2xl md:rounded-[2.5rem] overflow-hidden p-4 xs:p-6 md:p-8 lg:p-12 transition-all duration-500 relative bg-[#fef9ee] dark:bg-[#231405] border-2 border-[#fbaf35]/40 dark:border-[#fbaf35]/60 shadow-[0_20px_50px_-10px_rgba(251,175,53,0.25)] dark:shadow-[0_25px_65px_-10px_rgba(0,0,0,0.9)] opacity-100"
           >
             {/* Top Glass Rim Specular Highlight */}
-            <div className="absolute inset-x-8 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-white dark:via-white/40 to-transparent pointer-events-none rounded-full" />
+            <div className="absolute inset-x-8 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#fbaf35]/40 dark:via-[#fbaf35]/70 to-transparent pointer-events-none rounded-full" />
 
             <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-8 items-center relative z-10">
               
@@ -343,12 +338,12 @@ export default function MissionVision() {
               {/* Text Content (Right on Desktop, Top on Mobile) */}
               <div className="order-1 lg:order-2 flex flex-col items-start justify-center h-full">
                 <div className="font-sans font-medium text-base xs:text-lg sm:text-xl lg:text-[2rem] leading-snug lg:leading-[1.3] tracking-tight text-balance">
-                  <span className="inline-block text-secondary-600 dark:text-secondary-400 mb-2">
-                    To be the most <strong className="font-bold">trusted local business growth partner</strong> by delivering <strong className="font-bold">practical digital results</strong>.
+                  <span className="inline-block text-[#955717] dark:text-[#f7cb74] font-bold mb-2">
+                    To be the most <strong className="font-extrabold text-[#7a4818] dark:text-white underline decoration-[#fbaf35]/40 underline-offset-4">trusted local business growth partner</strong> by delivering <strong className="font-extrabold text-[#7a4818] dark:text-white">practical digital results</strong>.
                   </span>
                   <br/>
-                  <span className="inline-block text-gray-900 dark:text-white mt-4">
-                    We envision helping local businesses turn their digital presence into <strong className="font-bold">consistent customer inquiries</strong> through <strong className="font-bold">smart, transparent execution</strong>.
+                  <span className="inline-block text-slate-900 dark:text-slate-100 mt-4 font-normal">
+                    We envision helping local businesses turn their digital presence into <strong className="font-bold text-black dark:text-white">consistent customer inquiries</strong> through <strong className="font-bold text-black dark:text-white">smart, transparent execution</strong>.
                   </span>
                 </div>
               </div>

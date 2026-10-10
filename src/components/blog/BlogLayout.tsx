@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { Sparkles, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Blog } from "@/types/blog";
 import BlogCard from "@/components/blog/BlogCard";
@@ -225,8 +225,8 @@ export default function BlogLayout({
         </div>
 
         <div className="container relative z-10 mx-auto px-3 xs:px-4 md:px-8 text-center max-w-3xl">
-          <div className="inline-flex items-center gap-1.5 xs:gap-2 px-3 xs:px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] xs:text-xs font-medium text-emerald-400 mb-3 xs:mb-4 sm:mb-6 uppercase tracking-wider shadow-xs">
-            <Sparkles size={14} /> Knowledge Hub & Insights
+          <div className="inline-flex items-center px-3.5 xs:px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] xs:text-xs font-semibold text-emerald-400 mb-3 xs:mb-4 sm:mb-6 uppercase tracking-wider shadow-xs">
+            Knowledge Hub & Insights
           </div>
           <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-3 xs:mb-4 sm:mb-6 tracking-tighter">
             Growth <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">Insights</span>

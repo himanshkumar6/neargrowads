@@ -1,15 +1,13 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { 
   Phone,
   Target,
   Users,
-  TrendingUp,
-  Volume2, 
-  VolumeX
+  TrendingUp
 } from "lucide-react";
 
 if (typeof window !== "undefined") {
@@ -21,7 +19,6 @@ export default function Hero() {
   const leftColRef = useRef<HTMLDivElement>(null);
   const rightColRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isMuted, setIsMuted] = useState(true);
 
   // ── High-Performance Video Lifecycle & Autoplay Handling ──
   useEffect(() => {
@@ -49,13 +46,6 @@ export default function Hero() {
       observer.disconnect();
     };
   }, []);
-
-  const toggleSound = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.muted = !video.muted;
-    setIsMuted(video.muted);
-  };
 
   // ── Fluid GSAP Stagger Entrance (Respects prefers-reduced-motion) ──
   useGSAP(() => {
@@ -239,20 +229,6 @@ export default function Hero() {
                 >
                   <source src="/hero-bg.mp4" type="video/mp4" />
                 </video>
-
-                {/* Sound Mute/Unmute Control (Floating Top-Right) */}
-                <button
-                  onClick={toggleSound}
-                  className="absolute top-4 right-4 p-2.5 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md text-white transition-all duration-200 shadow-md cursor-pointer z-30"
-                  aria-label={isMuted ? "Unmute video" : "Mute video"}
-                  title={isMuted ? "Click to unmute" : "Click to mute"}
-                >
-                  {isMuted ? (
-                    <VolumeX className="w-4 h-4 text-white/90" />
-                  ) : (
-                    <Volume2 className="w-4 h-4 text-[#00c371]" />
-                  )}
-                </button>
               </div>
 
             </div>
