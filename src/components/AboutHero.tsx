@@ -6,7 +6,7 @@ import { fadeUp, staggerContainer } from "@/lib/animations";
 
 export default function AboutHero() {
   return (
-    <div className="relative pt-28 xs:pt-32 sm:pt-40 pb-16 sm:pb-24 text-center overflow-hidden">
+    <div className="relative pt-24 xs:pt-28 sm:pt-32 md:pt-36 pb-12 sm:pb-16 md:pb-20 text-center overflow-hidden">
       {/* Background Group Image */}
       <div className="absolute inset-0 z-0">
         <Image 
@@ -31,13 +31,13 @@ export default function AboutHero() {
       >
         <motion.h1 
           variants={fadeUp}
-          className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 sm:mb-6 drop-shadow-lg tracking-tight"
+          className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 xs:mb-4 sm:mb-6 drop-shadow-lg tracking-tight"
         >
           About NearGrow Ads
         </motion.h1>
         <motion.p 
           variants={fadeUp}
-          className="text-sm xs:text-base sm:text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto drop-shadow-md font-medium leading-relaxed"
+          className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl text-gray-200 max-w-3xl mx-auto drop-shadow-md font-medium leading-relaxed"
         >
           We help local businesses and emerging regional brands grow through high-visibility Google Business Profiles, targeted local advertising, and practical customer acquisition systems.
         </motion.p>

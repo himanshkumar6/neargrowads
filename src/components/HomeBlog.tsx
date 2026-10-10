@@ -69,13 +69,13 @@ export default function HomeBlog({ recentPosts = [] }: HomeBlogProps) {
         </div>
       </div>
 
-      <div className="container relative z-10 mx-auto px-3 xs:px-4 md:px-8 max-w-300">
+      <div className="container relative z-10 mx-auto px-3 xs:px-4 md:px-8 max-w-7xl">
 
         {/* ── Section Header — exact same pattern as Testimonials ── */}
         <div className="text-center max-w-4xl mx-auto mb-8 md:mb-10">
           <motion.h2
             initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} variants={fadeUp}
-            className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl font-semibold sm:font-bold md:font-bold mb-3 sm:mb-4 md:mb-6 tracking-tight text-center leading-[1.2]"
+            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold sm:font-bold md:font-bold mb-3 sm:mb-4 md:mb-6 tracking-tight text-center leading-[1.2]"
           >
             <span className="inline-block whitespace-nowrap mr-2 sm:mr-3">
               <span className="text-primary-950 dark:text-white">Latest </span>

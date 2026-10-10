@@ -216,7 +216,7 @@ export default function BlogLayout({
       `}} />
 
       {/* Hero Section with Infinite Marquee */}
-      <section className="relative pt-24 xs:pt-28 pb-10 sm:pt-36 sm:pb-16 md:pt-40 md:pb-20 overflow-hidden w-full">
+      <section className="relative pt-20 xs:pt-24 sm:pt-28 md:pt-32 pb-8 sm:pb-12 md:pb-14 overflow-hidden w-full">
         {/* Infinite Marquee Background */}
         <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 w-full overflow-hidden pointer-events-none select-none z-0">
           <div className="animate-marquee flex whitespace-nowrap text-[40px] xs:text-[50px] sm:text-[80px] md:text-[120px] lg:text-[160px] font-bold text-stroke opacity-70">
@@ -225,10 +225,10 @@ export default function BlogLayout({
         </div>
 
         <div className="container relative z-10 mx-auto px-3 xs:px-4 md:px-8 text-center max-w-3xl">
-          <div className="inline-flex items-center gap-1.5 xs:gap-2 px-3 xs:px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] xs:text-xs font-medium text-emerald-400 mb-4 xs:mb-6 uppercase tracking-wider shadow-xs">
+          <div className="inline-flex items-center gap-1.5 xs:gap-2 px-3 xs:px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] xs:text-xs font-medium text-emerald-400 mb-3 xs:mb-4 sm:mb-6 uppercase tracking-wider shadow-xs">
             <Sparkles size={14} /> Knowledge Hub & Insights
           </div>
-          <h1 className="text-2xl xs:text-3xl sm:text-5xl lg:text-7xl font-bold text-slate-900 dark:text-white mb-3 xs:mb-4 sm:mb-6 tracking-tighter">
+          <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-3 xs:mb-4 sm:mb-6 tracking-tighter">
             Growth <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">Insights</span>
           </h1>
           <p className="text-sm xs:text-base md:text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto font-normal">

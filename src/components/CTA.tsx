@@ -7,7 +7,7 @@ import { ArrowRight, TrendingUp, MapPin } from "lucide-react";
 
 export default function CTA() {
   return (
-    <section id="cta-section" className="relative py-16 sm:py-20 md:py-28 overflow-hidden bg-[#050b14] text-white">
+    <section id="cta-section" className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden bg-[#050b14] text-white">
       
       {/* ── 1. Luxury Background Image Layer ── */}
       <div 
@@ -79,7 +79,7 @@ export default function CTA() {
 
           <motion.h2 
             initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} variants={fadeLeft}
-            className="text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 xs:mb-6 md:mb-8 leading-[1.15] tracking-tight text-balance"
+            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 xs:mb-4 sm:mb-6 md:mb-8 leading-[1.15] tracking-tight text-balance"
           >
             Grow Local. <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#68B955] via-emerald-400 to-[#FBAF35]">Grow Smart.</span>
           </motion.h2>

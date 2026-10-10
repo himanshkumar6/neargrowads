@@ -90,18 +90,18 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       {service.faqs && <FaqSchema faqs={service.faqs} />}
       
       {/* Hero Section */}
-      <section className="relative py-12 xs:py-16 sm:py-20 lg:py-32 overflow-hidden">
+      <section className="relative py-10 xs:py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary-50/50 via-white to-white dark:from-primary-900/20 dark:via-[#050b14] dark:to-[#050b14] -z-10" />
         
         <div className="container mx-auto px-3 xs:px-4 md:px-8">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="w-16 h-16 xs:w-20 xs:h-20 bg-primary-50 dark:bg-primary-900/30 rounded-2xl flex items-center justify-center text-primary-600 dark:text-primary-400 mx-auto mb-6 xs:mb-8 shadow-sm border border-primary-100 dark:border-primary-800">
+            <div className="w-16 h-16 xs:w-20 xs:h-20 bg-primary-50 dark:bg-primary-900/30 rounded-2xl flex items-center justify-center text-primary-600 dark:text-primary-400 mx-auto mb-5 xs:mb-6 md:mb-8 shadow-sm border border-primary-100 dark:border-primary-800">
               <Icon size={34} />
             </div>
-            <span className="text-primary-600 dark:text-primary-400 font-semibold tracking-wider uppercase text-xs xs:text-sm mb-3 xs:mb-4 block">
+            <span className="text-primary-600 dark:text-primary-400 font-semibold tracking-wider uppercase text-xs xs:text-sm mb-2 xs:mb-3 block">
               Our Services
             </span>
-            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-3 xs:mb-4 leading-tight tracking-tight">
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-3 xs:mb-4 leading-tight tracking-tight">
               {service.title}
             </h1>
             <h2 className="text-base xs:text-lg sm:text-xl md:text-2xl font-semibold text-primary-600 dark:text-primary-400 mb-4 xs:mb-6 max-w-3xl mx-auto leading-relaxed">

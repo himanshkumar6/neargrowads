@@ -93,7 +93,7 @@ export default function Hero() {
   return (
     <section 
       ref={containerRef}
-      className="relative w-full pt-20 xs:pt-24 sm:pt-32 md:pt-36 pb-12 sm:pb-20 md:pb-24 overflow-hidden bg-white dark:bg-[#050b14] transition-colors duration-300"
+      className="relative w-full pt-20 xs:pt-24 sm:pt-28 md:pt-32 lg:pt-36 pb-10 sm:pb-14 md:pb-16 lg:pb-24 overflow-hidden bg-white dark:bg-[#050b14] transition-colors duration-300"
       aria-label="NearGrow Ads Hero"
     >
       {/* ── Background Subtle Ambient Glows (Full Light/Dark Adaptability) ── */}
@@ -124,19 +124,19 @@ export default function Hero() {
             />
 
             {/* 1. Bold 3-Line Editorial Headline */}
-            <h1 className="text-[1.85rem] xs:text-3xl sm:text-5xl lg:text-[3.25rem] xl:text-[3.65rem] font-bold tracking-tight text-slate-900 dark:text-white leading-[1.18] sm:leading-[1.14] mb-3.5 sm:mb-6 text-balance">
+            <h1 className="text-[1.85rem] xs:text-3xl sm:text-4xl md:text-[2.75rem] lg:text-[3.25rem] xl:text-[3.65rem] font-bold tracking-tight text-slate-900 dark:text-white leading-[1.18] sm:leading-[1.14] mb-3.5 sm:mb-5 text-balance">
               Putting your <br className="hidden sm:inline" />
               growth first with <br className="hidden sm:inline" />
               <span className="text-[#00c371] dark:text-[#68B955]">strategy and skill</span>
             </h1>
 
             {/* 2. Clean Supporting Description */}
-            <p className="text-sm sm:text-lg text-slate-600 dark:text-slate-400 font-normal leading-relaxed mb-6 sm:mb-10 max-w-lg text-balance">
+            <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-400 font-normal leading-relaxed mb-6 sm:mb-8 lg:mb-10 max-w-lg text-balance">
               We are a leading performance marketing agency dedicated to turning your local presence into scalable revenue with high-ROI Google &amp; Meta campaigns.
             </p>
 
             {/* 3. Action Buttons (Pill CTA + Circular Phone Call Us Now Button) */}
-            <div className="flex flex-wrap items-center gap-3 xs:gap-4 sm:gap-6 mb-7 sm:mb-12">
+            <div className="flex flex-wrap items-center gap-3 xs:gap-4 sm:gap-6 mb-6 sm:mb-8 lg:mb-12">
               {/* Primary Action Button */}
               <button
                 onClick={() => window.dispatchEvent(new Event("openLeadModal"))}

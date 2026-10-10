@@ -109,7 +109,7 @@ export default function Footer() {
       <div className="container mx-auto px-3 xs:px-4 md:px-8 relative z-10 max-w-7xl">
 
         {/* ── Main Grid ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:gap-10 items-start mb-4 md:mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-8 lg:gap-10 items-start mb-4 md:mb-8">
 
           {/* Column 1: Brand */}
           <div className="flex flex-col gap-5 mb-8 md:mb-0 border-b border-slate-200 dark:border-slate-800 pb-6 md:border-none md:pb-0">

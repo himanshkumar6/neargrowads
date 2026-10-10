@@ -52,25 +52,49 @@ export default function ChatWidget() {
     }
   }, [state.isOpen, isEmsPage]);
 
-  // Bulletproof mobile keyboard fix using Visual Viewport API
+  // Bulletproof mobile and tablet keyboard fix using Visual Viewport API
   useEffect(() => {
     if (typeof window === 'undefined' || !window.visualViewport || isEmsPage) return;
     
     const handleResize = () => {
-      // Only apply this dynamic offset on mobile screens
-      if (window.innerWidth < 640 && window.visualViewport) {
+      if (!window.visualViewport) return;
+      const isMobile = window.innerWidth < 640;
+      const vv = window.visualViewport;
+
+      if (isMobile) {
         setVvStyle({
-          height: `${window.visualViewport.height}px`,
-          top: `${window.visualViewport.offsetTop}px`,
-          left: `${window.visualViewport.offsetLeft}px`,
-          width: `${window.visualViewport.width}px`,
+          height: `${vv.height}px`,
+          top: `${vv.offsetTop}px`,
+          left: `${vv.offsetLeft}px`,
+          width: `${vv.width}px`,
         });
       } else {
-        setVvStyle({}); // Let desktop use its defined Tailwind classes
+        // Tablet (Portrait & Landscape) and Desktop keyboard/height adaptation:
+        const keyboardOffset = Math.max(0, window.innerHeight - (vv.offsetTop + vv.height));
+        
+        if (keyboardOffset > 50) {
+          // Virtual keyboard is active on tablet/desktop touch devices!
+          const availableHeight = Math.min(520, Math.max(280, vv.height - 24));
+          setVvStyle({
+            bottom: `${keyboardOffset + 12}px`,
+            height: `${availableHeight}px`,
+            maxHeight: `${availableHeight}px`,
+          });
+        } else if (window.innerHeight < 700) {
+          // Short landscape viewport (e.g. tablet in landscape with browser chrome)
+          const availableHeight = Math.min(480, Math.max(300, window.innerHeight - 80));
+          setVvStyle({
+            bottom: '12px',
+            height: `${availableHeight}px`,
+            maxHeight: `${availableHeight}px`,
+          });
+        } else {
+          setVvStyle({}); // Standard desktop dimensions
+        }
       }
     };
 
-    // The scroll event is critical on iOS because the keyboard forces a scroll
+    // The scroll event is critical on iOS/Android because the keyboard forces a scroll
     // without triggering a resize if the visual viewport shrinks natively.
     window.visualViewport.addEventListener('resize', handleResize);
     window.visualViewport.addEventListener('scroll', handleResize);
@@ -108,7 +132,7 @@ export default function ChatWidget() {
             transition={{ type: "spring", stiffness: 350, damping: 25 }}
             style={Object.keys(vvStyle).length > 0 ? vvStyle : {}}
             data-lenis-prevent="true"
-            className="fixed top-0 left-0 z-[1000] w-full h-[100dvh] sm:h-[550px] sm:max-h-[calc(100vh-140px)] sm:inset-auto sm:bottom-24 sm:right-6 sm:w-[380px] origin-bottom-right flex flex-col shadow-2xl"
+            className="fixed top-0 left-0 z-[1000] w-full h-[100dvh] sm:h-[520px] sm:max-h-[calc(100dvh-100px)] sm:inset-auto sm:bottom-20 md:bottom-24 sm:right-4 md:right-6 sm:w-[380px] origin-bottom-right flex flex-col shadow-2xl"
           >
             <ChatInterface 
               state={state}

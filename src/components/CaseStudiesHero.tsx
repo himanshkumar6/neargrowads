@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function CaseStudiesHero() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#f3fbf9] dark:bg-slate-950 pt-24 xs:pt-28 pb-16 xs:pb-20 md:pt-32 md:pb-28">
+    <section className="relative w-full overflow-hidden bg-[#f3fbf9] dark:bg-slate-950 pt-20 xs:pt-24 sm:pt-28 md:pt-32 pb-12 xs:pb-14 md:pb-20">
       {/* Abstract Background Elements (Light Pluses & Dots) */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <svg className="absolute top-1/4 right-1/4 opacity-20 dark:opacity-10" width="20" height="20" viewBox="0 0 20 20">
@@ -31,12 +31,12 @@ export default function CaseStudiesHero() {
             className="flex-1 w-full max-w-xl text-center md:text-left"
           >
             {/* Category / Sub-heading */}
-            <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#6D5D9B] dark:text-[#a594dc] mb-4 xs:mb-6 md:mb-12">
+            <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#6D5D9B] dark:text-[#a594dc] mb-3 xs:mb-4 sm:mb-6 md:mb-8">
               Success Stories
             </h2>
             
             {/* Main Headline */}
-            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-[3.5rem] leading-tight text-[#1B143F] dark:text-white mb-4 xs:mb-6 tracking-tight">
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] leading-tight text-[#1B143F] dark:text-white mb-3 xs:mb-4 sm:mb-6 tracking-tight">
               <span className="font-light">Growth &amp; Local</span> <span className="font-bold">Case Studies</span>
             </h1>
             

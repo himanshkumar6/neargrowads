@@ -6,7 +6,7 @@ import { fadeUp, staggerContainer } from "@/lib/animations";
 
 export default function MethodologyHero() {
   return (
-    <div className="relative pt-28 xs:pt-32 sm:pt-40 pb-16 xs:pb-20 sm:pb-24 text-center overflow-hidden">
+    <div className="relative pt-24 xs:pt-28 sm:pt-32 md:pt-36 pb-12 xs:pb-14 sm:pb-16 md:pb-20 text-center overflow-hidden">
       {/* Background Group Image */}
       <div className="absolute inset-0 z-0">
         <Image 
@@ -33,7 +33,7 @@ export default function MethodologyHero() {
       >
         <motion.h1 
           variants={fadeUp}
-          className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 xs:mb-6 drop-shadow-lg tracking-tight"
+          className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 xs:mb-4 sm:mb-6 drop-shadow-lg tracking-tight"
         >
           Practical Growth Methodology
         </motion.h1>

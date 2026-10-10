@@ -369,7 +369,7 @@ export default function WhyChooseUs() {
                 }`}
               >
                 {/* Number + suffix split so suffix can pop independently */}
-                <div className="text-4xl xs:text-5xl md:text-7xl font-bold md:font-extrabold text-white mb-2 xs:mb-3 tabular-nums flex items-end gap-1 justify-start tracking-tight" style={index === 2 ? { justifyContent: 'center' } : {}}>
+                <div className="text-4xl xs:text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-bold md:font-extrabold text-white mb-2 xs:mb-3 tabular-nums flex items-end gap-1 justify-start tracking-tight" style={index === 2 ? { justifyContent: 'center' } : {}}>
                   <AnimatedCounter value={stat.value} suffix="" />
                   <span className="stat-suffix inline-block text-secondary-400 font-medium" style={{ lineHeight: 1.1 }}>{stat.suffix}</span>
                 </div>

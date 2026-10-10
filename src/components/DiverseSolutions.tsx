@@ -102,7 +102,7 @@ export default function DiverseSolutions() {
         <div className="absolute -right-20 bottom-1/4 w-96 h-96 bg-secondary-400/10 dark:bg-secondary-500/15 rounded-full blur-[120px] animate-[planetFloat_20s_infinite_reverse]" />
       </div>
 
-      <div className="container mx-auto px-3 xs:px-4 md:px-8 max-w-350 relative z-10">
+      <div className="container mx-auto px-3 xs:px-4 md:px-8 max-w-7xl relative z-10">
         {/* Header Block */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 xs:mb-12 lg:mb-16">
           <motion.div 
@@ -150,7 +150,7 @@ export default function DiverseSolutions() {
           <div className="animate-marketing-marquee flex w-max">
             {/* Double array for seamless infinite marquee loop */}
             {[...solutions, ...solutions].map((solution, index) => (
-              <div key={index} className="shrink-0 w-[85vw] sm:w-85 md:w-100 lg:w-105 pr-4 sm:pr-6 h-auto">
+              <div key={index} className="shrink-0 w-[85vw] sm:w-[320px] md:w-[360px] lg:w-[400px] pr-4 sm:pr-6 h-auto">
                 {/* 4:5 Aspect Ratio Glass Card Shell */}
                 <div className="group relative w-full aspect-4/5 rounded-2xl xs:rounded-[2.2rem] overflow-hidden flex flex-col justify-between transform-gpu will-change-transform bg-gray-900 border border-white/20 dark:border-white/10 shadow-lg hover:shadow-2xl transition-all duration-500">
                   

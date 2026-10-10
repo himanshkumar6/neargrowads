@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 export default function ClientsPage() {
   return (
     <>
-      <div className="pt-32 pb-8 bg-gradient-to-b from-primary-50/50 dark:from-gray-900 to-white dark:to-gray-950 text-center">
+      <div className="pt-24 xs:pt-28 sm:pt-32 pb-6 sm:pb-8 bg-gradient-to-b from-primary-50/50 dark:from-gray-900 to-white dark:to-gray-950 text-center">
         <div className="container mx-auto px-4 md:px-8">
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">Our Clients</h1>
-          <p className="text-xl text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
+          <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-3 xs:mb-4 sm:mb-6">Our Clients</h1>
+          <p className="text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
             Discover the local businesses, regional brands, and enterprises that partner with NearGrow Ads.
           </p>
         </div>

@@ -44,7 +44,7 @@ export default function FAQ() {
         <div className="text-center mb-10 xs:mb-12 md:mb-16">
           <motion.h2
             initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} variants={fadeUp}
-            className="font-sans font-semibold sm:font-bold text-2xl xs:text-3xl sm:text-4xl md:text-6xl uppercase tracking-tight flex flex-wrap justify-center gap-1.5 xs:gap-2 mb-3.5 xs:mb-4"
+            className="font-sans font-semibold sm:font-bold text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl uppercase tracking-tight flex flex-wrap justify-center gap-1.5 xs:gap-2 mb-3.5 xs:mb-4"
           >
             <span className="text-slate-900 dark:text-white">Frequently</span>
             <span className="text-slate-900 dark:text-white">Asked</span>

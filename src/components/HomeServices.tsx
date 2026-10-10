@@ -184,7 +184,7 @@ export default function HomeServices() {
               animate={gridInView ? "visible" : "hidden"}
               whileHover={{ y: -4 }}
               transition={{ duration: 0.3 }}
-              className="relative flex flex-col justify-between rounded-2xl xs:rounded-3xl bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl border border-red-500/20 dark:border-red-500/25 p-4 xs:p-6 sm:p-8 md:p-10 shadow-xl shadow-red-500/5 dark:shadow-red-950/20 overflow-hidden"
+              className="relative flex flex-col justify-between rounded-2xl xs:rounded-3xl bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl border border-red-500/20 dark:border-red-500/25 p-4 xs:p-6 sm:p-7 md:p-8 lg:p-10 shadow-xl shadow-red-500/5 dark:shadow-red-950/20 overflow-hidden"
             >
               {/* Subtle Red Top Gradient Accent */}
               <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-red-500/50 to-transparent" />
@@ -254,7 +254,7 @@ export default function HomeServices() {
               animate={gridInView ? "visible" : "hidden"}
               whileHover={{ y: -4 }}
               transition={{ duration: 0.3 }}
-              className="relative flex flex-col justify-between rounded-2xl xs:rounded-3xl bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl border-2 border-primary-500/40 dark:border-primary-500/40 p-4 xs:p-6 sm:p-8 md:p-10 shadow-2xl shadow-primary-500/10 dark:shadow-primary-950/30 overflow-hidden"
+              className="relative flex flex-col justify-between rounded-2xl xs:rounded-3xl bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl border-2 border-primary-500/40 dark:border-primary-500/40 p-4 xs:p-6 sm:p-7 md:p-8 lg:p-10 shadow-2xl shadow-primary-500/10 dark:shadow-primary-950/30 overflow-hidden"
             >
               {/* Vibrant Green Top Gradient Accent */}
               <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-primary-400 via-primary-500 to-secondary-500" />

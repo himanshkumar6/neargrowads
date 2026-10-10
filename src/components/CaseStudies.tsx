@@ -52,7 +52,7 @@ export default function CaseStudies() {
       
 
 
-      <div className="container relative z-10 mx-auto px-3 xs:px-4 md:px-8 max-w-7xl space-y-16 xs:space-y-20 md:space-y-40">
+      <div className="container relative z-10 mx-auto px-3 xs:px-4 md:px-8 max-w-7xl space-y-14 xs:space-y-16 sm:space-y-20 md:space-y-24 lg:space-y-36">
         
         {/* SVG Definitions for Advanced Curve Masking */}
         <svg width="0" height="0" className="absolute pointer-events-none">
