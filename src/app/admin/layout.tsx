@@ -107,17 +107,24 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className={`h-16 border-b border-slate-200 dark:border-slate-800 flex items-center shrink-0 transition-all duration-300 ${isCollapsed ? "justify-center px-0 w-20" : "justify-between px-5 w-64"}`}>
           <Link href="/admin/dashboard" className="flex items-center gap-2.5 overflow-hidden">
             <Image
-              src="/logo.png"
-              alt="NearGrow Ads Logo"
-              width={140}
-              height={36}
+              src="/icon.png"
+              alt="NearGrow Ads"
+              width={34}
+              height={34}
               priority
-              className={`h-7 w-auto object-contain transition-all mix-blend-multiply dark:mix-blend-screen ${isCollapsed ? "max-w-8 object-left" : ""}`}
+              className="w-8 h-8 object-contain shrink-0"
             />
             {!isCollapsed && (
-              <span className="px-2 py-0.5 rounded-md text-[10px] font-semibold uppercase tracking-wider border whitespace-nowrap bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20">
-                Website CMS
-              </span>
+              <div className="flex items-center gap-2">
+                <div className="flex items-center text-lg font-hero font-bold tracking-tight shrink-0">
+                  <span className="text-slate-900 dark:text-white">Near</span>
+                  <span className="text-[#68B955]">Grow</span>
+                  <span className="text-[#FBAF35] ml-0.5">Ads</span>
+                </div>
+                <span className="px-2 py-0.5 rounded-md text-[10px] font-semibold uppercase tracking-wider border whitespace-nowrap bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20">
+                  Website CMS
+                </span>
+              </div>
             )}
           </Link>
         </div>
@@ -189,13 +196,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             {/* Mobile Logo */}
             <div className="md:hidden flex items-center gap-2">
               <Image
-                src="/logo.png"
+                src="/icon.png"
                 alt="NearGrow Ads"
-                width={120}
+                width={32}
                 height={32}
                 priority
-                className="h-7 w-auto object-contain mix-blend-multiply dark:mix-blend-screen"
+                className="w-7 h-7 object-contain shrink-0"
               />
+              <div className="flex items-center text-base font-hero font-bold tracking-tight shrink-0">
+                <span className="text-slate-900 dark:text-white">Near</span>
+                <span className="text-[#68B955]">Grow</span>
+                <span className="text-[#FBAF35] ml-0.5">Ads</span>
+              </div>
               <span className="px-2.5 py-0.5 rounded-lg text-[10px] font-semibold uppercase tracking-wider border whitespace-nowrap bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20">
                 Website CMS
               </span>

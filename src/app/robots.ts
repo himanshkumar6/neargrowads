@@ -11,7 +11,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/admin/', '/dashboard/', '/api/'],
       },
       {
-        userAgent: ['Googlebot', 'Googlebot-Image', 'Google Favicon'],
+        userAgent: ['Googlebot', 'Googlebot-Image', 'Google-Favicon'],
         allow: '/',
       },
     ],
