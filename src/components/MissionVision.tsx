@@ -54,6 +54,7 @@ function SmartVideo({
       playsInline
       preload="metadata"
       poster={poster}
+      suppressHydrationWarning
       className={className}
     >
       <source src={src} type="video/mp4" />

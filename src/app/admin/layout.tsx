@@ -36,7 +36,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const supabase = createClient();
   const pathname = usePathname();
 
-  const isCollapsed = useSyncExternalStore(subscribeSidebar, getSidebarSnapshot, getSidebarServerSnapshot);
+  const [mounted, setMounted] = useState(false);
+  const externalCollapsed = useSyncExternalStore(subscribeSidebar, getSidebarSnapshot, getSidebarServerSnapshot);
+  const isCollapsed = mounted ? externalCollapsed : false;
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const [userEmail, setUserEmail] = useState<string>('hr@neargrowads.com');
   const [isNavigating, setIsNavigating] = useState(false);
   const [prevPathname, setPrevPathname] = useState(pathname);

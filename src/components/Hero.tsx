@@ -225,6 +225,7 @@ export default function Hero() {
                   playsInline
                   preload="metadata"
                   poster="/hero-bg-poster.webp"
+                  suppressHydrationWarning
                   className="w-full h-full object-cover object-center opacity-100 transition-opacity duration-300"
                 >
                   <source src="/hero-bg.mp4" type="video/mp4" />

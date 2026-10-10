@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable react-hooks/purity */
 
 import { motion, Variants } from "framer-motion";
 import Sticker from "./Sticker";
@@ -73,7 +72,7 @@ export default function HeroStickers({ variant = "top-right" }: HeroStickersProp
               rotate: [stickerData.baseRotation, stickerData.baseRotation + 3, stickerData.baseRotation] 
             }}
             transition={{ 
-              duration: 6 + Math.random() * 2, // Randomize breathing speed slightly
+              duration: 7,
               repeat: Infinity, 
               ease: "easeInOut",
               delay: stickerData.delay + 1, // Start idle float AFTER peel reveal

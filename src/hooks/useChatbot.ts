@@ -12,7 +12,7 @@ const INITIAL_STATE: ChatbotState = {
       id: "init",
       type: "bot",
       text: CHATBOT_MESSAGES.WELCOME,
-      timestamp: Date.now(),
+      timestamp: 0,
     }
   ],
   isTyping: false,

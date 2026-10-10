@@ -22,9 +22,14 @@ export default function ChatWidget() {
   const pathname = usePathname();
   const isEmsPage = pathname?.startsWith("/admin") || pathname?.startsWith("/login") || pathname?.startsWith("/dashboard");
 
+  const [mounted, setMounted] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [vvStyle, setVvStyle] = useState<React.CSSProperties>({});
   const { state, toggleOpen, handleInputSubmit, handleOptionSelect, resetSession } = useChatbot();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Prevent background scrolling and rubber-banding when chat is open on mobile
   useEffect(() => {
@@ -106,8 +111,8 @@ export default function ChatWidget() {
     };
   }, [state.isOpen, isEmsPage]);
 
-  // Hide entirely on Admin or EMS routes to prevent overlapping with Admin Navigation
-  if (isEmsPage) return null;
+  // Hide on Admin/EMS routes or before client mount to prevent SSR hydration attribute mismatch
+  if (!mounted || isEmsPage) return null;
 
   return (
     <>

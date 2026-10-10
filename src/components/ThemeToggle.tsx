@@ -14,7 +14,11 @@ export function ThemeToggle({ showLabel = false }: { showLabel?: boolean }) {
   }, []);
 
   if (!mounted) {
-    return <div className="h-8 w-24 rounded-full bg-slate-200/50 dark:bg-slate-800/50 animate-pulse" />;
+    return showLabel ? (
+      <div className="h-8 w-24 rounded-full bg-slate-200/50 dark:bg-slate-800/50 animate-pulse" />
+    ) : (
+      <div className="w-9 h-9 rounded-full bg-slate-200/50 dark:bg-slate-800/50 animate-pulse shrink-0" />
+    );
   }
 
   const currentTheme = resolvedTheme || theme;
@@ -29,6 +33,7 @@ export function ThemeToggle({ showLabel = false }: { showLabel?: boolean }) {
       <button
         onClick={toggleTheme}
         type="button"
+        suppressHydrationWarning
         className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-white/90 dark:bg-[#1f2a3e]/90 border border-slate-200 dark:border-slate-700/80 shadow-sm hover:shadow transition-all duration-300 cursor-pointer group select-none"
         aria-label="Toggle theme mode"
       >
@@ -64,6 +69,7 @@ export function ThemeToggle({ showLabel = false }: { showLabel?: boolean }) {
     <button
       onClick={toggleTheme}
       type="button"
+      suppressHydrationWarning
       className="w-9 h-9 shrink-0 flex items-center justify-center rounded-full bg-white/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 border border-slate-200 dark:border-slate-700/80 shadow-xs transition-colors cursor-pointer select-none"
       aria-label="Toggle dark mode"
     >
