@@ -3,6 +3,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { LeadService } from "@/lib/services/leadService";
 import { revalidatePath } from "next/cache";
 
 export async function submitContactForm(formData: { fullName: string; company?: string; email: string; phone?: string; service: string | string[]; message: string; }) {
@@ -22,28 +23,16 @@ export async function submitContactForm(formData: { fullName: string; company?: 
       return { success: false, error: "Message must be under 3000 characters." };
     }
 
-    let supabase;
-    try {
-      supabase = createAdminClient();
-    } catch {
-      supabase = await createClient();
-    }
-    
-    const { error } = await supabase
-      .from('contact_messages')
-      .insert([
-        {
-          full_name: formData.fullName.trim(),
-          company: formData.company ? String(formData.company).trim().slice(0, 100) : null,
-          email: formData.email.trim().toLowerCase(),
-          phone: formData.phone ? String(formData.phone).trim().slice(0, 30) : null,
-          service: Array.isArray(formData.service) ? formData.service : [formData.service],
-          message: formData.message ? String(formData.message).trim().slice(0, 3000) : "",
-        }
-      ]);
+    const saveResult = await LeadService.saveLead({
+      name: formData.fullName.trim(),
+      company: formData.company ? String(formData.company).trim().slice(0, 100) : undefined,
+      email: formData.email.trim().toLowerCase(),
+      phone: formData.phone ? String(formData.phone).trim().slice(0, 30) : undefined,
+      service: Array.isArray(formData.service) ? (formData.service[0] || 'General Inquiry') : formData.service,
+      message: formData.message ? String(formData.message).trim().slice(0, 3000) : "",
+    });
 
-    if (error) {
-      console.error("Supabase insert error:", error);
+    if (!saveResult.success) {
       return { success: false, error: "Unable to submit inquiry at this time. Please try again later." };
     }
 
