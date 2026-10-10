@@ -21,12 +21,14 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const servicesList = [
-  { id: "gmb", label: "Google Business Profile & Maps" },
-  { id: "meta-ads", label: "Meta Ads (Facebook & Instagram)" },
-  { id: "google-ads", label: "Google Search Ads" },
-  { id: "local-seo", label: "Local SEO & Citations" },
-  { id: "reels-creative", label: "Reels & Creative Services" },
-  { id: "website", label: "Landing Pages & Websites" },
+  { id: "gbp-seo", label: "Google Business Profile & Local SEO" },
+  { id: "meta-google-ads", label: "Meta Ads & Google Search Ads" },
+  { id: "landing-websites", label: "Landing Pages & Business Websites" },
+  { id: "tracking-analytics", label: "Conversion Tracking & Analytics" },
+  { id: "brand-identity", label: "Brand Identity & Strategy" },
+  { id: "creative-reels", label: "Creative Services & Reel Editing" },
+  { id: "citations-directories", label: "Local Citations & Directory Listings" },
+  { id: "social-media", label: "Organic Social Media Management" },
 ];
 
 export default function ContactForm() {

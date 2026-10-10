@@ -115,7 +115,7 @@ export default function ChatInterface({
               message={msg} 
               onOptionSelect={onOptionSelect}
               currentInput={inputValue}
-              showNextButton={state.step === 4 && index === state.messages.length - 1 && inputValue.trim().length > 0}
+              showNextButton={state.step === CHAT_STEPS.SERVICE && index === state.messages.length - 1 && inputValue.trim().length > 0}
               onNext={onSubmit}
             />
           ))}

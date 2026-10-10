@@ -2,6 +2,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { revalidatePath } from "next/cache";
 
 export async function submitContactForm(formData: { fullName: string; company?: string; email: string; phone?: string; service: string | string[]; message: string; }) {
@@ -21,7 +22,12 @@ export async function submitContactForm(formData: { fullName: string; company?: 
       return { success: false, error: "Message must be under 3000 characters." };
     }
 
-    const supabase = await createClient();
+    let supabase;
+    try {
+      supabase = createAdminClient();
+    } catch {
+      supabase = await createClient();
+    }
     
     const { error } = await supabase
       .from('contact_messages')

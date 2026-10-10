@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { useChatbot } from "@/hooks/useChatbot";
+import { CHAT_STEPS } from "@/lib/constants/chatbot";
 
 // Lazy-load the heavy ChatInterface chunk so it doesn't block the initial page render
 const ChatInterface = dynamic(() => import("./ChatInterface"), {
@@ -119,7 +120,7 @@ export default function ChatWidget() {
                 setInputValue("");
               }}
               onOptionSelect={(option) => {
-                if (state.step === 4) { // CHAT_STEPS.SERVICE
+                if (state.step === CHAT_STEPS.SERVICE) {
                   setInputValue((prev) => {
                     if (!prev) return option;
                     const items = prev.split(',').map(s => s.trim()).filter(Boolean);

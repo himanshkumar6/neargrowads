@@ -12,14 +12,14 @@ export const CHAT_STEPS = {
 } as const;
 
 export const SERVICES_LIST = [
-  "Brand Strategy & Identity",
-  "Revenue Management",
-  "Website Design, SEO & Geo AI",
-  "Performance Marketing",
-  "Geo & GMB",
-  "Content Creation & Copywriting",
-  "Influencer & PR Outreach",
-  "Social Media Management",
+  "Google Business Profile & Local SEO",
+  "Meta Ads & Google Search Ads",
+  "Landing Pages & Business Websites",
+  "Conversion Tracking & Analytics",
+  "Brand Identity & Strategy",
+  "Creative Services & Reel Editing",
+  "Local Citations & Directory Listings",
+  "Organic Social Media Management",
 ];
 
 export const BOT_AVATAR = "/icon.png"; // Standard NearGrow Avatar
