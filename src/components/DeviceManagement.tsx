@@ -8,41 +8,41 @@ import { fadeUp, fadeRight, staggerContainer } from "@/lib/animations";
 const outcomes = [
   {
     icon: <TrendingUp className="w-5 h-5 text-green-500" />,
-    text: "Maximise Revenue Opportunities",
+    text: "Improve Local Inquiries & Calls",
     bg: "bg-green-100 dark:bg-green-900/30",
   },
   {
     icon: <Globe className="w-5 h-5 text-blue-500" />,
-    text: "Improve Hotel Visibility",
+    text: "Higher Google Maps Visibility",
     bg: "bg-blue-100 dark:bg-blue-900/30",
   },
   {
     icon: <CalendarCheck className="w-5 h-5 text-orange-500" />,
-    text: "Increase Direct Bookings",
+    text: "Cost-Efficient Ad Spend",
     bg: "bg-orange-100 dark:bg-orange-900/30",
   },
   {
     icon: <Users className="w-5 h-5 text-purple-500" />,
-    text: "Strengthen Guest Engagement",
+    text: "Active Local Customer Engagement",
     bg: "bg-purple-100 dark:bg-purple-900/30",
   },
   {
     icon: <MonitorSmartphone className="w-5 h-5 text-indigo-500" />,
-    text: "Build Stronger Digital Presence",
+    text: "Consistent Social & Search Presence",
     bg: "bg-indigo-100 dark:bg-indigo-900/30",
   },
   {
     icon: <Star className="w-5 h-5 text-yellow-500" />,
-    text: "Improve Brand Perception",
+    text: "Stronger Local Trust & Reputation",
     bg: "bg-yellow-100 dark:bg-yellow-900/30",
   },
 ];
 
 export default function DeviceManagement() {
   return (
-    <section className="py-12 md:py-12 bg-white dark:bg-[#050b14] overflow-hidden ">
-      <div className="container mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+    <section className="py-10 xs:py-12 md:py-12 bg-white dark:bg-[#050b14] overflow-hidden">
+      <div className="container mx-auto px-3 xs:px-4 md:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
           
           {/* Left Column: Content */}
           <motion.div 
@@ -50,42 +50,42 @@ export default function DeviceManagement() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false, margin: "-50px" }}
-            className="flex flex-col space-y-8"
+            className="flex flex-col space-y-6 xs:space-y-8"
           >
-            <div className="space-y-4">
+            <div className="space-y-3 xs:space-y-4">
               <motion.h2 
                 variants={fadeUp}
-                className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-tight"
+                className="text-2xl xs:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-tight"
               >
                 Marketing That <br className="hidden lg:block" /> Solves <span className="text-primary-600 dark:text-primary-400">Problems</span>
               </motion.h2>
               <motion.p 
                 variants={fadeUp}
-                className="text-gray-600 dark:text-gray-300 text-base md:text-lg leading-relaxed max-w-xl"
+                className="text-gray-600 dark:text-gray-300 text-sm xs:text-base md:text-lg leading-relaxed max-w-xl"
               >
-                We do not believe in generic marketing. Every hospitality brand has a unique guest experience, location advantage, revenue challenge, and audience behaviour. Our work begins by understanding these realities and then building practical, customised solutions that help brands grow.
+                We do not believe in generic marketing. Every local business has a distinct service area, local competitor landscape, customer intent pattern, and operational goal. Our work begins by auditing your local presence and building practical, modular solutions that help you attract and convert nearby customers.
               </motion.p>
             </div>
 
-            <div className="pt-4 space-y-4">
+            <div className="pt-2 xs:pt-4 space-y-3 xs:space-y-4">
               <motion.h3 
                 variants={fadeUp}
-                className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white"
+                className="text-lg xs:text-xl md:text-2xl font-bold text-gray-900 dark:text-white"
               >
                 Core Outcomes
               </motion.h3>
               
-              <motion.div variants={staggerContainer} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <motion.div variants={staggerContainer} className="grid grid-cols-1 sm:grid-cols-2 gap-3 xs:gap-4 sm:gap-6">
                 {outcomes.map((outcome, index) => (
                   <motion.div 
                     key={index}
                     variants={fadeRight}
-                    className="flex items-center space-x-4 bg-gray-50 dark:bg-gray-900/50 p-4 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm"
+                    className="flex items-center space-x-3 xs:space-x-4 bg-gray-50 dark:bg-gray-900/50 p-3.5 xs:p-4 rounded-xl xs:rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm"
                   >
-                  <div className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center ${outcome.bg}`}>
+                  <div className={`shrink-0 w-9 h-9 xs:w-10 xs:h-10 rounded-xl flex items-center justify-center ${outcome.bg}`}>
                     {outcome.icon}
                   </div>
-                  <span className="text-gray-800 dark:text-gray-200 font-medium text-sm md:text-base leading-tight">
+                  <span className="text-gray-800 dark:text-gray-200 font-medium text-xs xs:text-sm md:text-base leading-snug">
                     {outcome.text}
                   </span>
                 </motion.div>
@@ -110,7 +110,7 @@ export default function DeviceManagement() {
             </div>
 
             {/* The User's Socrates Vector Image */}
-            <div className="relative z-10 w-full max-w-[320px] sm:max-w-[450px] lg:max-w-full flex items-center justify-center pointer-events-none lg:-translate-x-4">
+            <div className="relative z-10 w-full max-w-[280px] xs:max-w-[320px] sm:max-w-[450px] lg:max-w-full flex items-center justify-center pointer-events-none lg:-translate-x-4">
               <Image 
                 src="/socrates-handrawn-vector-illustration.png"
                 alt="Philosophy of Marketing"

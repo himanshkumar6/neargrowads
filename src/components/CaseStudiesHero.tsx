@@ -2,13 +2,10 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Caveat } from "next/font/google";
-
-const caveat = Caveat({ subsets: ["latin"], weight: "600" });
 
 export default function CaseStudiesHero() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#f3fbf9] dark:bg-slate-950 pt-24 pb-20 md:pt-32 md:pb-28 ">
+    <section className="relative w-full overflow-hidden bg-[#f3fbf9] dark:bg-slate-950 pt-24 xs:pt-28 pb-16 xs:pb-20 md:pt-32 md:pb-28">
       {/* Abstract Background Elements (Light Pluses & Dots) */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <svg className="absolute top-1/4 right-1/4 opacity-20 dark:opacity-10" width="20" height="20" viewBox="0 0 20 20">
@@ -23,8 +20,8 @@ export default function CaseStudiesHero() {
         <div className="absolute top-[20%] right-[10%] w-3 h-3 rounded-full bg-purple-400 opacity-20 dark:opacity-10" />
       </div>
 
-      <div className="container mx-auto px-4 md:px-8 max-w-6xl relative z-10">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-12 md:gap-8">
+      <div className="container mx-auto px-3 xs:px-4 md:px-8 max-w-6xl relative z-10">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8 xs:gap-10 md:gap-8">
           
           {/* Left Column: Text Content */}
           <motion.div 
@@ -33,19 +30,19 @@ export default function CaseStudiesHero() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="flex-1 w-full max-w-xl text-center md:text-left"
           >
-            {/* Handwriting Logo Name */}
-            <h2 className={`text-5xl md:text-6xl text-[#6D5D9B] dark:text-[#a594dc] mb-8 md:mb-12 ${caveat.className}`}>
+            {/* Category / Sub-heading */}
+            <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#6D5D9B] dark:text-[#a594dc] mb-4 xs:mb-6 md:mb-12">
               Success Stories
             </h2>
             
             {/* Main Headline */}
-            <h1 className="text-4xl md:text-[3.5rem] leading-tight text-[#1B143F] dark:text-white mb-6 tracking-tight">
-              <span className="font-light">Hospitality</span> <span className="font-bold">Case Studies</span>
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-[3.5rem] leading-tight text-[#1B143F] dark:text-white mb-4 xs:mb-6 tracking-tight">
+              <span className="font-light">Growth &amp; Local</span> <span className="font-bold">Case Studies</span>
             </h1>
             
             {/* Paragraph Description */}
-            <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-md mx-auto md:mx-0">
-              Discover how we&apos;ve helped premium resorts and luxury hotels scale their direct bookings, elevate their brand positioning, and dominate their markets.
+            <p className="text-sm xs:text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-md mx-auto md:mx-0">
+              Discover how our integrated digital growth strategies have helped businesses strengthen local visibility, generate qualified inquiries, and achieve sustainable revenue growth.
             </p>
           </motion.div>
 

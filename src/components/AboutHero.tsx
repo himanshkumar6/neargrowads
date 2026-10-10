@@ -6,12 +6,12 @@ import { fadeUp, staggerContainer } from "@/lib/animations";
 
 export default function AboutHero() {
   return (
-    <div className="relative pt-40 pb-24 text-center overflow-hidden">
+    <div className="relative pt-28 xs:pt-32 sm:pt-40 pb-16 sm:pb-24 text-center overflow-hidden">
       {/* Background Group Image */}
       <div className="absolute inset-0 z-0">
         <Image 
           src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2000&q=80" 
-          alt="Trisage Team working together" 
+          alt="NearGrow Ads Team working together" 
           fill
           sizes="100vw"
           className="object-cover object-center"
@@ -27,19 +27,19 @@ export default function AboutHero() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: false, margin: "-50px" }}
-        className="relative z-20 container mx-auto px-4 md:px-8"
+        className="relative z-20 container mx-auto px-3 xs:px-4 md:px-8"
       >
         <motion.h1 
           variants={fadeUp}
-          className="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg"
+          className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 sm:mb-6 drop-shadow-lg tracking-tight"
         >
-          About Trisage
+          About NearGrow Ads
         </motion.h1>
         <motion.p 
           variants={fadeUp}
-          className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto drop-shadow-md font-medium"
+          className="text-sm xs:text-base sm:text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto drop-shadow-md font-medium leading-relaxed"
         >
-          We are a team of data-driven marketers, creative thinkers, and growth engineers dedicated to your success.
+          We help local businesses and emerging regional brands grow through high-visibility Google Business Profiles, targeted local advertising, and practical customer acquisition systems.
         </motion.p>
       </motion.div>
     </div>

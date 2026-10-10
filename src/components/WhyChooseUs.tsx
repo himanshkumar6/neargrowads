@@ -15,24 +15,24 @@ if (typeof window !== "undefined") {
 const stats = [
   { 
     id: 1, 
-    label: "Clients", 
-    value: 100, 
+    label: "Core Marketing Channels", 
+    value: 5, 
     suffix: "+",
-    bgClass: "bg-gradient-to-br from-primary-800/80 to-primary-900/90 border-primary-600/30"
+    bgClass: "bg-gradient-to-br from-slate-800/90 to-slate-900/95 border-slate-700/50"
   },
   { 
     id: 2, 
-    label: "Projects", 
-    value: 250, 
-    suffix: "+",
-    bgClass: "bg-gradient-to-bl from-secondary-900/70 to-primary-900/90 border-secondary-700/30"
+    label: "Modular Transparency", 
+    value: 100, 
+    suffix: "%",
+    bgClass: "bg-gradient-to-bl from-slate-800/90 to-slate-900/95 border-slate-700/50"
   },
   { 
     id: 3, 
-    label: "Client Satisfaction", 
+    label: "Client Retention Focus", 
     value: 95, 
     suffix: "%",
-    bgClass: "bg-gradient-to-tr from-primary-700/60 via-primary-800/80 to-secondary-900/80 border-primary-500/20"
+    bgClass: "bg-gradient-to-tr from-slate-800/90 via-slate-900/95 to-slate-950 border-slate-700/50"
   },
 ];
 
@@ -68,7 +68,7 @@ const SplitChars = ({ text }: { text: string }) => {
       {parseBoldWords(text).map((word, wordIndex) => (
         <span 
           key={wordIndex} 
-          className={`inline-block mr-[0.25em] char-drop will-change-transform transform-gpu ${word.isBold ? 'font-black text-secondary-300' : 'font-medium'}`}
+          className={`inline-block mr-[0.25em] char-drop will-change-transform transform-gpu ${word.isBold ? 'font-semibold text-secondary-300' : 'font-normal'}`}
         >
           {word.text}
         </span>
@@ -112,8 +112,8 @@ function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
   }, { scope: containerRef, dependencies: [value] });
 
   return (
-    <div ref={containerRef} className="text-5xl md:text-7xl font-bold text-white mb-2 tabular-nums">
-      <span ref={countRef}>0</span><span className="stat-suffix">{suffix}</span>
+    <div ref={containerRef} className="text-4xl xs:text-5xl md:text-7xl font-bold text-white mb-2 tabular-nums">
+      <span ref={countRef}>{value}</span><span className="stat-suffix">{suffix}</span>
     </div>
   );
 }
@@ -308,50 +308,50 @@ export default function WhyChooseUs() {
   }, { scope: containerRef });
 
   return (
-    <section id="why-choose-us" ref={containerRef} className="py-12 md:py-16 bg-primary-900 relative overflow-hidden">
+    <section id="why-choose-us" ref={containerRef} className="py-12 md:py-16 bg-[#080f1e] dark:bg-[#060c18] relative overflow-hidden border-y border-slate-800/80">
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent" />
       
-      <div className="container mx-auto px-4 md:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <div className="container mx-auto px-3 xs:px-4 md:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 xs:gap-10 lg:gap-16 items-center">
           <div>
-            <h2 ref={headingRef} className="text-3xl md:text-5xl font-bold mb-6 [perspective:1000px]">
-              <span className="block text-primary-300 text-2xl md:text-3xl mb-2">
+            <h2 ref={headingRef} className="text-2xl xs:text-3xl md:text-5xl font-bold mb-5 xs:mb-6 [perspective:1000px]">
+              <span className="block text-slate-300 text-xl xs:text-2xl md:text-3xl mb-1.5 xs:mb-2">
                 {"Why Choose Us".split(" ").map((word, i) => (
                   <span key={`w1-${i}`} className="inline-block mr-[0.25em] heading-word origin-bottom">{word}</span>
                 ))}
               </span>
               <span className="inline-block text-secondary-400">
-                {"AI-Driven Marketing for Your Hotel, Resort & Restaurant".split(" ").map((word, i) => (
+                {"Smart Digital Growth Built for Local Businesses".split(" ").map((word, i) => (
                   <span key={`w2-${i}`} className="inline-block mr-[0.25em] heading-word origin-bottom">{word}</span>
                 ))}
               </span>
             </h2>
-            <div ref={paraRef} className="space-y-4 mb-8">
-              <p className="text-primary-100 text-lg leading-relaxed">
-                <SplitChars text="In today’s AI-driven digital landscape, hotels, restaurants, and resorts need more than traditional advertising." />
+            <div ref={paraRef} className="space-y-4 mb-6 xs:mb-8">
+              <p className="text-slate-300 text-sm xs:text-base sm:text-lg leading-relaxed">
+                <SplitChars text="In today’s competitive local landscape, businesses need more than disconnected ads. We connect Google Maps, targeted paid campaigns, and organic social into one practical growth system." />
               </p>
             </div>
-            <div className="relative pl-4 mt-6">
+            <div className="relative pl-1 xs:pl-4 mt-6">
               {/* Connecting vertical line */}
               <div 
                 ref={lineRef} 
-                className="absolute left-[31px] top-4 bottom-4 w-0.5 bg-gradient-to-b from-primary-400/50 via-secondary-400/50 to-transparent" 
-              />
+                className="absolute left-[19px] xs:left-[31px] top-4 bottom-4 w-0.5 bg-gradient-to-b from-secondary-400/50 via-primary-400/50 to-transparent" 
+                />
               
-              <ul ref={listRef} className="space-y-6 relative">
+              <ul ref={listRef} className="space-y-5 xs:space-y-6 relative">
                 {[
-                  "**Data-backed, AI-ready marketing** ensuring visibility across Google, ChatGPT, and Gemini.",
-                  "**Performance-focused strategies** to grow bookings, brand authority, and direct revenue.",
-                  "**Full-service expertise** understanding the hospitality buyer journey from discovery to booking.",
-                  "**Top recommendation positioning** across AI-powered searches and voice-based discovery."
+                  "**High-intent local discovery** ensuring your business ranks clearly across Google Maps and local search.",
+                  "**Targeted paid campaigns** on Meta and Google Ads focused on local customer inquiries and walk-ins.",
+                  "**Modular & transparent pricing** with direct ad spend control and zero lock-in contracts.",
+                  "**Complete creative execution** from Reels and graphics to localized landing pages and profile optimization."
                 ].map((item, index) => (
-                  <li key={index} className="flex items-center gap-4 text-primary-50 relative z-10">
-                    <div className="list-icon shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 shadow-[0_0_15px_rgba(45,212,191,0.4)] flex items-center justify-center text-white">
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <li key={index} className="flex items-start gap-2.5 xs:gap-3.5 sm:gap-4 text-slate-100 relative z-10">
+                    <div className="list-icon shrink-0 w-7 h-7 xs:w-8 xs:h-8 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 shadow-[0_0_15px_rgba(251,175,53,0.35)] flex items-center justify-center text-white mt-0.5 sm:mt-1">
+                      <svg className="w-3.5 h-3.5 xs:w-4 xs:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
-                    <div className="list-text text-lg">
+                    <div className="list-text text-sm xs:text-base sm:text-lg leading-relaxed">
                       <SplitChars text={item} />
                     </div>
                   </li>
@@ -360,20 +360,20 @@ export default function WhyChooseUs() {
             </div>
           </div>
 
-          <div ref={cardsContainerRef} className="grid grid-cols-1 sm:grid-cols-2 gap-8 [perspective:1000px]">
+          <div ref={cardsContainerRef} className="grid grid-cols-1 sm:grid-cols-2 gap-4 xs:gap-6 sm:gap-8 [perspective:1000px]">
             {stats.map((stat, index) => (
               <div
                 key={stat.id}
-                className={`stat-card p-8 rounded-3xl apple-glass-tile transition-all duration-300 will-change-transform transform-gpu ${
+                className={`stat-card p-5 xs:p-6 sm:p-8 rounded-2xl xs:rounded-3xl apple-glass-tile transition-all duration-300 will-change-transform transform-gpu ${
                   index === 2 ? "sm:col-span-2 text-center" : ""
                 }`}
               >
                 {/* Number + suffix split so suffix can pop independently */}
-                <div className="text-5xl md:text-7xl font-black text-white mb-3 tabular-nums flex items-end gap-1 justify-start tracking-tight" style={index === 2 ? { justifyContent: 'center' } : {}}>
+                <div className="text-4xl xs:text-5xl md:text-7xl font-bold md:font-extrabold text-white mb-2 xs:mb-3 tabular-nums flex items-end gap-1 justify-start tracking-tight" style={index === 2 ? { justifyContent: 'center' } : {}}>
                   <AnimatedCounter value={stat.value} suffix="" />
-                  <span className="stat-suffix inline-block text-teal-400 font-medium" style={{ lineHeight: 1.1 }}>{stat.suffix}</span>
+                  <span className="stat-suffix inline-block text-secondary-400 font-medium" style={{ lineHeight: 1.1 }}>{stat.suffix}</span>
                 </div>
-                <p className="text-gray-300 font-bold uppercase tracking-widest text-xs sm:text-sm">{stat.label}</p>
+                <p className="text-slate-300 font-medium uppercase tracking-widest text-[11px] xs:text-xs sm:text-sm">{stat.label}</p>
               </div>
             ))}
           </div>

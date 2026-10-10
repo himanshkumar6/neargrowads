@@ -106,8 +106,9 @@ export async function GET(req: NextRequest) {
       },
       calendarDays,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Calendar API Error:', error);
-    return NextResponse.json({ success: false, error: error?.message || 'Internal server error' }, { status: 500 });
+    const message = error instanceof Error ? error.message : 'Internal server error';
+    return NextResponse.json({ success: false, error: message }, { status: 500 });
   }
 }

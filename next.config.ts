@@ -24,22 +24,59 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "*.supabase.co",
       },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
     ],
   },
   experimental: {
     serverActions: {
+      bodySizeLimit: "16mb",
       allowedOrigins: [
         "localhost:3000",
         "*.devtunnels.ms",
         "*.localhost:3000",
         "trisagemarketing.com",
         "*.trisagemarketing.com",
+        "neargrowads.com",
+        "*.neargrowads.com",
         "*.vercel.app",
       ],
     },
   },
   async redirects() {
     return [
+      {
+        source: '/admin/cms',
+        destination: '/admin/dashboard',
+        permanent: true,
+      },
+      {
+        source: '/admin/employees/:path*',
+        destination: '/admin/dashboard',
+        permanent: true,
+      },
+      {
+        source: '/admin/leaves/:path*',
+        destination: '/admin/dashboard',
+        permanent: true,
+      },
+      {
+        source: '/admin/calendar/:path*',
+        destination: '/admin/dashboard',
+        permanent: true,
+      },
+      {
+        source: '/dashboard/:path*',
+        destination: '/admin/dashboard',
+        permanent: true,
+      },
+      {
+        source: '/login',
+        destination: '/admin/login',
+        permanent: true,
+      },
       {
         source: '/robots',
         destination: '/robots.txt',
@@ -54,6 +91,27 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=(self)',
+          },
+        ],
+      },
       {
         source: '/(.*)\\.(ico|png|svg|webmanifest)',
         headers: [

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { fadeUp, fadeLeft, springUp } from "@/lib/animations";
-import { ArrowRight, Sparkles, TrendingUp } from "lucide-react";
+import { ArrowRight, TrendingUp, MapPin } from "lucide-react";
 
 export default function CTA() {
   return (
@@ -21,22 +21,22 @@ export default function CTA() {
         aria-hidden="true"
       />
 
-      {/* ── 3. Creative Glowing Mesh Radial Orbs ── */}
+      {/* ── 3. Creative Glowing Mesh Radial Orbs (Brand Green & Amber) ── */}
       <motion.div
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+        animate={{ scale: [1, 1.2, 1], opacity: [0.35, 0.55, 0.35] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         className="absolute -top-24 -left-24 w-96 h-96 rounded-full pointer-events-none blur-3xl"
-        style={{ background: "radial-gradient(circle, rgba(6,182,212,0.4) 0%, rgba(37,99,235,0.1) 70%, transparent 100%)" }}
+        style={{ background: "radial-gradient(circle, rgba(104,185,85,0.35) 0%, rgba(104,185,85,0.08) 70%, transparent 100%)" }}
       />
       <motion.div
-        animate={{ scale: [1.2, 1, 1.2], opacity: [0.35, 0.55, 0.35] }}
+        animate={{ scale: [1.2, 1, 1.2], opacity: [0.3, 0.5, 0.3] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         className="absolute -bottom-24 -right-24 w-[30rem] h-[30rem] rounded-full pointer-events-none blur-3xl"
-        style={{ background: "radial-gradient(circle, rgba(99,102,241,0.4) 0%, rgba(168,85,247,0.15) 70%, transparent 100%)" }}
+        style={{ background: "radial-gradient(circle, rgba(251,175,53,0.3) 0%, rgba(251,175,53,0.06) 70%, transparent 100%)" }}
       />
       <div 
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[20rem] rounded-full pointer-events-none blur-3xl opacity-20"
-        style={{ background: "radial-gradient(circle, rgba(37,99,235,0.3) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(104,185,85,0.2) 0%, transparent 70%)" }}
       />
 
       {/* ── 4. Subtle Geometric Grid Pattern Overlay ── */}
@@ -45,67 +45,67 @@ export default function CTA() {
         aria-hidden="true"
       />
 
-      {/* ── 5. Floating Decorative Creative Sparkles ── */}
+      {/* ── 5. Floating Decorative Badges ── */}
       <motion.div 
-        animate={{ y: [-6, 6, -6], rotate: [0, 10, 0] }}
+        animate={{ y: [-6, 6, -6], rotate: [0, 8, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-12 right-[12%] hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs text-cyan-300 shadow-lg pointer-events-none"
+        className="absolute top-12 right-[12%] hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs text-secondary-300 shadow-lg pointer-events-none"
       >
-        <Sparkles size={14} className="text-cyan-400" />
-        <span className="font-semibold tracking-wide">Accelerate Bookings</span>
+        <MapPin size={14} className="text-secondary-400" />
+        <span className="font-semibold tracking-wide">Local Visibility</span>
       </motion.div>
 
       <motion.div 
         animate={{ y: [6, -6, 6], rotate: [0, -8, 0] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-12 left-[10%] hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs text-emerald-300 shadow-lg pointer-events-none"
+        className="absolute bottom-12 left-[10%] hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs text-primary-300 shadow-lg pointer-events-none"
       >
-        <TrendingUp size={14} className="text-emerald-400" />
-        <span className="font-semibold tracking-wide">Data-Driven Yield</span>
+        <TrendingUp size={14} className="text-primary-400" />
+        <span className="font-semibold tracking-wide">Measurable Inquiries</span>
       </motion.div>
 
       {/* ── 6. Main Content Container ── */}
-      <div className="container mx-auto px-4 md:px-8 relative z-10">
-        <div className="max-w-4xl mx-auto text-center px-2 sm:px-0">
+      <div className="container mx-auto px-3 xs:px-4 md:px-8 relative z-10">
+        <div className="max-w-4xl mx-auto text-center px-1 xs:px-2 sm:px-0">
           
           {/* Glassmorphic Pill Tag */}
           <motion.div
             initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} variants={fadeUp}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 dark:bg-white/5 border border-white/20 backdrop-blur-md text-xs sm:text-sm font-bold uppercase tracking-widest text-cyan-300 mb-6 shadow-xl"
+            className="inline-flex items-center gap-2 xs:gap-2.5 px-3 xs:px-4 py-1.5 rounded-full bg-primary-500/10 border border-primary-500/30 backdrop-blur-md text-[10px] xs:text-xs sm:text-sm font-medium uppercase tracking-normal xs:tracking-wider sm:tracking-widest text-primary-300 mb-5 xs:mb-6 shadow-xl max-w-full text-center"
           >
-            <Sparkles size={14} className="text-cyan-400" />
-            <span>Ready for Hospitality Growth?</span>
+            <span className="w-2 h-2 rounded-full bg-primary-400 animate-pulse shrink-0" />
+            <span className="truncate">Ready to Grow Your Local Business?</span>
           </motion.div>
 
           <motion.h2 
             initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} variants={fadeLeft}
-            className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 md:mb-8 leading-[1.15] tracking-tight text-balance"
+            className="text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 xs:mb-6 md:mb-8 leading-[1.15] tracking-tight text-balance"
           >
-            Ready to scale your business to <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-200 to-indigo-300">new heights?</span>
+            Grow Local. <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#68B955] via-emerald-400 to-[#FBAF35]">Grow Smart.</span>
           </motion.h2>
 
           <motion.p 
             initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} variants={fadeUp}
-            className="text-base sm:text-lg md:text-xl text-blue-100/90 mb-8 sm:mb-10 max-w-2xl mx-auto leading-relaxed font-medium"
+            className="text-sm xs:text-base sm:text-lg md:text-xl text-slate-300 mb-6 xs:mb-8 sm:mb-10 max-w-2xl mx-auto leading-relaxed font-normal sm:font-medium"
           >
-            Join the ambitious hospitality brands that trust Trisage Marketing to drive direct bookings and scalable revenue growth.
+            Partner with NearGrow Ads to strengthen your Google Business Profile, run targeted local ads, and connect with nearby customers who are actively searching for what you offer.
           </motion.p>
 
           <motion.div 
             initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} variants={springUp}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full"
           >
             <Link 
               href="/contact" 
-              className="inline-flex justify-center items-center px-8 py-4 text-base font-bold text-gray-950 bg-white hover:bg-cyan-50 rounded-full transition-all shadow-[0_0_25px_rgba(255,255,255,0.3)] hover:shadow-[0_0_35px_rgba(6,182,212,0.5)] hover:-translate-y-1 w-full sm:w-auto"
+              className="inline-flex justify-center items-center px-4 xs:px-6 sm:px-8 py-3.5 sm:py-4 text-xs xs:text-sm sm:text-base font-semibold text-white bg-gradient-to-r from-primary-600 via-primary-500 to-secondary-500 hover:from-primary-500 hover:to-secondary-400 rounded-full transition-all duration-300 shadow-[0_4px_25px_rgba(104,185,85,0.4)] hover:shadow-[0_4px_35px_rgba(251,175,53,0.45)] hover:-translate-y-0.5 w-full sm:w-auto cursor-pointer text-center"
             >
-              Book Your Free Consultation
+              Request a Free Visibility Check
             </Link>
             <Link 
               href="/services" 
-              className="inline-flex justify-center items-center gap-2 px-8 py-4 text-base font-semibold text-white bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/25 hover:border-white/40 rounded-full transition-all w-full sm:w-auto"
+              className="inline-flex justify-center items-center gap-2 px-4 xs:px-6 sm:px-8 py-3.5 sm:py-4 text-xs xs:text-sm sm:text-base font-semibold text-white bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/20 hover:border-primary-400/40 rounded-full transition-all w-full sm:w-auto cursor-pointer text-center"
             >
-              Explore Services <ArrowRight size={18} />
+              Explore Services <ArrowRight size={16} />
             </Link>
           </motion.div>
         </div>

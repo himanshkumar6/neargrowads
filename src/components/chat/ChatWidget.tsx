@@ -25,11 +25,9 @@ export default function ChatWidget() {
   const [vvStyle, setVvStyle] = useState<React.CSSProperties>({});
   const { state, toggleOpen, handleInputSubmit, handleOptionSelect, resetSession } = useChatbot();
 
-  if (isEmsPage) return null;
-
   // Prevent background scrolling and rubber-banding when chat is open on mobile
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || isEmsPage) return;
     
     if (state.isOpen && window.innerWidth < 640) {
       const scrollY = window.scrollY;
@@ -51,11 +49,11 @@ export default function ChatWidget() {
         window.scrollTo(0, scrollY);
       };
     }
-  }, [state.isOpen]);
+  }, [state.isOpen, isEmsPage]);
 
   // Bulletproof mobile keyboard fix using Visual Viewport API
   useEffect(() => {
-    if (typeof window === 'undefined' || !window.visualViewport) return;
+    if (typeof window === 'undefined' || !window.visualViewport || isEmsPage) return;
     
     const handleResize = () => {
       // Only apply this dynamic offset on mobile screens
@@ -81,15 +79,10 @@ export default function ChatWidget() {
       window.visualViewport?.removeEventListener('resize', handleResize);
       window.visualViewport?.removeEventListener('scroll', handleResize);
     };
-  }, [state.isOpen]);
+  }, [state.isOpen, isEmsPage]);
 
-  // Hide entirely on Admin routes to prevent overlapping with Admin Mobile Nav
-  if (pathname?.startsWith("/admin")) return null;
-
-  const onSubmit = () => {
-    handleInputSubmit(inputValue);
-    setInputValue("");
-  };
+  // Hide entirely on Admin or EMS routes to prevent overlapping with Admin Navigation
+  if (isEmsPage) return null;
 
   return (
     <>
@@ -149,12 +142,15 @@ export default function ChatWidget() {
       </AnimatePresence>
 
       {/* 2. Floating Toggle Button */}
-      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[999] flex flex-col items-end">
+      <div 
+        id="chat-widget-container" 
+        className="fixed bottom-3.5 right-3.5 sm:bottom-6 sm:right-6 z-[999] flex flex-col items-end floating-widget-container"
+      >
         <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={toggleOpen}
-        className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-primary-600 to-primary-800 text-white shadow-xl shadow-primary-600/30 flex items-center justify-center hover:shadow-2xl hover:shadow-primary-600/40 transition-shadow focus:outline-none focus-visible:ring-4 focus-visible:ring-primary-500/50"
+        className="w-11 h-11 xs:w-12 xs:h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-primary-600 to-primary-800 text-white shadow-xl shadow-primary-600/30 flex items-center justify-center hover:shadow-2xl hover:shadow-primary-600/40 transition-shadow focus:outline-none focus-visible:ring-4 focus-visible:ring-primary-500/50"
         aria-label={state.isOpen ? "Close chat window" : "Open chat window"}
       >
         <AnimatePresence mode="wait">
@@ -166,7 +162,7 @@ export default function ChatWidget() {
               exit={{ rotate: 90, opacity: 0 }}
               transition={{ duration: 0.15 }}
             >
-              <X size={24} strokeWidth={2.5} />
+              <X size={20} strokeWidth={2.5} className="xs:w-6 xs:h-6" />
             </motion.div>
           ) : (
             <motion.div
@@ -176,14 +172,14 @@ export default function ChatWidget() {
               exit={{ rotate: -90, opacity: 0 }}
               transition={{ duration: 0.15 }}
             >
-              <MessageCircle size={24} strokeWidth={2} className="fill-white/10" />
+              <MessageCircle size={20} strokeWidth={2} className="xs:w-6 xs:h-6 fill-white/10" />
             </motion.div>
           )}
         </AnimatePresence>
         
         {/* Notification dot */}
         {!state.isOpen && (
-          <span className="absolute top-0 right-0 w-4 h-4 bg-red-500 border-2 border-white dark:border-gray-900 rounded-full animate-pulse"></span>
+          <span className="absolute top-0 right-0 w-3.5 h-3.5 xs:w-4 xs:h-4 bg-red-500 border-2 border-white dark:border-gray-900 rounded-full animate-pulse"></span>
         )}
       </motion.button>
       </div>

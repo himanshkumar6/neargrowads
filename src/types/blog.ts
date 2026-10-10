@@ -18,7 +18,7 @@ export interface TiptapJSONContent {
   styles?: { bold?: boolean; italic?: boolean; underline?: boolean; strikethrough?: boolean; code?: boolean; };
   href?: string;
   id?: string;
-  props?: Record<string, any>;
+  props?: Record<string, unknown>;
   [key: string]: unknown;
 }
 
@@ -29,7 +29,14 @@ export interface Blog {
   excerpt: string | null;
   content: TiptapJSONContent; // ProseMirror JSON tree
   cover_image: string | null;
-  category: string;
+  featured_image?: string | null;
+  /** FK to categories.id — use categories?.name for the display label */
+  category_id: string | null;
+  /** Populated when categories is joined in the query (select '*, categories(name)') */
+  categories?: { name: string } | null;
+  blog_categories?: { name: string } | null;
+  /** Convenience accessor — resolved from categories join or falls back to "General" */
+  category?: string | null;
   tags: string[];
   is_featured: boolean;
   read_time: string | null;

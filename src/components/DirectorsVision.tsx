@@ -16,15 +16,15 @@ const QuoteMark = ({ className }: { className?: string }) => (
 
 export default function DirectorsVision() {
   return (
-    <section className="pt-12 pb-4 md:pt-16 md:pb-8 bg-gray-50 dark:bg-[#050b14] ">
-      <div className="container mx-auto px-4 md:px-8">
+    <section className="pt-10 pb-4 md:pt-16 md:pb-8 bg-gray-50 dark:bg-[#050b14]">
+      <div className="container mx-auto px-3 xs:px-4 md:px-8">
         
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="relative rounded-3xl md:rounded-[2.5rem] overflow-hidden bg-primary-900 shadow-2xl"
+          className="relative rounded-2xl xs:rounded-3xl md:rounded-[2.5rem] overflow-hidden bg-primary-900 shadow-2xl"
         >
           {/* Topographical Wavy Background Pattern */}
           <div 
@@ -36,38 +36,38 @@ export default function DirectorsVision() {
             }}
           />
 
-          <div className="relative z-10 py-10 px-5 sm:px-8 md:py-16 md:px-16 lg:px-24 flex flex-col items-center">
+          <div className="relative z-10 py-8 xs:py-10 px-3.5 xs:px-5 sm:px-8 md:py-16 md:px-16 lg:px-24 flex flex-col items-center">
             
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-16 text-center">
-              Director&apos;s Vision
+            <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 xs:mb-12 md:mb-16 text-center tracking-tight">
+              Founder&apos;s Vision
             </h2>
 
-            <div className="w-full relative px-0 sm:px-4 md:px-12 mt-4 md:mt-0">
-              <div className="absolute -top-10 -left-1 md:-top-12 md:-left-6 text-white">
-                <QuoteMark className="w-10 h-10 md:w-16 md:h-16 opacity-90" />
+            <div className="w-full relative px-0 sm:px-4 md:px-12 mt-2 xs:mt-4 md:mt-0">
+              <div className="absolute -top-6 -left-0.5 xs:-top-8 xs:-left-1 md:-top-12 md:-left-6 text-white pointer-events-none">
+                <QuoteMark className="w-6 h-6 xs:w-8 xs:h-8 md:w-16 md:h-16 opacity-80" />
               </div>
 
-              <div className="text-white space-y-5 md:space-y-8 text-center text-[15px] sm:text-base md:text-lg lg:text-xl font-medium leading-[1.7] md:leading-relaxed px-2 sm:px-4 md:px-8">
+              <div className="text-white space-y-4 xs:space-y-5 md:space-y-8 text-center text-[13.5px] xs:text-[15px] sm:text-base md:text-lg lg:text-xl font-medium leading-[1.65] xs:leading-[1.7] md:leading-relaxed px-1 xs:px-2 sm:px-4 md:px-8">
                 <p>
-                  At Trisage Marketing, we believe every hotel has a unique story, experience, and identity that deserves to be presented in the best possible way.
+                  At NearGrow Ads, we believe every local business has a distinct service, community presence, and identity that deserves to be discovered by nearby customers who need it.
                 </p>
                 <p>
-                  Our vision is to help hospitality brands create stronger digital identities, connect better with their audience, and achieve consistent business growth through strategic marketing and revenue-focused solutions.
+                  Our vision is to empower local businesses to establish prominent Google Business Profiles, run targeted and cost-efficient ads, and achieve sustainable customer acquisition without bloated agency retainers or empty promises.
                 </p>
                 <p>
-                  We aim to transform hospitality brands through innovation, creativity, and data-driven execution while maintaining the essence of hospitality and guest experience.
+                  We focus on practical execution—clear local SEO, accurate conversion tracking, compelling creative content, and transparent communication that builds long-term local brand equity.
                 </p>
               </div>
 
-              <div className="absolute -bottom-8 -right-1 md:-bottom-12 md:-right-6 text-white rotate-180">
-                <QuoteMark className="w-10 h-10 md:w-16 md:h-16 opacity-90" />
+              <div className="absolute -bottom-6 -right-0.5 xs:-bottom-8 xs:-right-1 md:-bottom-12 md:-right-6 text-white rotate-180 pointer-events-none">
+                <QuoteMark className="w-6 h-6 xs:w-8 xs:h-8 md:w-16 md:h-16 opacity-80" />
               </div>
             </div>
 
-            <div className="w-full flex flex-col justify-center items-center mt-16 md:mt-24 px-0 md:px-8">
+            <div className="w-full flex flex-col justify-center items-center mt-8 xs:mt-12 md:mt-24 px-0 md:px-8">
               <div className="text-center">
-                <h4 className="text-white font-bold text-lg md:text-xl mb-1">Sachin Dubey</h4>
-                <p className="text-white/60 text-xs md:text-sm font-medium">Director</p>
+                <h4 className="text-white font-bold text-base xs:text-lg md:text-xl mb-1">Ajay Singh</h4>
+                <p className="text-white/60 text-xs md:text-sm font-medium">Founder</p>
               </div>
             </div>
 

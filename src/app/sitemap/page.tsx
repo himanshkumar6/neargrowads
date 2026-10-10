@@ -4,18 +4,18 @@ import { getAllPublishedPosts } from "@/lib/blog/data";
 import SitemapClient, { SitemapItem } from "./SitemapClient";
 
 export const metadata: Metadata = {
-  title: "HTML Sitemap & Navigation Directory | Trisage Marketing",
+  title: "HTML Sitemap & Navigation Directory | NearGrow Ads",
   description:
-    "Explore all canonical pages, core hospitality marketing services, case studies, and industry resources from Trisage Marketing.",
+    "Explore all canonical pages, core digital marketing services, case studies, and industry resources from NearGrow Ads.",
   alternates: {
     canonical: "https://trisagemarketing.com/sitemap",
   },
   openGraph: {
-    title: "HTML Sitemap & Navigation Directory | Trisage Marketing",
+    title: "HTML Sitemap & Navigation Directory | NearGrow Ads",
     description:
-      "Explore all canonical pages, core hospitality marketing services, case studies, and industry resources from Trisage Marketing.",
+      "Explore all canonical pages, core digital marketing services, case studies, and industry resources from NearGrow Ads.",
     url: "https://trisagemarketing.com/sitemap",
-    siteName: "Trisage Marketing",
+    siteName: "NearGrow Ads",
     type: "website",
   },
 };
@@ -28,21 +28,21 @@ export default async function SitemapPage() {
   // Core static routes
   const staticItems: SitemapItem[] = [
     {
-      title: "Home — Hospitality Digital Marketing Agency",
+      title: "Home — Local Business Growth & Marketing Agency",
       url: baseUrl,
       category: "Core",
       priority: "1.0",
       changeFreq: "weekly",
     },
     {
-      title: "About Trisage Marketing",
+      title: "About NearGrow Ads",
       url: `${baseUrl}/about`,
       category: "Core",
       priority: "0.8",
       changeFreq: "monthly",
     },
     {
-      title: "Hospitality Marketing Services Hub",
+      title: "Local Marketing Services Hub",
       url: `${baseUrl}/services`,
       category: "Core",
       priority: "0.9",
@@ -56,7 +56,7 @@ export default async function SitemapPage() {
       changeFreq: "weekly",
     })),
     {
-      title: "Our Methodology — Data-Driven Hospitality Growth",
+      title: "Our Methodology — Local Business Growth Framework",
       url: `${baseUrl}/methodology`,
       category: "Core",
       priority: "0.8",
@@ -77,21 +77,21 @@ export default async function SitemapPage() {
       changeFreq: "weekly",
     },
     {
-      title: "Hotel & Resort Clients",
+      title: "Clients & Partners",
       url: `${baseUrl}/clients`,
       category: "Case Study",
       priority: "0.6",
       changeFreq: "monthly",
     },
     {
-      title: "Hospitality Marketing Blog & Insights",
+      title: "Local Growth Blog & Insights",
       url: `${baseUrl}/blog`,
       category: "Blog",
       priority: "0.8",
       changeFreq: "weekly",
     },
     {
-      title: "Contact Our Hospitality Team",
+      title: "Contact Our Growth Team",
       url: `${baseUrl}/contact`,
       category: "Core",
       priority: "0.7",

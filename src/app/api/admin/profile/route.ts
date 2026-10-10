@@ -26,7 +26,8 @@ export async function GET(req: NextRequest) {
       query = query.eq('role', roleFilter);
     }
 
-    let { data: profiles, error } = await query;
+    const { data: initialProfiles, error } = await query;
+    let profiles = initialProfiles;
 
     // Fallback: If join on departments fails, fetch basic profiles
     if (error) {
@@ -52,8 +53,9 @@ export async function GET(req: NextRequest) {
       count: profiles?.length || 0,
       profiles: profiles || [],
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Admin Profiles Route Exception:', error);
-    return NextResponse.json({ success: false, error: error?.message || 'Internal server error' }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'Internal server error';
+    return NextResponse.json({ success: false, error: errorMessage }, { status: 500 });
   }
 }

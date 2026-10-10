@@ -12,14 +12,15 @@ import CookieConsentBanner from "@/components/CookieConsentBanner";
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://trisagemarketing.com'),
-  title: "Trisage Marketing | Hospitality Digital Marketing Agency",
-  description: "Trisage Marketing is a hospitality digital marketing agency helping hotels & resorts scale direct bookings through SEO, social media, and performance marketing.",
+  title: "NearGrow Ads | Grow Local. Grow Smart. Local Business Marketing Agency",
+  description: "NearGrow Ads helps local businesses and regional brands grow through Google Maps optimization, local SEO, Meta & Google Ads, and conversion-focused websites.",
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
-      { url: '/icon.png', sizes: '512x512', type: 'image/png' },
-      { url: '/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/icon.png', sizes: '512x512', type: 'image/png' },
     ],
     shortcut: ['/favicon.ico'],
     apple: [
@@ -27,15 +28,15 @@ export const metadata: Metadata = {
     ],
   },
   appleWebApp: {
-    title: 'Trisage Marketing',
+    title: 'NearGrow Ads',
     statusBarStyle: 'default',
     capable: true,
   },
   openGraph: {
-    title: "Trisage Marketing | Hospitality Digital Marketing Agency",
-    description: "Trisage Marketing is a hospitality digital marketing agency helping hotels & resorts scale direct bookings through SEO, social media, and performance marketing.",
+    title: "NearGrow Ads | Grow Local. Grow Smart. Local Business Marketing Agency",
+    description: "NearGrow Ads helps local businesses and regional brands grow through Google Maps optimization, local SEO, Meta & Google Ads, and conversion-focused websites.",
     url: 'https://trisagemarketing.com',
-    siteName: 'Trisage Marketing',
+    siteName: 'NearGrow Ads',
     locale: 'en_IN',
     type: 'website',
     images: [
@@ -43,14 +44,14 @@ export const metadata: Metadata = {
         url: '/logo.png',
         width: 1200,
         height: 630,
-        alt: 'Trisage Marketing - Hospitality Digital Marketing Agency',
+        alt: 'NearGrow Ads - Local Business Marketing Agency',
       }
     ]
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Trisage Marketing | Hospitality Digital Marketing Agency",
-    description: "Trisage Marketing is a hospitality digital marketing agency helping hotels & resorts scale direct bookings through SEO, social media, and performance marketing.",
+    title: "NearGrow Ads | Grow Local. Grow Smart. Local Business Marketing Agency",
+    description: "NearGrow Ads helps local businesses and regional brands grow through Google Maps optimization, local SEO, Meta & Google Ads, and conversion-focused websites.",
     images: ['/logo.png'],
   },
 };
@@ -62,8 +63,8 @@ const globalJsonLd = {
       "@type": "WebSite",
       "@id": "https://trisagemarketing.com/#website",
       "url": "https://trisagemarketing.com/",
-      "name": "Trisage Marketing",
-      "description": "Hospitality digital marketing agency specializing in SEO, social media, performance marketing, and direct booking growth for hotels and resorts.",
+      "name": "NearGrow Ads",
+      "description": "NearGrow Ads is a local business growth agency specializing in Google Business Profile optimization, local SEO, Meta & Google Ads, and high-converting websites.",
       "publisher": {
         "@id": "https://trisagemarketing.com/#organization"
       },
@@ -72,7 +73,7 @@ const globalJsonLd = {
     {
       "@type": ["Organization", "LocalBusiness"],
       "@id": "https://trisagemarketing.com/#organization",
-      "name": "Trisage Marketing",
+      "name": "NearGrow Ads",
       "url": "https://trisagemarketing.com/",
       "logo": {
         "@type": "ImageObject",
@@ -81,31 +82,30 @@ const globalJsonLd = {
         "height": 1024
       },
       "image": "https://trisagemarketing.com/logo.png",
-      "description": "Trisage Marketing is a hospitality digital marketing agency in India helping hotels, resorts, and hospitality brands scale through SEO, social media, performance marketing, and direct booking growth.",
-      "telephone": "+919217900934",
-      "email": "admin@trisagemarketing.com",
+      "description": "NearGrow Ads helps local businesses and regional brands in India expand through Google Maps visibility, targeted local ads, and high-converting creative services.",
+      "telephone": "+919289810149",
+      "email": "info@neargrowads.in",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "B-11, Amaltash Marg, & Block B, Sector 4",
-        "addressLocality": "Noida",
-        "addressRegion": "Uttar Pradesh",
-        "postalCode": "201301",
+        "streetAddress": "Pillar no. 781, B-1, Bhagwati Garden Rd, near dwarka mor, Uttam Nagar, Bhagwati Garden, Nawada",
+        "addressLocality": "New Delhi",
+        "addressRegion": "Delhi",
+        "postalCode": "110059",
         "addressCountry": "IN"
       },
       "sameAs": [
-        "https://linkedin.com/company/trisage-marketing/",
-        "https://instagram.com/trisagemarketing"
+        "https://linkedin.com/company/neargrow-ads/",
+        "https://instagram.com/neargrowads"
       ],
       "knowsAbout": [
-        "Hospitality Digital Marketing",
-        "Hotel SEO",
-        "Resort Marketing",
-        "Direct Booking Strategy",
-        "Hotel Social Media Marketing",
-        "Performance Marketing for Hotels",
-        "Hotel Revenue Management",
-        "Hospitality Website Design",
-        "Generative Engine Optimization (GEO)"
+        "Local Business Marketing Agency",
+        "Google Business Profile Optimization",
+        "Google Maps Marketing",
+        "Meta Ads for Local Businesses",
+        "Google Search Ads",
+        "Local SEO & Citations",
+        "Social Media Management & Reels",
+        "Landing Page Design & Conversion Optimization"
       ],
       "serviceArea": [
         {
@@ -129,6 +129,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className="scroll-smooth" data-scroll-behavior="smooth">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap" rel="stylesheet" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(globalJsonLd) }}
@@ -157,11 +161,11 @@ export default function RootLayout({
               toastOptions={{
                 unstyled: true,
                 classNames: {
-                  toast: "w-auto max-w-[calc(100vw-24px)] flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white/95 dark:bg-[#1f2a3e]/95 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800 shadow-2xl text-slate-900 dark:text-white font-sans text-[11px] sm:text-xs font-extrabold z-[9999999] mx-auto shrink-0 whitespace-nowrap overflow-hidden text-ellipsis transition-all",
-                  title: "font-black text-slate-900 dark:text-white text-[11px] sm:text-xs leading-tight font-sans whitespace-nowrap truncate",
-                  description: "text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs font-medium leading-tight whitespace-nowrap truncate",
-                  actionButton: "bg-secondary-500 text-white font-black text-[10px] sm:text-xs px-2.5 py-1 rounded-full shrink-0 whitespace-nowrap",
-                  cancelButton: "bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-[10px] sm:text-xs px-2.5 py-1 rounded-full shrink-0 whitespace-nowrap",
+                  toast: "w-auto max-w-[calc(100vw-24px)] flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white/95 dark:bg-[#1f2a3e]/95 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800 shadow-2xl text-slate-900 dark:text-white font-sans text-[11px] sm:text-xs font-medium z-[9999999] mx-auto shrink-0 whitespace-nowrap overflow-hidden text-ellipsis transition-all",
+                  title: "font-semibold text-slate-900 dark:text-white text-[11px] sm:text-xs leading-tight font-sans whitespace-nowrap truncate",
+                  description: "text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs font-normal leading-tight whitespace-nowrap truncate",
+                  actionButton: "bg-secondary-500 text-white font-semibold text-[10px] sm:text-xs px-2.5 py-1 rounded-full shrink-0 whitespace-nowrap",
+                  cancelButton: "bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium text-[10px] sm:text-xs px-2.5 py-1 rounded-full shrink-0 whitespace-nowrap",
                   success: "border-l-4 border-l-emerald-500",
                   error: "border-l-4 border-l-rose-500",
                   info: "border-l-4 border-l-secondary-500",

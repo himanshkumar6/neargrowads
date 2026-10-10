@@ -11,22 +11,22 @@ export async function GET() {
     const posts = await getAllPublishedPosts();
 
     const feed = new Feed({
-      title: "Trisage Marketing Blog | Hospitality Marketing Insights",
-      description: "Expert perspectives on hotel SEO, direct booking strategies, hospitality performance marketing, and scaling hotel revenue growth.",
+      title: "NearGrow Ads Blog | Digital Marketing Insights",
+      description: "Expert perspectives on SEO, performance marketing, direct booking strategies, and scaling business revenue growth.",
       id: baseUrl,
       link: baseUrl,
       language: "en",
-      image: `${baseUrl}/icon.png`, // Fallback standard icon
+      image: `${baseUrl}/icon.png`,
       favicon: `${baseUrl}/favicon.ico`,
-      copyright: `All rights reserved ${now.getFullYear()}, Trisage Marketing`,
+      copyright: `All rights reserved ${now.getFullYear()}, NearGrow Ads`,
       updated: now,
-      generator: "Trisage CMS",
+      generator: "NearGrow Ads CMS",
       feedLinks: {
         rss2: `${baseUrl}/feed.xml`,
       },
       author: {
-        name: "Trisage Marketing",
-        email: "hello@trisagemarketing.com",
+        name: "NearGrow Ads",
+        email: "info@neargrowads.in",
         link: baseUrl,
       }
     });
@@ -44,14 +44,14 @@ export async function GET() {
         content: post.excerpt || post.meta_description || "Read more on our blog.",
         author: [
           {
-            name: post.author_name || "Trisage Team",
+            name: post.author_name || "NearGrow Team",
             // role is mapped as title if needed
           }
         ],
         date: pubDate,
         image: post.cover_image || undefined,
         category: [
-          { name: post.category },
+          { name: post.category ?? 'General' },
           ...(post.tags || []).map((tag: string) => ({ name: tag }))
         ],
       });

@@ -1,32 +1,24 @@
 "use client";
-/* eslint-disable @typescript-eslint/no-unused-vars, react-hooks/set-state-in-effect */
 
-import { useRef, useEffect, useState } from "react";
-import { motion, useTransform, useSpring, useReducedMotion, useMotionTemplate, useMotionValue } from "framer-motion";
+import { useRef, useEffect, useSyncExternalStore } from "react";
+import { motion, useTransform, useSpring, useReducedMotion, useMotionTemplate, useMotionValue, type MotionValue } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { teamMembers } from "@/data/teamMembers";
 import { fadeUp } from "@/lib/animations";
 
-const Card = ({ member, index, total, globalRotation }: { member: any, index: number, total: number, globalRotation: any }) => {
+const Card = ({ member, index, total, globalRotation }: { member: (typeof teamMembers)[0]; index: number; total: number; globalRotation: MotionValue<number> }) => {
   const prefersReducedMotion = useReducedMotion();
 
-  const [mounted, setMounted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    
-    // Check initial size
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    handleResize(); // Set immediately on mount
-    window.addEventListener('resize', handleResize);
-    
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const mounted = useSyncExternalStore(() => () => {}, () => true, () => false);
+  const isMobile = useSyncExternalStore(
+    (onStoreChange) => {
+      window.addEventListener('resize', onStoreChange);
+      return () => window.removeEventListener('resize', onStoreChange);
+    },
+    () => window.innerWidth < 768,
+    () => false
+  );
 
   const angleIncrement = 360 / total;
   
@@ -35,7 +27,10 @@ const Card = ({ member, index, total, globalRotation }: { member: any, index: nu
 
   const rotateYRaw = useTransform(globalRotation, (y: number) => y + cardAngle);
   
-  const rotateY = useSpring(rotateYRaw, { stiffness: 400, damping: 50 });
+  const rotateY = useSpring(rotateYRaw, { 
+    stiffness: prefersReducedMotion ? 1000 : 400, 
+    damping: prefersReducedMotion ? 100 : 50 
+  });
 
   const normalizedAngle = useTransform(rotateYRaw, (y: number) => {
     let normalized = y % 360;
@@ -88,9 +83,9 @@ const Card = ({ member, index, total, globalRotation }: { member: any, index: nu
       
       <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black/90 via-black/40 to-transparent pointer-events-none opacity-100 rounded-b-2xl md:rounded-b-3xl" />
       
-      <div className="absolute bottom-0 left-0 w-full p-4 md:p-6 text-left pointer-events-none transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-        <h3 className="text-white text-lg md:text-2xl font-bold tracking-tight mb-1 drop-shadow-md leading-tight">{member.name}</h3>
-        <p className="text-gray-200 text-xs md:text-sm font-medium uppercase tracking-wider drop-shadow-md">{member.role}</p>
+      <div className="absolute bottom-0 left-0 w-full p-3.5 xs:p-4 md:p-6 text-left pointer-events-none transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+        <h3 className="text-white text-base xs:text-lg md:text-2xl font-bold tracking-tight mb-0.5 xs:mb-1 drop-shadow-md leading-tight">{member.name}</h3>
+        <p className="text-gray-200 text-[11px] xs:text-xs md:text-sm font-medium uppercase tracking-wider drop-shadow-md">{member.role}</p>
       </div>
     </motion.div>
   );
@@ -139,22 +134,22 @@ export default function TeamShowcase() {
     <section className="relative min-h-[90vh] py-12 md:py-16 bg-white dark:bg-gray-950 flex flex-col justify-center items-center overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-primary-500/10 via-transparent to-transparent opacity-80 dark:opacity-40 pointer-events-none" />
 
-      <div className="container mx-auto px-4 md:px-8 text-center relative z-20 mb-10 md:mb-20 mt-6 md:mt-1">
+      <div className="container mx-auto px-3 xs:px-4 md:px-8 text-center relative z-20 mb-8 xs:mb-10 md:mb-20 mt-4 xs:mt-6 md:mt-1">
         <motion.span 
           initial="hidden" whileInView="visible" viewport={{ once: false }} variants={fadeUp}
-          className="text-primary-600 dark:text-primary-400 font-semibold tracking-wider uppercase text-sm"
+          className="text-primary-600 dark:text-primary-400 font-semibold tracking-wider uppercase text-xs xs:text-sm"
         >
           Leadership Team
         </motion.span>
         <motion.h2 
           initial="hidden" whileInView="visible" viewport={{ once: false }} variants={fadeUp}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mt-4 mb-4 md:mb-6 leading-tight"
+          className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mt-3 xs:mt-4 mb-3 xs:mb-4 md:mb-6 leading-tight tracking-tight"
         >
           Team Work Makes the Dream Work
         </motion.h2>
         <motion.p 
           initial="hidden" whileInView="visible" viewport={{ once: false }} variants={fadeUp}
-          className="text-gray-600 dark:text-gray-300 text-base md:text-xl max-w-2xl mx-auto leading-relaxed"
+          className="text-gray-600 dark:text-gray-300 text-sm xs:text-base md:text-xl max-w-2xl mx-auto leading-relaxed"
         >
           Meet the brilliant minds behind our award-winning campaigns. We combine data-driven precision with world-class creativity to scale your brand.
         </motion.p>

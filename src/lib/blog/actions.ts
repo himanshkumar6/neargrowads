@@ -79,6 +79,16 @@ export async function saveDraft(formData: z.input<typeof SaveDraftSchema>) {
         break;
       }
 
+      let resolvedCategoryId: string | null = null;
+      if (validated.category) {
+        const { data: catRow } = await adminSupabase
+          .from('categories')
+          .select('id')
+          .ilike('name', validated.category.trim())
+          .maybeSingle();
+        if (catRow) resolvedCategoryId = catRow.id;
+      }
+
       const { data: newBlog, error: insertError } = await adminSupabase
         .from('blogs')
         .insert({
@@ -91,10 +101,9 @@ export async function saveDraft(formData: z.input<typeof SaveDraftSchema>) {
           author_name: validated.authorName || user.user_metadata?.full_name || user.email?.split('@')[0] || 'Admin',
           author_role: validated.authorRole || null,
           author_avatar: validated.authorAvatar || null,
-          category: validated.category,
-          cover_image: validated.coverImage || null,
+          category_id: resolvedCategoryId,
+          featured_image: validated.coverImage || null,
           tags: validated.tags || [],
-          faqs: validated.faqs && validated.faqs.length > 0 ? validated.faqs : null,
         })
         .select('id')
         .single();
@@ -111,17 +120,28 @@ export async function saveDraft(formData: z.input<typeof SaveDraftSchema>) {
         .eq('id', targetBlogId)
         .maybeSingle();
 
-      const updatePayload: Record<string, any> = {
-        category: validated.category,
+      let resolvedCategoryId: string | null = null;
+      if (validated.category) {
+        const { data: catRow } = await adminSupabase
+          .from('categories')
+          .select('id')
+          .ilike('name', validated.category.trim())
+          .maybeSingle();
+        if (catRow) resolvedCategoryId = catRow.id;
+      }
+
+      const updatePayload: Record<string, unknown> = {
         excerpt: validated.excerpt || null,
-        cover_image: validated.coverImage || null,
+        featured_image: validated.coverImage || null,
         tags: validated.tags || [],
-        faqs: validated.faqs && validated.faqs.length > 0 ? validated.faqs : null,
         author_name: validated.authorName || user.user_metadata?.full_name || user.email?.split('@')[0] || 'Admin',
         author_role: validated.authorRole || null,
         author_avatar: validated.authorAvatar || null,
         updated_at: new Date().toISOString(),
       };
+      if (resolvedCategoryId) {
+        updatePayload.category_id = resolvedCategoryId;
+      }
 
       // If the post is currently in 'draft' status, keep content & title in blogs table updated too
       if (existingBlog?.status === 'draft') {
@@ -197,7 +217,16 @@ export async function publishBlog(formData: z.input<typeof PublishSchema>) {
 
     const now = new Date().toISOString();
 
-    // 1. Direct and guaranteed update to `blogs` table with ALL content and metadata
+    let resolvedCategoryId: string | null = null;
+    if (validated.category) {
+      const { data: catRow } = await adminSupabase
+        .from('categories')
+        .select('id')
+        .ilike('name', validated.category.trim())
+        .maybeSingle();
+      if (catRow) resolvedCategoryId = catRow.id;
+    }
+
     const { error: updateError } = await adminSupabase
       .from('blogs')
       .update({
@@ -208,10 +237,9 @@ export async function publishBlog(formData: z.input<typeof PublishSchema>) {
         published_at: now,
         updated_at: now,
         excerpt: validated.excerpt || null,
-        cover_image: validated.coverImage || null,
-        category: validated.category,
+        featured_image: validated.coverImage || null,
+        category_id: resolvedCategoryId,
         tags: validated.tags || [],
-        faqs: validated.faqs && validated.faqs.length > 0 ? validated.faqs : null,
         author_name: validated.authorName || user.user_metadata?.full_name || user.email?.split('@')[0] || 'Admin',
         author_role: validated.authorRole || null,
         author_avatar: validated.authorAvatar || null,
@@ -267,11 +295,103 @@ export async function publishBlog(formData: z.input<typeof PublishSchema>) {
 // CATEGORY ACTIONS
 // =======================
 
+export interface FullCategory {
+  id: string;
+  name: string;
+  slug: string;
+  description: string | null;
+  created_at: string;
+}
+
+export async function getCategoriesFull(): Promise<FullCategory[]> {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from('categories')
+      .select('id, name, slug, description, created_at')
+      .order('name', { ascending: true });
+    if (error) throw error;
+    return data || [];
+  } catch (error: unknown) {
+    console.error('[CMS Logs] Failed to fetch full categories:', error);
+    return [];
+  }
+}
+
+export async function createCategory(data: { name: string; slug: string; description?: string | null }) {
+  try {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error('Unauthorized');
+
+    const name = data.name.trim();
+    if (!name) throw new Error('Category name is required.');
+    const slug = data.slug.trim() || name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+
+    const { data: inserted, error } = await supabase
+      .from('categories')
+      .insert({
+        name,
+        slug,
+        description: data.description?.trim() || null
+      })
+      .select('id, name, slug, description, created_at')
+      .single();
+
+    if (error) {
+      if (error.code === '23505') throw new Error('That category name or slug already exists.');
+      throw error;
+    }
+    revalidatePath('/admin/categories');
+    revalidatePath('/admin/blog');
+    revalidatePath('/blog');
+    return { success: true, category: inserted };
+  } catch (error: unknown) {
+    console.error('[CMS Logs] Failed to create category:', error);
+    return { error: error instanceof Error ? error.message : "Unknown error" };
+  }
+}
+
+export async function updateCategory(id: string, data: { name: string; slug: string; description?: string | null }) {
+  try {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error('Unauthorized');
+
+    const name = data.name.trim();
+    if (!name) throw new Error('Category name is required.');
+    const slug = data.slug.trim() || name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+
+    const { data: updated, error } = await supabase
+      .from('categories')
+      .update({
+        name,
+        slug,
+        description: data.description?.trim() || null
+      })
+      .eq('id', id)
+      .select('id, name, slug, description, created_at')
+      .single();
+
+    if (error) {
+      if (error.code === '23505') throw new Error('That category name or slug already exists.');
+      throw error;
+    }
+    revalidatePath('/admin/categories');
+    revalidatePath('/admin/blog');
+    revalidatePath('/blog');
+    return { success: true, category: updated };
+  } catch (error: unknown) {
+    console.error('[CMS Logs] Failed to update category:', error);
+    return { error: error instanceof Error ? error.message : "Unknown error" };
+  }
+}
+
 export async function getCategories(): Promise<{ id: string; name: string }[]> {
   try {
     const supabase = await createClient();
     const { data, error } = await supabase
-      .from('blog_categories')
+      .from('categories')
       .select('id, name')
       .order('name', { ascending: true });
     if (error) throw error;
@@ -291,9 +411,11 @@ export async function addCategory(name: string) {
     const trimmed = name.trim();
     if (!trimmed || trimmed.length < 2) throw new Error('Category name must be at least 2 characters.');
 
+    const slug = trimmed.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+
     const { data, error } = await supabase
-      .from('blog_categories')
-      .insert({ name: trimmed })
+      .from('categories')
+      .insert({ name: trimmed, slug })
       .select('id, name')
       .single();
 
@@ -301,6 +423,7 @@ export async function addCategory(name: string) {
       if (error.code === '23505') throw new Error('That category already exists.');
       throw error;
     }
+    revalidatePath('/admin/categories');
     revalidatePath('/admin/blog');
     return { success: true, category: data };
   } catch (error: unknown) {
@@ -315,13 +438,153 @@ export async function deleteCategory(id: string) {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) throw new Error('Unauthorized');
 
-    const { error } = await supabase.from('blog_categories').delete().eq('id', id);
+    const { error } = await supabase.from('categories').delete().eq('id', id);
     if (error) throw error;
+    revalidatePath('/admin/categories');
     revalidatePath('/admin/blog');
+    revalidatePath('/blog');
     return { success: true };
   } catch (error: unknown) {
     console.error('[CMS Logs] Failed to delete category:', error);
     return { error: error instanceof Error ? error.message : "Unknown error" };
+  }
+}
+
+export interface SaveBlogPayload {
+  id?: string;
+  title: string;
+  slug: string;
+  content: unknown;
+  excerpt?: string | null;
+  featured_image?: string | null;
+  cover_image?: string | null;
+  category_id?: string | null;
+  category?: string | null;
+  author_id?: string | null;
+  author_name?: string | null;
+  author_avatar?: string | null;
+  status: 'draft' | 'scheduled' | 'published' | 'archived';
+  published_at?: string | null;
+  meta_title?: string | null;
+  meta_description?: string | null;
+  meta_keywords?: string | null;
+  canonical_url?: string | null;
+  og_title?: string | null;
+  og_description?: string | null;
+  og_image?: string | null;
+  faqs?: { q?: string; a?: string; question?: string; answer?: string }[] | null;
+}
+
+export async function saveBlogPost(payload: SaveBlogPayload) {
+  try {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Unauthorized");
+
+    const adminSupabase = createAdminClient();
+
+    const title = payload.title.trim();
+    if (!title) throw new Error("Post title is required.");
+
+    let slug = (payload.slug || title).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    if (!slug) slug = `post-${Date.now()}`;
+
+    // Ensure slug uniqueness (except against itself)
+    let finalSlug = slug;
+    let counter = 2;
+    while (true) {
+      const query = adminSupabase.from('blogs').select('id').eq('slug', finalSlug);
+      if (payload.id && payload.id !== 'new') {
+        query.neq('id', payload.id);
+      }
+      const { data: existing } = await query.maybeSingle();
+      if (existing) {
+        finalSlug = `${slug}-${counter}`;
+        counter++;
+        continue;
+      }
+      break;
+    }
+
+    const now = new Date().toISOString();
+    let publishedAt = payload.published_at ? new Date(payload.published_at).toISOString() : null;
+    if (payload.status === 'published' && !publishedAt) {
+      publishedAt = now;
+    }
+
+    const image = payload.featured_image || payload.cover_image || null;
+    const authorName = payload.author_name?.trim() || user.user_metadata?.full_name || user.email?.split('@')[0] || 'Admin';
+
+    const dataToSave: Record<string, unknown> = {
+      title,
+      slug: finalSlug,
+      content: payload.content,
+      excerpt: payload.excerpt?.trim() || null,
+      featured_image: image,
+      category_id: payload.category_id || null,
+      author_id: payload.author_id || user.id,
+      author_name: authorName,
+      author_avatar: payload.author_avatar || null,
+      status: payload.status,
+      published_at: publishedAt,
+      meta_title: payload.meta_title?.trim() || null,
+      meta_description: payload.meta_description?.trim() || null,
+      meta_keywords: payload.meta_keywords?.trim() || null,
+      canonical_url: payload.canonical_url?.trim() || null,
+      og_title: payload.og_title?.trim() || null,
+      og_description: payload.og_description?.trim() || null,
+      og_image: payload.og_image || image,
+      updated_at: now,
+    };
+
+    let savedBlogId = payload.id;
+
+    if (savedBlogId && savedBlogId !== 'new') {
+      const { error: updateError } = await adminSupabase
+        .from('blogs')
+        .update(dataToSave)
+        .eq('id', savedBlogId);
+
+      if (updateError) throw updateError;
+    } else {
+      const { data: newBlog, error: insertError } = await adminSupabase
+        .from('blogs')
+        .insert({
+          ...dataToSave,
+          created_at: now,
+        })
+        .select('id')
+        .single();
+
+      if (insertError) throw insertError;
+      savedBlogId = newBlog.id;
+    }
+
+    // Clean up draft if published
+    if (savedBlogId && payload.status === 'published') {
+      try {
+        await adminSupabase.from('blog_drafts').delete().eq('blog_id', savedBlogId);
+      } catch (err) {
+        console.warn('[CMS Logs] Draft cleanup notice:', err);
+      }
+    }
+
+    revalidatePath('/admin/blog');
+    revalidatePath(`/admin/blog/${savedBlogId}`);
+    revalidatePath('/blog');
+    revalidatePath(`/blog/${finalSlug}`);
+
+    return {
+      success: true,
+      blogId: savedBlogId,
+      slug: finalSlug
+    };
+  } catch (error: unknown) {
+    console.error('[CMS Logs] Failed to save blog post:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to save blog post'
+    };
   }
 }
 
@@ -361,7 +624,7 @@ export async function getPublishedBlogsForLinking(search?: string): Promise<Publ
     const supabase = createPublicClient();
     let query = supabase
       .from('blogs')
-      .select('id, title, slug, category, published_at')
+      .select('id, title, slug, published_at, categories(name)')
       .eq('status', 'published')
       .order('published_at', { ascending: false, nullsFirst: false })
       .limit(40);
@@ -372,13 +635,18 @@ export async function getPublishedBlogsForLinking(search?: string): Promise<Publ
 
     const { data, error } = await query;
     if (error) throw error;
-    return (data || []).map((b) => ({
-      id: b.id,
-      title: b.title,
-      slug: b.slug,
-      category: b.category,
-      published_at: b.published_at,
-    }));
+    return (data || []).map((b) => {
+      const catObj = Array.isArray(b.categories) ? b.categories[0] : (b.categories as { name?: string } | null);
+      const fallbackCat = (b as Record<string, unknown>).blog_categories as { name?: string } | { name?: string }[] | null;
+      const fallbackCatName = Array.isArray(fallbackCat) ? fallbackCat[0]?.name : fallbackCat?.name;
+      return {
+        id: b.id,
+        title: b.title,
+        slug: b.slug,
+        category: catObj?.name ?? fallbackCatName ?? undefined,
+        published_at: b.published_at,
+      };
+    });
   } catch (err) {
     console.error('[CMS Logs] Failed to fetch blogs for linking:', err);
     return [];
@@ -453,8 +721,7 @@ export async function getMediaLibraryItems(): Promise<MediaLibraryItem[]> {
 }
 
 /**
- * Uploads an image file to Supabase blog-media storage using the privileged Admin client.
- * Bypasses client-side RLS restrictions and returns the live CDN public URL.
+ * Uploads an image to Cloudinary using the configured unsigned upload preset.
  */
 export async function uploadBlogMedia(formData: FormData): Promise<{
   success: boolean;
@@ -480,39 +747,43 @@ export async function uploadBlogMedia(formData: FormData): Promise<{
       return { success: false, error: 'File is too large. Maximum file size is 15MB.' };
     }
 
-    const ext = file.name.split('.').pop() || 'jpg';
-    const timestamp = Date.now();
-    const randomId = uuidv4().substring(0, 8);
-    const safeBlogId = blogId === 'new' ? 'drafts' : blogId;
-    const filePath = `blogs/${safeBlogId}/${timestamp}-${randomId}.${ext}`;
-
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
-    const adminSupabase = createAdminClient();
-
-    const { data: uploadData, error: uploadError } = await adminSupabase.storage
-      .from('blog-media')
-      .upload(filePath, buffer, {
-        contentType: file.type || 'image/jpeg',
-        cacheControl: '3600',
-        upsert: false,
-      });
-
-    if (uploadError) {
-      console.error('[CMS Logs] Supabase storage upload error:', uploadError);
-      return { success: false, error: `Upload failed: ${uploadError.message}` };
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return { success: false, error: 'You must be signed in to upload blog media.' };
     }
 
-    const { data: { publicUrl } } = adminSupabase.storage
-      .from('blog-media')
-      .getPublicUrl(uploadData.path);
+    const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+    const uploadPreset = process.env.CLOUDINARY_UPLOAD_PRESET;
+    if (!cloudName || !uploadPreset) {
+      return { success: false, error: 'Cloudinary upload is not configured on the server.' };
+    }
+
+    const safeBlogId = blogId === 'new' || !/^[a-zA-Z0-9_-]{1,100}$/.test(blogId)
+      ? 'drafts'
+      : blogId;
+    const cloudinaryForm = new FormData();
+    cloudinaryForm.append('file', file, file.name);
+    cloudinaryForm.append('upload_preset', uploadPreset);
+    cloudinaryForm.append('folder', `blogs/${safeBlogId}`);
+    cloudinaryForm.append('public_id', `${Date.now()}-${uuidv4().substring(0, 8)}`);
+
+    const response = await fetch(
+      `https://api.cloudinary.com/v1_1/${encodeURIComponent(cloudName)}/image/upload`,
+      { method: 'POST', body: cloudinaryForm }
+    );
+    const uploadData = await response.json();
+
+    if (!response.ok || !uploadData.secure_url) {
+      const message = uploadData.error?.message || 'Cloudinary rejected the upload.';
+      return { success: false, error: `Upload failed: ${message}` };
+    }
 
     return {
       success: true,
-      url: publicUrl,
-      mediaId: uploadData.path,
-      fileName: file.name,
+      url: uploadData.secure_url,
+      mediaId: uploadData.public_id,
+      fileName: uploadData.original_filename || file.name,
     };
   } catch (err: unknown) {
     console.error('[CMS Logs] Unexpected error in uploadBlogMedia:', err);

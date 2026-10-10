@@ -37,16 +37,16 @@ function FooterAccordion({ title, children }: { title: string; children: React.R
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="w-full border-b border-primary-100 dark:border-primary-900/60 md:border-none">
+    <div className="w-full border-b border-slate-200 dark:border-slate-800/80 md:border-none">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex py-4 w-full items-center justify-between md:justify-start lg:w-full md:cursor-default md:pointer-events-none group md:py-0 md:mb-5"
+        className="flex py-3.5 xs:py-4 min-h-[44px] w-full items-center justify-between md:justify-start lg:w-full md:cursor-default md:pointer-events-none group md:py-0 md:mb-5"
         aria-expanded={isOpen}
       >
-        <h3 className="w-full text-left poppins-semibold text-xs uppercase tracking-widest text-primary-600 dark:text-primary-400">
+        <h3 className="w-full text-left font-bold text-xs uppercase tracking-wider text-slate-900 dark:text-white">
           {title}
         </h3>
-        <span className="md:hidden text-primary-400 dark:text-primary-600 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors shrink-0 ml-2">
+        <span className="md:hidden text-slate-400 dark:text-slate-500 group-hover:text-primary-500 transition-colors shrink-0 ml-2">
           {isOpen ? <Minus size={15} /> : <Plus size={15} />}
         </span>
       </button>
@@ -75,16 +75,16 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-white dark:bg-[#050b14] pt-16 pb-0 border-t-2 border-primary-100 dark:border-primary-900 overflow-hidden">
+    <footer className="relative bg-white dark:bg-[#050b14] pt-16 pb-0 border-t border-slate-200 dark:border-slate-800 overflow-hidden">
 
-      {/* ── Mesh Orbs — same pattern as all sections ── */}
+      {/* ── Mesh Orbs (Brand Green & Amber) ── */}
       <div
         className="absolute -top-1/4 left-[-8%] w-[45%] h-[70%] rounded-full pointer-events-none animate-[pulse_10s_ease-in-out_infinite] will-change-opacity transform-gpu"
-        style={{ background: "radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(104,185,85,0.06) 0%, transparent 70%)" }}
       />
       <div
         className="absolute -bottom-1/4 right-[-5%] w-[40%] h-[60%] rounded-full pointer-events-none animate-[pulse_13s_ease-in-out_infinite_reverse] will-change-opacity transform-gpu"
-        style={{ background: "radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(251,175,53,0.05) 0%, transparent 70%)" }}
       />
 
       {/* ── Scrolling Marquee Background ── */}
@@ -97,60 +97,69 @@ export default function Footer() {
           {[...Array(4)].map((_, i) => (
             <span
               key={i}
-              className="text-[35vw] md:text-[45vw] font-black leading-[0.75] tracking-tighter text-primary-950/3 dark:text-white/3 pr-16 md:pr-32"
-              style={{ fontFamily: "'Poppins', sans-serif" }}
+              className="text-[35vw] md:text-[45vw] font-bold leading-[0.75] tracking-tighter text-slate-900/[0.025] dark:text-white/[0.025] pr-16 md:pr-32"
+              style={{ fontFamily: "'Google Sans Flex', sans-serif" }}
             >
-              TRISAGE
+              NEARGROW
             </span>
           ))}
         </motion.div>
       </div>
 
-      <div className="container mx-auto px-4 md:px-8 relative z-10 max-w-7xl">
+      <div className="container mx-auto px-3 xs:px-4 md:px-8 relative z-10 max-w-7xl">
 
         {/* ── Main Grid ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:gap-10 items-start mb-4 md:mb-8">
 
           {/* Column 1: Brand */}
-          <div className="flex flex-col gap-5 mb-8 md:mb-0 border-b-2 border-primary-100 dark:border-primary-900 pb-6 md:border-none md:pb-0">
+          <div className="flex flex-col gap-5 mb-8 md:mb-0 border-b border-slate-200 dark:border-slate-800 pb-6 md:border-none md:pb-0">
             <Link 
               href="/" 
-              className="inline-block"
+              className="inline-flex items-center gap-2.5 sm:gap-3 group cursor-pointer shrink-0"
               onClick={(e) => handleSamePageScroll(e, "/")}
             >
               <Image
-                src="/logo.svg"
-                alt="Trisage Marketing"
-                width={200}
-                height={60}
-                className="h-10 md:h-12 w-auto transition-all mix-blend-multiply dark:mix-blend-screen dark:invert dark:hue-rotate-180"
+                src="/icon.png"
+                alt="NearGrow Ads"
+                width={40}
+                height={40}
+                className="h-9 w-9 md:h-10 md:w-10 object-contain transition-transform duration-300 group-hover:scale-105"
               />
+              <div className="flex items-center leading-none">
+                <span className="font-hero font-bold tracking-[0.03em] text-xl md:text-2xl text-slate-900 dark:text-white transition-colors whitespace-nowrap">
+                  NEAR<span className="text-[#68B955]">GROW</span> <span className="text-[#FBAF35] ml-1">ADS</span>
+                </span>
+              </div>
             </Link>
 
-            {/* Brand tagline — MissionVision two-tone style */}
-            <p className="font-sans font-medium text-[1.125rem] uppercase tracking-tight leading-snug text-balance">
-              <span className="text-primary-600 dark:text-primary-400">Hospitality digital marketing agency</span>{" "}
-              <span className="text-gray-700 dark:text-gray-300">helping hotels, resorts, and hospitality brands scale through</span>{" "}
-              <strong className="font-black text-primary-950 dark:text-white">data-driven strategies,</strong>{" "}
-              <strong className="font-black text-secondary-600 dark:text-secondary-400">direct bookings,</strong>{" "}
-              <span className="text-gray-700 dark:text-gray-300">and exceptional</span>{" "}
-              <strong className="font-black text-secondary-600 dark:text-secondary-400">design.</strong>
+            {/* Brand description — Clean sentence case, high readability */}
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-sm font-normal">
+              Dedicated local business growth agency helping nearby retail shops, clinics, restaurants, and service providers scale through <strong className="font-semibold text-slate-900 dark:text-white">Google Maps visibility</strong>, <strong className="font-semibold text-slate-900 dark:text-white">targeted local advertising</strong>, and high-converting creative execution.
             </p>
 
             {/* Social icons */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5">
               {[
-                { href: "mailto:admin@trisagemarketing.com", icon: <Email size={17} />, label: "Email" },
-                { href: "https://linkedin.com/company/trisage-marketing/", icon: <Linkedin size={17} />, label: "LinkedIn" },
-                { href: "https://instagram.com/trisagemarketing", icon: <Instagram size={17} />, label: "Instagram" },
+                { href: "mailto:info@neargrowads.in", icon: <Email size={17} />, label: "Email" },
+                { 
+                  href: "https://wa.me/919289810149?text=Hello%20NearGrow%20Ads!%20I%20would%20like%20to%20inquire%20about%20your%20digital%20marketing%20services.", 
+                  icon: (
+                    <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.705 1.754zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l.999 1.594-1.066 3.896 3.99-1.045 1.82 1.222zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                    </svg>
+                  ), 
+                  label: "WhatsApp" 
+                },
+                { href: "https://linkedin.com/company/neargrow-ads/", icon: <Linkedin size={17} />, label: "LinkedIn" },
+                { href: "https://instagram.com/neargrowads", icon: <Instagram size={17} />, label: "Instagram" },
               ].map(({ href, icon, label }) => (
                 <a
                   key={label}
                   href={href}
-                  target={href !== "#" ? "_blank" : undefined}
-                  rel={href !== "#" ? "noopener noreferrer" : undefined}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-10 h-10 rounded-full flex items-center justify-center border-2 border-primary-100 dark:border-primary-800 text-primary-400 dark:text-primary-500 hover:border-primary-400 dark:hover:border-primary-500 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900 transition-all duration-300"
+                  className="w-9 h-9 rounded-full flex items-center justify-center border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-[#68B955] dark:hover:border-[#68B955] hover:text-[#68B955] dark:hover:text-[#68B955] hover:bg-slate-50 dark:hover:bg-slate-900 transition-all duration-300"
                 >
                   {icon}
                 </a>
@@ -159,7 +168,7 @@ export default function Footer() {
           </div>
 
           {/* Column 2: Company */}
-          <div className="border-t border-primary-100 dark:border-primary-900/60 md:border-none mt-4 md:mt-0">
+          <div className="border-t border-slate-200 dark:border-slate-800/80 md:border-none mt-4 md:mt-0">
             <FooterAccordion title="Company">
               <nav aria-label="Company Navigation">
                 <ul className="flex flex-col gap-2.5 text-sm lg:pr-4">
@@ -174,9 +183,9 @@ export default function Footer() {
                       <Link
                         href={href}
                         onClick={(e) => handleSamePageScroll(e, href)}
-                        className="font-sans font-medium uppercase tracking-tight text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 flex items-center gap-1.5 group"
+                        className="font-medium text-slate-600 dark:text-slate-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors duration-200 flex items-center gap-1.5 group"
                       >
-                        <span className="w-0 group-hover:w-2 h-0.5 bg-primary-500 transition-all duration-300 rounded-full" />
+                        <span className="w-0 group-hover:w-1.5 h-0.5 bg-primary-500 transition-all duration-300 rounded-full" />
                         {label}
                       </Link>
                     </li>
@@ -197,9 +206,9 @@ export default function Footer() {
                       <Link
                         href={serviceHref}
                         onClick={(e) => handleSamePageScroll(e, serviceHref)}
-                        className="font-sans font-medium uppercase tracking-tight text-gray-600 dark:text-gray-400 hover:text-secondary-600 dark:hover:text-secondary-400 transition-colors duration-200 flex items-center gap-1.5 group"
+                        className="font-medium text-slate-600 dark:text-slate-400 hover:text-secondary-500 dark:hover:text-secondary-400 transition-colors duration-200 flex items-center gap-1.5 group"
                       >
-                        <span className="w-0 group-hover:w-2 h-0.5 bg-secondary-500 transition-all duration-300 rounded-full" />
+                        <span className="w-0 group-hover:w-1.5 h-0.5 bg-secondary-500 transition-all duration-300 rounded-full" />
                         {service.title}
                       </Link>
                     </li>
@@ -210,51 +219,41 @@ export default function Footer() {
           </FooterAccordion>
 
           {/* Column 4: Contact */}
-          <FooterAccordion title="Contact Us">
-            <ul className="flex flex-col gap-4 text-sm">
-              <li className="flex items-start gap-3">
-                <div className="w-7 h-7 rounded-full bg-primary-50 dark:bg-primary-900 border-2 border-primary-100 dark:border-primary-800 flex items-center justify-center shrink-0 mt-0.5">
-                  <Mail size={13} className="text-primary-600 dark:text-primary-400" />
-                </div>
-                <div>
-                  <span className="block font-black text-[10px] uppercase tracking-widest text-primary-600 dark:text-primary-400 mb-0.5">Email</span>
-                  <a href="mailto:Admin@trisagemarketing.com" className="font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-                    Admin@trisagemarketing.com
-                  </a>
-                </div>
+          <FooterAccordion title="Contact Info">
+            <ul className="flex flex-col gap-4 text-sm pt-1">
+              <li>
+                <a
+                  href="tel:+919289810149"
+                  className="flex items-center gap-3 text-slate-700 dark:text-slate-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors group font-medium"
+                >
+                  <Phone size={18} className="text-primary-500 dark:text-primary-400 shrink-0 group-hover:scale-110 transition-transform" />
+                  <span>+91 92898 10149</span>
+                </a>
               </li>
-              <li className="flex items-start gap-3">
-                <div className="w-7 h-7 rounded-full bg-secondary-50 dark:bg-secondary-900/30 border-2 border-secondary-100 dark:border-secondary-800/50 flex items-center justify-center shrink-0 mt-0.5">
-                  <Phone size={13} className="text-secondary-600 dark:text-secondary-400" />
-                </div>
-                <div>
-                  <span className="block font-black text-[10px] uppercase tracking-widest text-secondary-600 dark:text-secondary-400 mb-0.5">Phone</span>
-                  <div className="flex flex-col gap-1">
-                    <a href="tel:+919217900976" className="font-medium text-gray-700 dark:text-gray-300 hover:text-secondary-600 dark:hover:text-secondary-400 transition-colors">
-                      +91 92179 00976
-                    </a>
-                    <a href="tel:+919217900946" className="font-medium text-gray-700 dark:text-gray-300 hover:text-secondary-600 dark:hover:text-secondary-400 transition-colors">
-                      +91 92179 00946
-                    </a>
-                  </div>
-                </div>
+              <li>
+                <a
+                  href="mailto:info@neargrowads.in"
+                  className="flex items-center gap-3 text-slate-700 dark:text-slate-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors group font-medium"
+                >
+                  <Mail size={18} className="text-primary-500 dark:text-primary-400 shrink-0 group-hover:scale-110 transition-transform" />
+                  <span>info@neargrowads.in</span>
+                </a>
               </li>
-              <li className="flex items-start gap-3">
-                <div className="w-7 h-7 rounded-full bg-primary-50 dark:bg-primary-900 border-2 border-primary-100 dark:border-primary-800 flex items-center justify-center shrink-0 mt-0.5">
-                  <MapPin size={13} className="text-primary-600 dark:text-primary-400" />
-                </div>
-                <div>
-                  <span className="block font-black text-[10px] uppercase tracking-widest text-primary-600 dark:text-primary-400 mb-0.5">Address</span>
-                  <a 
-                    href="https://www.google.com/maps/search/?api=1&query=B-11,+Amaltash+Marg,+Block+B,+Sector+4,+Noida,+Uttar+Pradesh+201301" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="font-medium text-gray-700 dark:text-gray-300 leading-relaxed block hover:text-secondary-600 dark:hover:text-secondary-400 transition-colors"
-                  >
-                    B-11, Amaltash Marg, <br /> &amp; Block B, Sector 4,<br />
-                    Noida, Uttar Pradesh 201301
-                  </a>
-                </div>
+              <li className="pt-1">
+                <a 
+                  href="https://www.google.com/maps/search/?api=1&query=Pillar+no.+781,+B-1,+Bhagwati+Garden+Rd,+near+dwarka+mor,+Uttam+Nagar,+Bhagwati+Garden,+Nawada,+New+Delhi,+Delhi+110059" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-3 text-slate-700 dark:text-slate-300 hover:text-secondary-500 dark:hover:text-secondary-400 transition-colors leading-relaxed group font-medium text-xs sm:text-sm"
+                >
+                  <MapPin size={18} className="text-secondary-500 dark:text-secondary-400 shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
+                  <span>
+                    Pillar no. 781, B-1, Bhagwati Garden Rd,<br />
+                    near dwarka mor, Uttam Nagar,<br />
+                    Bhagwati Garden, Nawada,<br />
+                    New Delhi, Delhi, 110059
+                  </span>
+                </a>
               </li>
             </ul>
           </FooterAccordion>
@@ -262,44 +261,40 @@ export default function Footer() {
         </div>
 
         {/* ── Bottom Bar ── */}
-        <div className=" border-primary-100 dark:border-primary-900 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
-          {/* Copyright — MissionVision two-tone */}
-          <p className="font-sans font-medium text-xs uppercase tracking-widest text-center md:text-left order-2 md:order-1 leading-relaxed">
-
-            <strong className="block md:inline font-black text-primary-600 dark:text-primary-400">
-              © {currentYear} Trisage Marketing Pvt Ltd.
+        <div className="border-t border-slate-200 dark:border-slate-800 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          {/* Copyright */}
+          <p className="font-medium text-xs text-slate-500 dark:text-slate-400 text-center md:text-left order-2 md:order-1 leading-relaxed">
+            <strong className="block md:inline font-semibold text-slate-800 dark:text-slate-200">
+              © {currentYear} NearGrow Ads.
             </strong>
-
-            {/* Separator — visible only on desktop */}
-            <span className="hidden md:inline mx-2 text-primary-300 dark:text-primary-800 font-black">·</span>
-
-            <span className="block text-gray-400 dark:text-gray-600 mt-1 md:mt-0 md:inline">
-              All rights reserved.
+            <span className="hidden md:inline mx-2 text-slate-300 dark:text-slate-700">·</span>
+            <span className="block text-slate-500 dark:text-slate-400 mt-1 md:mt-0 md:inline">
+              All rights reserved. Grow Local. Grow Smart.
             </span>
           </p>
 
           {/* Legal links */}
-          <div className="flex flex-wrap justify-center items-center gap-6 order-1 md:order-2">
+          <div className="flex flex-wrap justify-center items-center gap-x-3 gap-y-2 xs:gap-x-5 order-1 md:order-2">
             <Link
               href="/privacy"
               onClick={(e) => handleSamePageScroll(e, "/privacy")}
-              className="font-sans font-black text-[10px] uppercase tracking-widest text-gray-400 dark:text-gray-600 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+              className="text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors"
             >
               Privacy Policy
             </Link>
-            <span className="w-1 h-1 rounded-full bg-primary-300 dark:bg-primary-800" />
+            <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700" />
             <Link
               href="/terms-and-conditions"
               onClick={(e) => handleSamePageScroll(e, "/terms-and-conditions")}
-              className="font-sans font-black text-[10px] uppercase tracking-widest text-gray-400 dark:text-gray-600 hover:text-secondary-600 dark:hover:text-secondary-400 transition-colors"
+              className="text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-secondary-500 dark:hover:text-secondary-400 transition-colors"
             >
               Terms of Service
             </Link>
-            <span className="w-1 h-1 rounded-full bg-primary-300 dark:bg-primary-800" />
+            <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700" />
             <Link
               href="/sitemap"
               onClick={(e) => handleSamePageScroll(e, "/sitemap")}
-              className="font-sans font-black text-[10px] uppercase tracking-widest text-gray-400 dark:text-gray-600 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+              className="text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors"
             >
               Sitemap
             </Link>

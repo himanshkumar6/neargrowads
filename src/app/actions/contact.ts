@@ -6,24 +6,39 @@ import { revalidatePath } from "next/cache";
 
 export async function submitContactForm(formData: { fullName: string; company?: string; email: string; phone?: string; service: string | string[]; message: string; }) {
   try {
+    // Server-side Defensive Validation
+    if (!formData.fullName || typeof formData.fullName !== 'string' || formData.fullName.trim().length < 2 || formData.fullName.length > 100) {
+      return { success: false, error: "Please provide a valid full name (2-100 characters)." };
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email || typeof formData.email !== 'string' || !emailRegex.test(formData.email) || formData.email.length > 255) {
+      return { success: false, error: "Please provide a valid email address." };
+    }
+    if (formData.phone && (typeof formData.phone !== 'string' || formData.phone.length > 30)) {
+      return { success: false, error: "Phone number is invalid or too long." };
+    }
+    if (formData.message && (typeof formData.message !== 'string' || formData.message.length > 3000)) {
+      return { success: false, error: "Message must be under 3000 characters." };
+    }
+
     const supabase = await createClient();
     
     const { error } = await supabase
       .from('contact_messages')
       .insert([
         {
-          full_name: formData.fullName,
-          company: formData.company,
-          email: formData.email,
-          phone: formData.phone,
+          full_name: formData.fullName.trim(),
+          company: formData.company ? String(formData.company).trim().slice(0, 100) : null,
+          email: formData.email.trim().toLowerCase(),
+          phone: formData.phone ? String(formData.phone).trim().slice(0, 30) : null,
           service: Array.isArray(formData.service) ? formData.service : [formData.service],
-          message: formData.message,
+          message: formData.message ? String(formData.message).trim().slice(0, 3000) : "",
         }
       ]);
 
     if (error) {
       console.error("Supabase insert error:", error);
-      return { success: false, error: `Supabase Error: ${error.message || JSON.stringify(error)}` };
+      return { success: false, error: "Unable to submit inquiry at this time. Please try again later." };
     }
 
     // Since we added a new message, tell Next.js to revalidate the admin dashboard
@@ -33,7 +48,7 @@ export async function submitContactForm(formData: { fullName: string; company?: 
 
   } catch (err: unknown) {
     console.error("Server action error:", err);
-    return { success: false, error: "An unexpected error occurred." };
+    return { success: false, error: "An unexpected error occurred. Please try again." };
   }
 }
 

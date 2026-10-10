@@ -142,7 +142,7 @@ export default function Testimonials() {
   return (
     <>
       {/* ── MOBILE & TABLET TESTIMONIAL VIEW (GSAP ScrollTrigger Scrub) ── */}
-      <section className="block md:hidden py-14 px-4 bg-white dark:bg-[#050b14] relative overflow-hidden">
+      <section className="block md:hidden py-10 xs:py-14 px-3 xs:px-4 bg-white dark:bg-[#050b14] relative overflow-hidden">
         {/* Subtle Decorative Mesh Orbs */}
         <div
           className="absolute -top-1/4 -left-[10%] w-[60%] h-[70%] rounded-full pointer-events-none opacity-40 dark:opacity-20"
@@ -155,11 +155,11 @@ export default function Testimonials() {
 
         <div className="max-w-md mx-auto relative z-10">
           {/* Header */}
-          <div className="text-center mb-8">
-            <span className="text-primary-600 dark:text-primary-400 font-bold uppercase tracking-widest text-xs sm:text-sm block mb-1">
+          <div className="text-center mb-6 xs:mb-8">
+            <span className="text-primary-600 dark:text-primary-400 font-medium uppercase tracking-widest text-[11px] xs:text-xs sm:text-sm block mb-1">
               Client Testimonials
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+            <h2 className="text-2xl xs:text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
               What They Say?
             </h2>
           </div>
@@ -171,12 +171,12 @@ export default function Testimonials() {
               
               // Alternating slight rotations like reference image
               const tiltClass = idx % 4 === 0 
-                ? "rotate-[2.5deg]" 
+                ? "rotate-[1.5deg] xs:rotate-[2.5deg]" 
                 : idx % 4 === 1 
-                ? "-rotate-[2.5deg]" 
+                ? "-rotate-[1.5deg] xs:-rotate-[2.5deg]" 
                 : idx % 4 === 2 
-                ? "rotate-[2deg]" 
-                : "-rotate-[2deg]";
+                ? "rotate-[1.2deg] xs:rotate-[2deg]" 
+                : "-rotate-[1.2deg] xs:-rotate-[2deg]";
               
               // Global CSS secondary-100 (soft teal accent) vs crisp white cards
               const bgClass = isEven 
@@ -195,10 +195,10 @@ export default function Testimonials() {
                     }
                   }}
                   style={{ zIndex: (idx + 1) * 10 }}
-                  className={`w-full p-4 sm:p-5 rounded-[1.15rem] will-change-transform ${marginClass} ${tiltClass} ${bgClass}`}
+                  className={`w-full p-3.5 xs:p-5 rounded-xl xs:rounded-[1.15rem] will-change-transform ${marginClass} ${tiltClass} ${bgClass}`}
                 >
                   {/* Top Header Row: Avatar + Identity (Left) | Rating Pill (Right) */}
-                  <div className="flex items-start justify-between gap-2.5 mb-2.5">
+                  <div className="flex items-start justify-between gap-2 xs:gap-2.5 mb-2 xs:mb-2.5">
                     
                     {/* Left: Avatar + Name/Role */}
                     <div className="flex items-center gap-2.5">
@@ -212,10 +212,10 @@ export default function Testimonials() {
                         />
                       </div>
                       <div className="flex flex-col justify-center">
-                        <h3 className="font-extrabold text-gray-900 dark:text-white text-sm sm:text-base leading-tight tracking-tight">
+                        <h3 className="font-semibold text-gray-900 dark:text-white text-sm sm:text-base leading-tight tracking-tight">
                           {testimonial.name}
                         </h3>
-                        <p className="text-[11px] text-primary-600 dark:text-primary-400 font-semibold leading-none mt-0.5">
+                        <p className="text-[11px] text-primary-600 dark:text-primary-400 font-medium leading-none mt-0.5">
                           {testimonial.role || "Client"}
                         </p>
                       </div>
@@ -287,12 +287,12 @@ export default function Testimonials() {
             
             {/* Header */}
             <div className="text-center max-w-4xl mx-auto mb-6 md:mb-12 lg:mb-16 [@media(max-height:850px)]:mb-4 relative z-20 pointer-events-none shrink-0">
-              <h2 className="text-[7vw] sm:text-4xl md:text-6xl [@media(max-height:850px)]:md:text-4xl font-black mb-1 sm:mb-4 md:mb-6 uppercase tracking-tight flex flex-wrap justify-center gap-1 sm:gap-2">
+              <h2 className="text-[7vw] sm:text-4xl md:text-6xl [@media(max-height:850px)]:md:text-4xl font-semibold sm:font-bold md:font-bold mb-1 sm:mb-4 md:mb-6 uppercase tracking-tight flex flex-wrap justify-center gap-1 sm:gap-2">
                 <span className="text-primary-950 dark:text-white">Client Success </span>
                 <span className="text-transparent bg-clip-text bg-linear-to-r from-primary-600 to-secondary-500 dark:from-primary-400 dark:to-secondary-400">Stories</span>
               </h2>
-              <p className="text-sm sm:text-xl md:text-2xl [@media(max-height:850px)]:md:text-lg font-medium tracking-wide text-primary-600/80 dark:text-primary-400/80 uppercase">
-                Don&apos;t just take our word for it. Here&apos;s what our <span className="text-primary-900 dark:text-white font-bold">partners</span> have to say about working with <span className="font-black text-primary-950 dark:text-white">Trisage.</span>
+              <p className="text-sm sm:text-xl md:text-2xl [@media(max-height:850px)]:md:text-lg font-normal sm:font-medium tracking-wide text-primary-600/80 dark:text-primary-400/80 uppercase">
+                Don&apos;t just take our word for it. Here&apos;s what our <span className="text-primary-900 dark:text-white font-semibold">partners</span> have to say about working with <span className="font-semibold text-primary-950 dark:text-white">NearGrow Ads.</span>
               </p>
             </div>
 
@@ -358,8 +358,8 @@ export default function Testimonials() {
                           unoptimized
                         />
                       </div>
-                      <h3 className="stagger-elem text-base sm:text-2xl lg:text-3xl font-black uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-primary-950 via-primary-800 to-primary-600 dark:from-white dark:via-primary-100 dark:to-primary-400 drop-shadow-sm leading-none mt-1">{testimonial.name}</h3>
-                      <p className="stagger-elem font-bold uppercase tracking-widest text-[9px] sm:text-xs lg:text-sm mt-1 sm:mt-2 text-transparent bg-clip-text bg-gradient-to-r from-secondary-600 to-primary-500 dark:from-secondary-400 dark:to-primary-300">{testimonial.company}</p>
+                      <h3 className="stagger-elem text-base sm:text-2xl lg:text-3xl font-bold uppercase tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-primary-950 via-primary-800 to-primary-600 dark:from-white dark:via-primary-100 dark:to-primary-400 drop-shadow-sm leading-none mt-1">{testimonial.name}</h3>
+                      <p className="stagger-elem font-medium uppercase tracking-widest text-[9px] sm:text-xs lg:text-sm mt-1 sm:mt-2 text-transparent bg-clip-text bg-gradient-to-r from-secondary-600 to-primary-500 dark:from-secondary-400 dark:to-primary-300">{testimonial.company}</p>
                     </div>
 
                     {/* Right Side: Rating & Quote */}
@@ -371,24 +371,24 @@ export default function Testimonials() {
                             <Star key={i} size={12} className="sm:w-[18px] sm:h-[18px]" fill="currentColor" />
                           ))}
                         </div>
-                        <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary-950 to-primary-700 dark:from-white dark:to-primary-300 text-[9px] sm:text-sm tracking-widest uppercase border-l border-primary-200 dark:border-primary-700 pl-2 sm:pl-3">
+                        <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-primary-950 to-primary-700 dark:from-white dark:to-primary-300 text-[9px] sm:text-sm tracking-widest uppercase border-l border-primary-200 dark:border-primary-700 pl-2 sm:pl-3">
                           5.0 Rating
                         </span>
                       </div>
 
                       {/* Quote */}
-                      <div className="stagger-elem font-sans text-[11px] sm:text-xl lg:text-[1.6rem] leading-tight lg:leading-[1.35] font-medium uppercase tracking-tight text-balance text-center lg:text-left">
+                      <div className="stagger-elem font-sans text-[11px] sm:text-xl lg:text-[1.6rem] leading-tight lg:leading-[1.35] font-normal uppercase tracking-tight text-balance text-center lg:text-left">
                         <span className="text-primary-600 dark:text-primary-400">
                           {testimonial.reviewPart1}{" "}
-                          <strong className="font-black">{testimonial.reviewHighlight1}</strong>{" "}
+                          <strong className="font-bold">{testimonial.reviewHighlight1}</strong>{" "}
                         </span>
                         <span className="text-secondary-600 dark:text-secondary-400">
                           {testimonial.reviewPart2}{" "}
-                          <strong className="font-black text-primary-950 dark:text-white">{testimonial.reviewHighlight2}</strong>{" "}
+                          <strong className="font-bold text-primary-950 dark:text-white">{testimonial.reviewHighlight2}</strong>{" "}
                         </span>
                         <span className="text-gray-800 dark:text-gray-200">
                           {testimonial.reviewPart3}{" "}
-                          <strong className="font-black text-primary-600 dark:text-primary-400">{testimonial.reviewHighlight3}</strong>
+                          <strong className="font-bold text-primary-600 dark:text-primary-400">{testimonial.reviewHighlight3}</strong>
                         </span>
                       </div>
                     </div>

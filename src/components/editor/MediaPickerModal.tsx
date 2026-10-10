@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { UploadCloud, Image as ImageIcon, Globe, Check, X, Loader2, RefreshCcw } from "lucide-react";
 import imageCompression from "browser-image-compression";
@@ -21,7 +21,7 @@ export default function MediaPickerModal({
   onInsertImage,
   blogId = "drafts",
 }: MediaPickerModalProps) {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(() => () => {}, () => true, () => false);
   const [activeTab, setActiveTab] = useState<"upload" | "library" | "url">("upload");
   const [uploadedUrl, setUploadedUrl] = useState<string>("");
   const [uploadedMediaId, setUploadedMediaId] = useState<string>("");
@@ -40,10 +40,22 @@ export default function MediaPickerModal({
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Portal mount check to prevent SSR hydration mismatch
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  // Reset fields on modal open
+  const [prevIsOpen, setPrevIsOpen] = useState(false);
+  if (isOpen && !prevIsOpen) {
+    setPrevIsOpen(true);
+    setUploadedUrl("");
+    setUploadedMediaId("");
+    setLocalPreviewUrl("");
+    setAltText("");
+    setCaption("");
+    setExternalUrl("");
+    setSelectedLibraryItem(null);
+    setActiveTab("upload");
+    setIsDragging(false);
+  } else if (!isOpen && prevIsOpen) {
+    setPrevIsOpen(false);
+  }
 
   // Keyboard shortcut: Escape to close
   useEffect(() => {
@@ -59,7 +71,9 @@ export default function MediaPickerModal({
   useEffect(() => {
     if (isOpen && activeTab === "library") {
       let isMounted = true;
-      setIsLoadingLibrary(true);
+      const timer = setTimeout(() => {
+        setIsLoadingLibrary(true);
+      }, 0);
       getMediaLibraryItems().then((items) => {
         if (isMounted) {
           setLibraryItems(items);
@@ -68,24 +82,10 @@ export default function MediaPickerModal({
       });
       return () => {
         isMounted = false;
+        clearTimeout(timer);
       };
     }
   }, [isOpen, activeTab]);
-
-  // Reset fields on modal open
-  useEffect(() => {
-    if (isOpen) {
-      setUploadedUrl("");
-      setUploadedMediaId("");
-      setLocalPreviewUrl("");
-      setAltText("");
-      setCaption("");
-      setExternalUrl("");
-      setSelectedLibraryItem(null);
-      setActiveTab("upload");
-      setIsDragging(false);
-    }
-  }, [isOpen]);
 
   if (!isOpen || !mounted) return null;
 
@@ -192,12 +192,12 @@ export default function MediaPickerModal({
   };
 
   return createPortal(
-    <div 
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 md:p-6 bg-black/80 backdrop-blur-md transition-all duration-300 overflow-y-auto overflow-x-hidden no-scrollbar font-rubik animate-in fade-in"
+    <div
+      className="fixed inset-0 z-9999 flex items-center justify-center p-3 sm:p-4 md:p-6 bg-black/80 backdrop-blur-md transition-all duration-300 overflow-y-auto overflow-x-hidden no-scrollbar animate-in fade-in"
       onClick={onClose}
     >
-      <div 
-        className="relative w-full max-w-4xl h-[580px] max-h-[90vh] bg-white dark:bg-[#0b1329] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl shadow-black/70 dark:shadow-[0_25px_70px_rgba(0,0,0,0.85)] flex flex-col my-auto overflow-hidden animate-in zoom-in-95 duration-200 select-none"
+      <div
+        className="relative w-full max-w-4xl h-145 max-h-[90vh] bg-white dark:bg-[#0b1329] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl shadow-black/70 dark:shadow-[0_25px_70px_rgba(0,0,0,0.85)] flex flex-col my-auto overflow-hidden animate-in zoom-in-95 duration-200 select-none"
         onClick={(e) => e.stopPropagation()}
       >
 
@@ -218,11 +218,10 @@ export default function MediaPickerModal({
             <button
               type="button"
               onClick={() => setActiveTab("upload")}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                activeTab === "upload"
-                  ? "bg-white dark:bg-[#0b1329] text-primary-600 dark:text-primary-400 shadow-xs"
-                  : "text-gray-500 hover:text-gray-900 dark:hover:text-white"
-              }`}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${activeTab === "upload"
+                ? "bg-white dark:bg-[#0b1329] text-primary-600 dark:text-primary-400 shadow-xs"
+                : "text-gray-500 hover:text-gray-900 dark:hover:text-white"
+                }`}
             >
               <UploadCloud size={13} />
               Upload Image
@@ -230,11 +229,10 @@ export default function MediaPickerModal({
             <button
               type="button"
               onClick={() => setActiveTab("library")}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                activeTab === "library"
-                  ? "bg-white dark:bg-[#0b1329] text-primary-600 dark:text-primary-400 shadow-xs"
-                  : "text-gray-500 hover:text-gray-900 dark:hover:text-white"
-              }`}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${activeTab === "library"
+                ? "bg-white dark:bg-[#0b1329] text-primary-600 dark:text-primary-400 shadow-xs"
+                : "text-gray-500 hover:text-gray-900 dark:hover:text-white"
+                }`}
             >
               <ImageIcon size={13} />
               Media Library
@@ -242,11 +240,10 @@ export default function MediaPickerModal({
             <button
               type="button"
               onClick={() => setActiveTab("url")}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                activeTab === "url"
-                  ? "bg-white dark:bg-[#0b1329] text-primary-600 dark:text-primary-400 shadow-xs"
-                  : "text-gray-500 hover:text-gray-900 dark:hover:text-white"
-              }`}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${activeTab === "url"
+                ? "bg-white dark:bg-[#0b1329] text-primary-600 dark:text-primary-400 shadow-xs"
+                : "text-gray-500 hover:text-gray-900 dark:hover:text-white"
+                }`}
             >
               <Globe size={13} />
               Image URL
@@ -265,10 +262,10 @@ export default function MediaPickerModal({
 
         {/* 2-Column Split Body */}
         <div className="flex-1 min-h-0 flex flex-col md:flex-row overflow-hidden">
-          
+
           {/* LEFT PANEL: Full Cover Image / Dropzone / Library Grid */}
           <div className="w-full md:w-7/12 lg:w-3/5 p-5 bg-gray-50/50 dark:bg-[#070d1d]/60 border-b md:border-b-0 md:border-r border-gray-100 dark:border-white/10 flex flex-col overflow-hidden">
-            
+
             {/* 1. Upload Tab */}
             {activeTab === "upload" && (
               <div className="w-full h-full flex flex-col">
@@ -353,11 +350,10 @@ export default function MediaPickerModal({
                       }
                     }}
                     onClick={() => fileInputRef.current?.click()}
-                    className={`w-full h-full rounded-2xl border-2 border-dashed transition-all flex flex-col items-center justify-center p-6 sm:p-8 text-center cursor-pointer group select-none ${
-                      isDragging
-                        ? "border-primary-500 bg-primary-50/40 dark:bg-primary-500/15 scale-[1.01] shadow-xl shadow-primary-500/10 ring-2 ring-primary-500/20"
-                        : "border-gray-300 dark:border-slate-700/80 hover:border-primary-500 hover:bg-primary-50/20 dark:hover:bg-primary-500/5"
-                    }`}
+                    className={`w-full h-full rounded-2xl border-2 border-dashed transition-all flex flex-col items-center justify-center p-6 sm:p-8 text-center cursor-pointer group select-none ${isDragging
+                      ? "border-primary-500 bg-primary-50/40 dark:bg-primary-500/15 scale-[1.01] shadow-xl shadow-primary-500/10 ring-2 ring-primary-500/20"
+                      : "border-gray-300 dark:border-slate-700/80 hover:border-primary-500 hover:bg-primary-50/20 dark:hover:bg-primary-500/5"
+                      }`}
                   >
                     <div className="w-14 h-14 rounded-2xl bg-primary-500/10 dark:bg-primary-500/15 border border-primary-500/20 flex items-center justify-center mb-3 text-primary-600 dark:text-primary-400 group-hover:scale-110 transition-transform">
                       <UploadCloud size={28} />
@@ -411,11 +407,10 @@ export default function MediaPickerModal({
                             setSelectedLibraryItem(item);
                             if (!altText) setAltText(item.name.replace(/\.[^/.]+$/, ""));
                           }}
-                          className={`relative aspect-video rounded-xl overflow-hidden border-2 transition-all cursor-pointer group bg-gray-100 dark:bg-slate-800 ${
-                            isSelected
-                              ? "border-primary-600 ring-2 ring-primary-500/20 shadow-md"
-                              : "border-transparent hover:border-gray-300 dark:hover:border-slate-600"
-                          }`}
+                          className={`relative aspect-video rounded-xl overflow-hidden border-2 transition-all cursor-pointer group bg-gray-100 dark:bg-slate-800 ${isSelected
+                            ? "border-primary-600 ring-2 ring-primary-500/20 shadow-md"
+                            : "border-transparent hover:border-gray-300 dark:hover:border-slate-600"
+                            }`}
                         >
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={item.url} alt={item.name} className="w-full h-full object-cover" />
@@ -463,7 +458,7 @@ export default function MediaPickerModal({
 
           {/* RIGHT PANEL: Attachment Details & SEO Metadata */}
           <div className="w-full md:w-5/12 lg:w-2/5 p-5 bg-white dark:bg-[#0b1329] flex flex-col justify-between overflow-y-auto no-scrollbar">
-            
+
             <div className="space-y-4">
               {/* Header inside right panel */}
               <div className="flex items-center justify-between pb-2 border-b border-gray-100 dark:border-white/10">
@@ -491,7 +486,7 @@ export default function MediaPickerModal({
                     value={externalUrl}
                     onChange={(e) => setExternalUrl(e.target.value)}
                     placeholder="https://images.unsplash.com/..."
-                    className="w-full px-3 py-2 bg-gray-50 dark:bg-[#070d1d] border border-gray-200 dark:border-slate-800 rounded-xl text-xs text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-mono"
+                    className="w-full px-3 py-2 bg-gray-50 dark:bg-[#070d1d] border border-gray-200 dark:border-slate-800 rounded-xl text-xs text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all"
                     autoFocus
                   />
                 </div>
@@ -548,7 +543,7 @@ export default function MediaPickerModal({
             {/* Bottom info inside right panel */}
             <div className="pt-3 border-t border-gray-100 dark:border-white/10 flex items-center justify-between text-[11px] text-gray-400">
               <span>Target: TipTap Rich Content</span>
-              <span>CDN: Supabase Storage</span>
+              <span>CDN: Cloudinary</span>
             </div>
 
           </div>

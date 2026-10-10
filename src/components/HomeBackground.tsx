@@ -106,23 +106,23 @@ export default function HomeBackground() {
 
         {/* ── PARALLAX LAYER 1 (Slow drift) ── */}
         <div ref={p1Ref} className="absolute inset-0 pointer-events-none will-change-transform">
-          {/* Main Moon System */}
-          <div className="absolute right-[12%] top-[10%] w-[80px] h-[80px] md:w-[220px] md:h-[220px]" style={{
-            animation: "planetBounce 12s infinite",
+          {/* Main Moon System - Shifted to upper-right flank with soft ambient presence */}
+          <div className="absolute right-[4%] top-[2%] w-[60px] h-[60px] md:w-[160px] md:h-[160px] opacity-45 pointer-events-none" style={{
+            animation: "planetFloat 18s ease-in-out infinite",
             transformStyle: "preserve-3d"
           }}>
-            <div className="absolute top-1/2 left-1/2 w-[240%] h-[240%] pointer-events-none" style={{
+            <div className="absolute top-1/2 left-1/2 w-[220%] h-[220%] pointer-events-none" style={{
               transform: "translate(-50%, -50%) rotateZ(-15deg) rotateX(75deg)",
               transformStyle: "preserve-3d"
             }}>
-              <div className="absolute inset-0 border-[2px] border-dashed border-slate-400/30 rounded-full" />
-              <div className="absolute inset-0 animate-[planetSpin_12s_linear_infinite]" style={{ transformStyle: "preserve-3d" }}>
+              <div className="absolute inset-0 border-[1px] border-dashed border-slate-400/20 rounded-full" />
+              <div className="absolute inset-0 animate-[planetSpin_24s_linear_infinite]" style={{ transformStyle: "preserve-3d" }}>
                 <div className="absolute top-0 left-1/2 w-0 h-0" style={{ transformStyle: "preserve-3d" }}>
-                  <div className="absolute inset-0 animate-[planetSpinReverse_12s_linear_infinite]" style={{ transformStyle: "preserve-3d" }}>
+                  <div className="absolute inset-0 animate-[planetSpinReverse_24s_linear_infinite]" style={{ transformStyle: "preserve-3d" }}>
                     <div className="absolute inset-0" style={{ transform: "rotateX(-75deg)", transformStyle: "preserve-3d" }}>
-                      <div className="absolute w-5 h-5 md:w-10 md:h-10 -translate-x-1/2 -translate-y-1/2 rounded-full" style={{
+                      <div className="absolute w-4 h-4 md:w-7 md:h-7 -translate-x-1/2 -translate-y-1/2 rounded-full" style={{
                         background: "radial-gradient(circle at 30% 30%, #f1f5f9 0%, #cbd5e1 40%, #334155 100%)",
-                        boxShadow: "0 0 15px 2px rgba(255,255,255,0.1), inset -3px -3px 8px rgba(0,0,0,0.6)"
+                        boxShadow: "0 0 10px 1px rgba(255,255,255,0.08), inset -2px -2px 6px rgba(0,0,0,0.5)"
                       }}>
                         <div className="absolute rounded-full bg-slate-800/30 w-[30%] h-[30%] top-[20%] left-[25%]" />
                         <div className="absolute rounded-full bg-slate-800/40 w-[20%] h-[20%] top-[55%] left-[60%]" />
@@ -135,34 +135,32 @@ export default function HomeBackground() {
             <div className="absolute inset-0 rounded-full" style={{
               transform: "translateZ(1px)",
               background: "radial-gradient(circle at 30% 30%, #ffffff 0%, #e2e8f0 40%, #94a3b8 100%)",
-              boxShadow: "0 0 40px 15px rgba(255, 255, 255, 0.15), inset -15px -15px 30px rgba(0, 0, 0, 0.4)",
+              boxShadow: "0 0 30px 10px rgba(255, 255, 255, 0.08), inset -10px -10px 20px rgba(0, 0, 0, 0.35)",
             }}>
-              <div className="absolute inset-0 w-full h-full animate-[planetSpin_40s_linear_infinite] rounded-full overflow-hidden">
-                <div className="absolute rounded-full bg-slate-800/20" style={{ left: "20%", top: "35%", width: "18%", height: "18%" }} />
-                <div className="absolute rounded-full bg-slate-800/15" style={{ left: "55%", top: "60%", width: "25%", height: "25%" }} />
-                <div className="absolute rounded-full bg-slate-800/20" style={{ left: "65%", top: "25%", width: "12%", height: "12%" }} />
+              <div className="absolute inset-0 w-full h-full animate-[planetSpin_50s_linear_infinite] rounded-full overflow-hidden">
+                <div className="absolute rounded-full bg-slate-800/15" style={{ left: "20%", top: "35%", width: "18%", height: "18%" }} />
+                <div className="absolute rounded-full bg-slate-800/10" style={{ left: "55%", top: "60%", width: "25%", height: "25%" }} />
               </div>
             </div>
           </div>
 
-          {/* Mars System */}
-          <div className="absolute left-[18%] top-[22%] w-[35px] h-[35px] md:w-[80px] md:h-[80px]" style={{
-            animation: "planetBounce 15s infinite",
-            animationDelay: "-4s",
+          {/* Accent Satellite System - Shifted below hero typography on the left flank */}
+          <div className="absolute left-[5%] top-[38%] w-[30px] h-[30px] md:w-[64px] md:h-[64px] opacity-40 pointer-events-none" style={{
+            animation: "planetFloat 20s ease-in-out infinite reverse",
             transformStyle: "preserve-3d"
           }}>
-            <div className="absolute top-1/2 left-1/2 w-[300%] h-[300%] pointer-events-none" style={{
+            <div className="absolute top-1/2 left-1/2 w-[260%] h-[260%] pointer-events-none" style={{
               transform: "translate(-50%, -50%) rotateZ(25deg) rotateX(70deg)",
               transformStyle: "preserve-3d"
             }}>
-              <div className="absolute inset-0 border-[1px] border-dashed border-red-500/20 rounded-full" />
-              <div className="absolute inset-0 animate-[planetSpin_5s_linear_infinite]" style={{ transformStyle: "preserve-3d" }}>
+              <div className="absolute inset-0 border-[1px] border-dashed border-[#FBAF35]/25 rounded-full" />
+              <div className="absolute inset-0 animate-[planetSpin_12s_linear_infinite]" style={{ transformStyle: "preserve-3d" }}>
                 <div className="absolute top-0 left-1/2 w-0 h-0" style={{ transformStyle: "preserve-3d" }}>
-                  <div className="absolute inset-0 animate-[planetSpinReverse_5s_linear_infinite]" style={{ transformStyle: "preserve-3d" }}>
+                  <div className="absolute inset-0 animate-[planetSpinReverse_12s_linear_infinite]" style={{ transformStyle: "preserve-3d" }}>
                     <div className="absolute inset-0" style={{ transform: "rotateX(-70deg)", transformStyle: "preserve-3d" }}>
-                      <div className="absolute w-2 h-2 md:w-4 md:h-4 -translate-x-1/2 -translate-y-1/2 rounded-full" style={{
-                        background: "radial-gradient(circle at 30% 30%, #fca5a5 0%, #b91c1c 40%, #450a0a 100%)",
-                        boxShadow: "0 0 5px 1px rgba(239,68,68,0.1), inset -1px -1px 3px rgba(0,0,0,0.6)"
+                      <div className="absolute w-2 h-2 md:w-3.5 md:h-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full" style={{
+                        background: "radial-gradient(circle at 30% 30%, #fde68a 0%, #fbaf35 40%, #78350f 100%)",
+                        boxShadow: "0 0 6px 1px rgba(251,175,55,0.2), inset -1px -1px 3px rgba(0,0,0,0.6)"
                       }} />
                     </div>
                   </div>
@@ -171,12 +169,11 @@ export default function HomeBackground() {
             </div>
             <div className="absolute inset-0 rounded-full" style={{
               transform: "translateZ(1px)",
-              background: "radial-gradient(circle at 30% 30%, #fca5a5 0%, #ef4444 50%, #7f1d1d 100%)",
-              boxShadow: "inset -8px -8px 15px rgba(0, 0, 0, 0.6)",
+              background: "radial-gradient(circle at 30% 30%, #fde68a 0%, #f59e0b 50%, #92400e 100%)",
+              boxShadow: "inset -6px -6px 12px rgba(0, 0, 0, 0.5)",
             }}>
-              <div className="absolute inset-0 w-full h-full animate-[planetSpin_30s_linear_infinite] rounded-full overflow-hidden">
-                <div className="absolute rounded-full bg-red-950/30" style={{ left: "30%", top: "40%", width: "25%", height: "25%" }} />
-                <div className="absolute rounded-full bg-red-950/30" style={{ left: "60%", top: "20%", width: "15%", height: "15%" }} />
+              <div className="absolute inset-0 w-full h-full animate-[planetSpin_40s_linear_infinite] rounded-full overflow-hidden">
+                <div className="absolute rounded-full bg-amber-950/20" style={{ left: "30%", top: "40%", width: "25%", height: "25%" }} />
               </div>
             </div>
           </div>

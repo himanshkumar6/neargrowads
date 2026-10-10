@@ -37,7 +37,7 @@ export async function PATCH(req: NextRequest) {
   const body = await req.json();
 
   // Strict Sanitization: Allow self-updating ONLY these fields
-  const allowedUpdates: Record<string, any> = {};
+  const allowedUpdates: Record<string, unknown> = {};
   if (body.phone !== undefined) allowedUpdates.phone = body.phone;
   if (body.bio !== undefined) allowedUpdates.bio = body.bio;
   if (body.address !== undefined) allowedUpdates.address = body.address;

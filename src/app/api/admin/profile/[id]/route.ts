@@ -13,7 +13,7 @@ export async function PATCH(
   const { supabase } = auth;
   const body = await req.json();
 
-  const updates: Record<string, any> = {};
+  const updates: Record<string, unknown> = {};
   if (body.employee_id !== undefined) updates.employee_id = body.employee_id;
   if (body.department_id !== undefined) updates.department_id = body.department_id;
   if (body.joining_date !== undefined) updates.joining_date = body.joining_date;

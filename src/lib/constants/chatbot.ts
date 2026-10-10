@@ -22,10 +22,10 @@ export const SERVICES_LIST = [
   "Social Media Management",
 ];
 
-export const BOT_AVATAR = "/logo.png"; // Standard Trisage Avatar
+export const BOT_AVATAR = "/icon.png"; // Standard NearGrow Avatar
 
 export const CHATBOT_MESSAGES = {
-  WELCOME: "Welcome to Trisage Marketing. How can I help you grow today?",
+  WELCOME: "Welcome to NearGrow Ads. How can I help you grow today?",
   ASK_NAME: "What's your name?",
   ASK_EMAIL: "What's the Email Id",
   ASK_PHONE: "What's your phone number we can call you on?",

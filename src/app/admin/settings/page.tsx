@@ -12,7 +12,7 @@ export default async function SettingsPage() {
   }
 
   // Murphy's Law: Providing a beautiful fallback for the email if it fails to load
-  const userEmail = user.email || "admin@trisagemarketing.com";
+  const userEmail = user.email || "admin@neargrowads.com";
 
   return (
     <div className="p-4 sm:p-6 md:p-12 w-full max-w-4xl mx-auto">

@@ -10,7 +10,7 @@ const caseStudies = [
   {
     id: "villasita",
     headline: "Proof of Impact: The Villasita Resort",
-    challengeSolution: "Trisage implemented a targeted social media revival strategy, OTA optimization, GMB enhancement, and premium content positioning to strengthen Villasita Resort’s digital presence, increase room night bookings, and improve local search visibility.",
+    challengeSolution: "NearGrow Ads implemented a targeted social media revival strategy, OTA optimization, GMB enhancement, and premium content positioning to strengthen Villasita Resort’s digital presence, increase room night bookings, and improve local search visibility.",
     results: [
       { metric: "Approx. ₹1 Cr+", label: "ONLINE REVENUE IN 12 MONTHS", highlight: true },
       { metric: "Up to ₹15L", label: "PEAK MONTHLY ONLINE REVENUE", highlight: true },
@@ -29,7 +29,7 @@ const caseStudies = [
   {
     id: "avyanta",
     headline: "Proof of Impact: Avyanta Hotels",
-    challengeSolution: "Trisage implemented luxury-focused digital branding, a social media growth strategy, premium storytelling content, and a visibility-driven hospitality marketing approach to strengthen Avyanta Hotels’ online presence and audience engagement.",
+    challengeSolution: "NearGrow Ads implemented luxury-focused digital branding, a social media growth strategy, premium storytelling content, and a visibility-driven hospitality marketing approach to strengthen Avyanta Hotels’ online presence and audience engagement.",
     results: [
       { metric: "+180%", label: "Growth in Social Media Reach", highlight: true },
       { metric: "+140%", label: "Increase in Audience Engagement", highlight: true },
@@ -52,7 +52,7 @@ export default function CaseStudies() {
       
 
 
-      <div className="container relative z-10 mx-auto px-4 md:px-8 max-w-7xl space-y-24 md:space-y-40">
+      <div className="container relative z-10 mx-auto px-3 xs:px-4 md:px-8 max-w-7xl space-y-16 xs:space-y-20 md:space-y-40">
         
         {/* SVG Definitions for Advanced Curve Masking */}
         <svg width="0" height="0" className="absolute pointer-events-none">
@@ -79,13 +79,13 @@ export default function CaseStudies() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
-              className={`flex flex-col lg:flex-row gap-10 lg:gap-16 items-center ${isEven ? "" : "lg:flex-row-reverse"}`}
+              className={`flex flex-col lg:flex-row gap-8 xs:gap-10 lg:gap-16 items-center ${isEven ? "" : "lg:flex-row-reverse"}`}
             >
               
               {/* Image/Visual Column with Full-Width Button Below */}
               <motion.div 
                 variants={fadeUp}
-                className="w-full lg:w-1/2 drop-shadow-2xl dark:drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col gap-5"
+                className="w-full lg:w-1/2 drop-shadow-2xl dark:drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col gap-4 xs:gap-5"
               >
                 <div 
                   className={`relative w-full aspect-4/3 bg-linear-to-br ${study.imageColor} flex items-center justify-center group`}
@@ -131,14 +131,14 @@ export default function CaseStudies() {
                 {study.link ? (
                   <Link
                     href={study.link}
-                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-linear-to-r from-primary-600 via-primary-700 to-secondary-600 dark:from-primary-500 dark:to-secondary-400 text-white text-sm sm:text-base font-extrabold shadow-xl shadow-primary-600/20 hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] active:scale-95 cursor-pointer text-center"
+                    className="w-full inline-flex items-center justify-center gap-2 px-4 xs:px-6 py-3.5 xs:py-4 rounded-xl xs:rounded-2xl bg-linear-to-r from-primary-600 via-primary-700 to-secondary-600 dark:from-primary-500 dark:to-secondary-400 text-white text-xs xs:text-sm sm:text-base font-semibold shadow-xl shadow-primary-600/20 hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] active:scale-95 cursor-pointer text-center"
                   >
                     <span>Read Full Case Study</span>
                     <ArrowRight size={18} />
                   </Link>
                 ) : (
                   <div
-                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-gray-200 dark:bg-gray-800/50 text-gray-500 dark:text-gray-400 text-sm sm:text-base font-extrabold cursor-not-allowed text-center border border-gray-300 dark:border-gray-700/50 opacity-80"
+                    className="w-full inline-flex items-center justify-center gap-2 px-4 xs:px-6 py-3.5 xs:py-4 rounded-xl xs:rounded-2xl bg-gray-200 dark:bg-gray-800/50 text-gray-500 dark:text-gray-400 text-xs xs:text-sm sm:text-base font-semibold cursor-not-allowed text-center border border-gray-300 dark:border-gray-700/50 opacity-80"
                   >
                     <span>Case Study Coming Soon</span>
                     <Sparkles size={16} className="opacity-60" />
@@ -149,30 +149,30 @@ export default function CaseStudies() {
               {/* Content Column */}
               <motion.div 
                 variants={fadeUp}
-                className="w-full lg:w-1/2 space-y-6 flex flex-col justify-center"
+                className="w-full lg:w-1/2 space-y-4 xs:space-y-6 flex flex-col justify-center"
               >
-                <div className="space-y-3">
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif italic text-gray-900 dark:text-white tracking-tight">
+                <div className="space-y-2 xs:space-y-3">
+                  <h2 className="text-2xl xs:text-3xl md:text-4xl lg:text-5xl font-semibold italic text-gray-900 dark:text-white tracking-tight">
                     {study.headline}
                   </h2>
-                  <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+                  <p className="text-sm xs:text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
                     <strong className="text-gray-900 dark:text-gray-200">Our Approach: </strong> 
                     {study.challengeSolution}
                   </p>
                 </div>
 
                 {/* Results Grid */}
-                <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
-                  <h4 className="text-xs md:text-sm uppercase tracking-wider font-bold text-gray-400 dark:text-gray-500 mb-4">
+                <div className="pt-3 xs:pt-4 border-t border-gray-200 dark:border-gray-800">
+                  <h4 className="text-[11px] xs:text-xs md:text-sm uppercase tracking-wider font-medium text-gray-400 dark:text-gray-500 mb-3 xs:mb-4">
                     Key Results
                   </h4>
-                  <div className="grid grid-cols-2 gap-4 md:gap-6">
+                  <div className="grid grid-cols-2 gap-3 xs:gap-4 md:gap-6">
                     {study.results.map((result, i) => (
-                      <div key={i} className="space-y-1">
-                        <div className={`text-2xl md:text-3xl font-black ${result.highlight ? study.themeColor : "text-gray-900 dark:text-white"}`}>
+                      <div key={i} className="space-y-0.5 xs:space-y-1">
+                        <div className={`text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold break-words leading-tight ${result.highlight ? study.themeColor : "text-gray-900 dark:text-white"}`}>
                           {result.metric}
                         </div>
-                        <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 font-medium">
+                        <p className="text-[11px] xs:text-xs md:text-sm text-gray-600 dark:text-gray-400 font-medium leading-tight">
                           {result.label}
                         </p>
                       </div>
@@ -181,10 +181,10 @@ export default function CaseStudies() {
                 </div>
 
                 {/* Closing Copy Blockquote */}
-                <div className="relative pt-4">
-                  <div className="relative pl-5">
+                <div className="relative pt-3 xs:pt-4">
+                  <div className="relative pl-3.5 xs:pl-5">
                     <div className={`absolute left-0 top-0 bottom-0 w-1 rounded-full bg-linear-to-b ${study.imageColor.replace('/20', '/100')}`} />
-                    <p className="text-base md:text-lg font-medium text-gray-800 dark:text-gray-300 italic">
+                    <p className="text-sm xs:text-base md:text-lg font-medium text-gray-800 dark:text-gray-300 italic">
                       &quot;{study.closingCopy}&quot;
                     </p>
                   </div>

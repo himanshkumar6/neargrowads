@@ -3,17 +3,22 @@
 import { motion } from "framer-motion";
 import { fadeUp } from "@/lib/animations";
 import Link from "next/link";
-import Image from "next/image";
-import { Clock, Calendar, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
-interface RecentPost {
+import BlogCard from "@/components/blog/BlogCard";
+
+export interface RecentPost {
   id: string;
   slug?: string | null;
   title?: string | null;
   excerpt?: string | null;
   category?: string | null;
   cover_image?: string | null;
+  imageUrl?: string | null;
   published_at?: string | null;
+  author_name?: string | null;
+  author_avatar?: string | null;
+  read_time?: string | null;
 }
 
 interface HomeBlogProps {
@@ -22,19 +27,16 @@ interface HomeBlogProps {
 
 export default function HomeBlog({ recentPosts = [] }: HomeBlogProps) {
   const displayPosts = recentPosts.map((post) => ({
-    id: post.slug || post.id,
+    id: post.id,
+    slug: post.slug || post.id,
     title: post.title || "Untitled article",
     excerpt: post.excerpt || "Read our latest insights and strategies for growth.",
-    category: post.category || "General",
-    date: post.published_at
-      ? new Date(post.published_at).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      })
-      : "Recently",
-    readTime: "5 min read",
-    imageUrl: post.cover_image || "/fallback-blog.jpg",
+    category: post.category || "Digital Marketing",
+    cover_image: post.cover_image || null,
+    author_name: post.author_name || null,
+    author_avatar: post.author_avatar || null,
+    read_time: post.read_time || "5 min read",
+    published_at: post.published_at || null,
   }));
 
   return (
@@ -67,13 +69,13 @@ export default function HomeBlog({ recentPosts = [] }: HomeBlogProps) {
         </div>
       </div>
 
-      <div className="container relative z-10 mx-auto px-4 md:px-8 max-w-300">
+      <div className="container relative z-10 mx-auto px-3 xs:px-4 md:px-8 max-w-300">
 
         {/* ── Section Header — exact same pattern as Testimonials ── */}
         <div className="text-center max-w-4xl mx-auto mb-8 md:mb-10">
           <motion.h2
             initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} variants={fadeUp}
-            className="text-3xl sm:text-4xl md:text-6xl font-black mb-4 md:mb-6 tracking-tight text-center leading-[1.2]"
+            className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl font-semibold sm:font-bold md:font-bold mb-3 sm:mb-4 md:mb-6 tracking-tight text-center leading-[1.2]"
           >
             <span className="inline-block whitespace-nowrap mr-2 sm:mr-3">
               <span className="text-primary-950 dark:text-white">Latest </span>
@@ -86,12 +88,12 @@ export default function HomeBlog({ recentPosts = [] }: HomeBlogProps) {
           </motion.h2>
           <motion.p
             initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} variants={fadeUp}
-            className="font-sans font-medium text-base sm:text-xl lg:text-2xl leading-relaxed capitalize tracking-tight text-balance text-primary-700 dark:text-primary-300 max-w-2xl mx-auto"
+            className="font-sans font-normal sm:font-medium text-sm xs:text-base sm:text-xl lg:text-2xl leading-relaxed capitalize tracking-tight text-balance text-primary-700 dark:text-primary-300 max-w-2xl mx-auto"
           >
-            Industry-leading perspectives on{" "}
-            <strong className="font-black text-primary-600 dark:text-primary-400">digital marketing</strong>,{" "}
-            <strong className="font-black text-secondary-600 dark:text-secondary-400">growth engineering</strong>, and building{" "}
-            <strong className="font-black text-primary-950 dark:text-white">iconic brands</strong>.
+            Practical guides and strategies on{" "}
+            <strong className="font-semibold text-primary-600 dark:text-primary-400">Google Business Profiles</strong>,{" "}
+            <strong className="font-semibold text-secondary-600 dark:text-secondary-400">local ads</strong>, and attracting{" "}
+            <strong className="font-semibold text-primary-950 dark:text-white">nearby customers</strong>.
           </motion.p>
         </div>
 
@@ -104,67 +106,9 @@ export default function HomeBlog({ recentPosts = [] }: HomeBlogProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.25 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="h-full"
             >
-              <Link
-                href={`/blog/${post.id}`}
-                className="group relative flex flex-col h-full bg-primary-50 dark:bg-primary-950 rounded-3xl overflow-hidden border-2 border-primary-100 dark:border-primary-900 shadow-sm hover:border-primary-200 dark:hover:border-primary-700 hover:shadow-[0_20px_60px_rgba(37,99,235,0.10)] dark:hover:shadow-[0_20px_60px_rgba(37,99,235,0.18)] transition-all duration-500 hover:-translate-y-2"
-              >
-                {/* Corner slash — same as Testimonials & FAQ */}
-                <div
-                  className="absolute bottom-0 right-0 w-[40%] h-[35%] pointer-events-none opacity-[0.07] dark:opacity-[0.12] group-hover:opacity-[0.13] dark:group-hover:opacity-[0.20] transition-opacity duration-500 z-10"
-                  style={{
-                    clipPath: "polygon(100% 0%, 100% 100%, 0% 100%)",
-                    background: "linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%)",
-                  }}
-                />
-                <div
-                  className="absolute bottom-0 right-0 w-[25%] h-[22%] pointer-events-none opacity-[0.12] dark:opacity-[0.18] group-hover:opacity-[0.22] dark:group-hover:opacity-[0.30] transition-opacity duration-500 z-10"
-                  style={{
-                    clipPath: "polygon(100% 0%, 100% 100%, 0% 100%)",
-                    background: "linear-gradient(135deg, #22d3ee 0%, #0ea5e9 100%)",
-                  }}
-                />
-
-                {/* Cover Image */}
-                <div className="relative aspect-3/2 w-full overflow-hidden">
-                  <Image
-                    src={post.imageUrl}
-                    alt={post.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  {/* Category badge */}
-                  <div className="absolute top-4 left-4 z-10">
-                    <span className="px-3 py-1.5 rounded-full text-[10px] sm:text-xs font-black capitalize tracking-widest bg-white/90 dark:bg-primary-950/80 backdrop-blur-md text-primary-600 dark:text-primary-400 border border-primary-100 dark:border-primary-800 shadow-sm">
-                      {post.category}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Card Body */}
-                <div className="relative z-10 flex flex-col grow p-5 sm:p-6 md:p-7 normal-case!">
-                  <h3 className="font-sans font-black text-lg md:text-xl tracking-tight leading-snug mb-3 text-primary-950 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300 line-clamp-2 capitalize" style={{ textTransform: "none" }}>
-                    {post.title}
-                  </h3>
-
-                  <p className="font-sans font-medium text-sm leading-relaxed grow mb-5 line-clamp-3 text-primary-700 dark:text-primary-300 normal-case!">
-                    {post.excerpt}
-                  </p>
-
-                  {/* Footer meta */}
-                  <div className="flex items-center justify-between pt-4 border-t-2 border-primary-100 dark:border-primary-800 mt-auto">
-                    <div className="flex items-center gap-1.5 text-[11px] font-bold capitalize tracking-widest text-secondary-600 dark:text-secondary-400">
-                      <Calendar size={13} />
-                      {post.date}
-                    </div>
-                    <div className="flex items-center gap-1.5 text-[11px] font-bold capitalize tracking-widest text-primary-600 dark:text-primary-400">
-                      <Clock size={13} />
-                      {post.readTime}
-                    </div>
-                  </div>
-                </div>
-              </Link>
+              <BlogCard post={post} priority={index === 0} />
             </motion.div>
           ))}
         </div>
@@ -176,7 +120,7 @@ export default function HomeBlog({ recentPosts = [] }: HomeBlogProps) {
         >
           <Link
             href="/blog"
-            className="inline-flex items-center justify-center py-4 px-8 rounded-full text-white text-sm font-black capitalize tracking-widest bg-linear-to-r from-primary-600 to-secondary-500 dark:from-primary-500 dark:to-secondary-400 hover:from-primary-500 hover:to-secondary-400 shadow-lg shadow-primary-500/20 hover:shadow-primary-500/40 transition-all duration-300 hover:-translate-y-1 gap-2 group"
+            className="inline-flex items-center justify-center py-3.5 sm:py-4 px-6 sm:px-8 rounded-full text-white text-xs xs:text-sm font-semibold capitalize tracking-widest bg-linear-to-r from-primary-600 to-secondary-500 dark:from-primary-500 dark:to-secondary-400 hover:from-primary-500 hover:to-secondary-400 shadow-lg shadow-primary-500/20 hover:shadow-primary-500/40 transition-all duration-300 hover:-translate-y-1 gap-2 group cursor-pointer"
           >
             View All Articles
             <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />

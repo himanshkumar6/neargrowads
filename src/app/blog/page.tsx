@@ -4,8 +4,8 @@ import { getAllPublishedPosts, getAllCategories } from "@/lib/blog/data";
 import BlogLayout from "@/components/blog/BlogLayout";
 
 export const metadata: Metadata = {
-  title: "Hospitality Marketing Insights & Strategy | Trisage Marketing",
-  description: "Expert perspectives on hotel SEO, direct booking strategies, hospitality performance marketing, and scaling hotel revenue growth.",
+  title: "Growth Insights & Strategy | NearGrow Ads",
+  description: "Expert perspectives on SEO, direct booking strategies, performance marketing, and scaling business revenue growth.",
   alternates: {
     canonical: "https://trisagemarketing.com/blog",
   },
@@ -19,7 +19,7 @@ export default async function BlogPage() {
   const dbCategories = await getAllCategories();
 
   return (
-    <main className="min-h-screen bg-white dark:bg-[#050b14] font-rubik relative overflow-hidden">
+    <main className="min-h-screen bg-white dark:bg-[#050b14] relative overflow-hidden">
       <BlogLayout initialBlogs={blogs} dbCategories={dbCategories} />
       <CTA />
     </main>

@@ -8,9 +8,9 @@ async function getAddressFromCoords(lat: number, lng: number): Promise<string | 
 
   try {
     const res = await fetch(
-      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=16`,
+      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`,
       {
-        headers: { 'User-Agent': 'TrisageEMS/1.0' },
+        headers: { 'User-Agent': 'NearGrowEMS/1.0' },
         signal: controller.signal,
       }
     );
@@ -29,7 +29,7 @@ async function getAddressFromCoords(lat: number, lng: number): Promise<string | 
       }
       if (data.display_name) return data.display_name;
     }
-  } catch (e) {
+  } catch {
     clearTimeout(timeoutId);
   }
   return null;
@@ -52,7 +52,7 @@ async function getAddressFromIP(ip: string): Promise<string | null> {
         return `${data.city || ''}, ${data.region || ''}, ${data.country_name || ''}`.replace(/^,\s*|,\s*$/g, '');
       }
     }
-  } catch (e) {
+  } catch {
     clearTimeout(timeoutId);
   }
   return null;
@@ -141,8 +141,8 @@ export async function POST(req: NextRequest) {
   }
 
   // 4. Resolve Location & Calculate 200m Office Geofencing Radius Distance
-  const officeLat = Number(process.env.OFFICE_LAT) || 28.5837; // Trisage HQ Latitude (B-11, Sector 4, Noida)
-  const officeLng = Number(process.env.OFFICE_LNG) || 77.3230; // Trisage HQ Longitude (B-11, Sector 4, Noida)
+  const officeLat = Number(process.env.OFFICE_LAT) || 28.6190; // NearGrow HQ Latitude (Pillar no. 781, Bhagwati Garden, Dwarka Mor, Delhi)
+  const officeLng = Number(process.env.OFFICE_LNG) || 77.0325; // NearGrow HQ Longitude (Pillar no. 781, Bhagwati Garden, Dwarka Mor, Delhi)
   const allowedRadiusMeters = Number(process.env.OFFICE_RADIUS_METERS) || 200;
 
   let resolvedAddress: string | null = null;
@@ -170,7 +170,7 @@ export async function POST(req: NextRequest) {
   let formattedLocationTag = '';
   if (validLat !== null && validLng !== null && distanceFromOfficeMeters !== null) {
     if (isInOfficeRadius) {
-      formattedLocationTag = `🏢 OFFICE PUNCH (${distanceFromOfficeMeters}m from Trisage HQ${resolvedAddress ? ` - ${resolvedAddress}` : ''})`;
+      formattedLocationTag = `🏢 OFFICE PUNCH (${distanceFromOfficeMeters}m from NearGrow HQ${resolvedAddress ? ` - ${resolvedAddress}` : ''})`;
     } else {
       const kmDistance = (distanceFromOfficeMeters / 1000).toFixed(1);
       formattedLocationTag = `🌐 REMOTE PUNCH (${kmDistance} km from Office${resolvedAddress ? ` - ${resolvedAddress}` : ''})`;

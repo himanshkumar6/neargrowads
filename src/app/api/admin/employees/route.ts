@@ -54,9 +54,10 @@ export async function DELETE(req: NextRequest) {
       message: `Successfully deleted ${filteredIds.length} employee profile(s).`,
       deletedCount: filteredIds.length,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('DELETE Admin Employees Exception:', error);
-    return NextResponse.json({ success: false, error: error?.message || 'Internal server error' }, { status: 500 });
+    const message = error instanceof Error ? error.message : 'Internal server error';
+    return NextResponse.json({ success: false, error: message }, { status: 500 });
   }
 }
 
@@ -85,7 +86,7 @@ export async function PATCH(req: NextRequest) {
 
     const adminSupabase = createAdminClient();
 
-    const { data: updatedUserData, error: updateError } = await adminSupabase.auth.admin.updateUserById(
+    const { error: updateError } = await adminSupabase.auth.admin.updateUserById(
       employeeId,
       {
         password: newPassword,
@@ -105,10 +106,11 @@ export async function PATCH(req: NextRequest) {
       success: true,
       message: 'Employee password reset successfully.',
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('PATCH Admin Employees Exception:', error);
+    const message = error instanceof Error ? error.message : 'Internal server error';
     return NextResponse.json(
-      { success: false, error: error?.message || 'Internal server error' },
+      { success: false, error: message },
       { status: 500 }
     );
   }

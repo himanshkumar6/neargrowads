@@ -6,8 +6,8 @@ import CTA from "@/components/CTA";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Methodology | Trisage Marketing",
-  description: "Discover our data-driven approach to scaling brands and delivering predictable ROI.",
+  title: "Methodology | NearGrow Ads",
+  description: "Discover our structured approach to expanding local visibility, optimizing Google Business Profiles, and acquiring nearby customers with NearGrow Ads.",
 };
 
 export default function MethodologyPage() {

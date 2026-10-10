@@ -9,8 +9,8 @@ import DeviceManagement from "@/components/DeviceManagement";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Us | Trisage Marketing",
-  description: "Learn about Trisage Marketing, our founder, and our methodology for scaling ambitious brands.",
+  title: "About Us | NearGrow Ads",
+  description: "Learn about NearGrow Ads, our leadership team, and our practical methodology for helping local businesses grow through Google Maps, paid advertising, and targeted digital marketing.",
 };
 
 export default function AboutPage() {

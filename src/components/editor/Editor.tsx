@@ -182,7 +182,7 @@ export default function BlogEditor({
     editable,
     editorProps: {
       attributes: {
-        class: "prose sm:prose-lg dark:prose-invert max-w-none focus:outline-none min-h-[340px] p-3.5 sm:p-4 font-rubik text-gray-900 dark:text-white leading-relaxed",
+        class: "prose sm:prose-lg dark:prose-invert max-w-none focus:outline-none min-h-[340px] p-3.5 sm:p-4 text-gray-900 dark:text-white leading-relaxed",
       },
     },
     onUpdate: ({ editor }) => {
@@ -210,7 +210,7 @@ export default function BlogEditor({
     }, 3000);
 
     return () => clearTimeout(handler);
-  }, [editor?.state.doc, editor]);
+  }, [editor, editor?.state.doc, onAutoSave]);
 
   if (!editor) {
     return <div className="h-[500px] w-full animate-pulse bg-gray-50 dark:bg-gray-800/50 rounded-2xl border border-gray-200 dark:border-gray-800" />;
@@ -251,7 +251,7 @@ export default function BlogEditor({
           href: data.href,
           blogId: data.blogId,
           targetType: "blog",
-        } as any)
+        } as unknown as { href: string })
         .focus()
         .run();
     } else {
@@ -292,7 +292,7 @@ export default function BlogEditor({
           target: data.openInNewTab ? "_blank" : undefined,
           targetType: "external",
           blogId: null,
-        } as any)
+        } as unknown as { href: string })
         .focus()
         .run();
     } else {
@@ -343,10 +343,10 @@ export default function BlogEditor({
       alt: data.alt || "",
       mediaId: data.mediaId,
       caption: data.caption,
-    } as any).run();
+    } as unknown as { src: string }).run();
   };
 
-  // 1-Click Auto-link for Trisage services and CTAs
+  // 1-Click Auto-link for NearGrow Ads services and CTAs
   const handleAutoLinkKeywords = () => {
     if (!editor) return;
     const currentJson = editor.getJSON();
@@ -355,7 +355,7 @@ export default function BlogEditor({
       editor.commands.setContent(autoLinked);
       const jsonContent = editor.getJSON();
       onChange(jsonContent);
-      toast.success("✨ Trisage services & Free Audit CTAs auto-linked successfully!");
+      toast.success("✨ NearGrow Ads services & Free Audit CTAs auto-linked successfully!");
     }
   };
 
@@ -406,7 +406,7 @@ export default function BlogEditor({
   };
 
   return (
-    <div className="relative border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden bg-white dark:bg-[#0a1220] shadow-sm font-rubik">
+    <div className="relative border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden bg-white dark:bg-[#0a1220] shadow-sm">
       
       {/* Top Toolbar */}
       <div className="sticky top-0 z-20 flex flex-wrap items-center gap-1 px-2.5 py-1.5 bg-gray-50/95 dark:bg-[#0d1728]/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 select-none">
@@ -497,7 +497,7 @@ export default function BlogEditor({
         {/* 1-Click Auto-Link Services & CTAs */}
         <EditorButton
           onClick={handleAutoLinkKeywords}
-          title="✨ Auto-Link Trisage Services & Free Audit CTAs (1-Click)"
+          title="✨ Auto-Link NearGrow Ads Services & Free Audit CTAs (1-Click)"
         >
           <Sparkles size={16} className="text-amber-500" />
           <span className="hidden xl:inline text-[11px] font-semibold text-amber-600 dark:text-amber-400">
@@ -546,7 +546,7 @@ export default function BlogEditor({
                 className="fixed inset-0 z-40" 
                 onClick={() => setIsTableMenuOpen(false)} 
               />
-              <div className="absolute right-0 mt-2 w-72 sm:w-80 bg-white dark:bg-[#0c1424] border border-gray-200 dark:border-gray-800 rounded-xl shadow-2xl z-50 p-2 space-y-1.5 font-rubik animate-in fade-in zoom-in-95 duration-150">
+              <div className="absolute right-0 mt-2 w-72 sm:w-80 bg-white dark:bg-[#0c1424] border border-gray-200 dark:border-gray-800 rounded-xl shadow-2xl z-50 p-2 space-y-1.5 animate-in fade-in zoom-in-95 duration-150">
                 <button
                   type="button"
                   onClick={handleInsertHotelComparisonTable}

@@ -66,14 +66,14 @@ export class EmailService {
       hrEmails = [],
     } = payload;
 
-    const defaultHREmail = process.env.HR_NOTIFICATION_EMAIL || 'hr@trisagemarketing.com';
+    const defaultHREmail = process.env.HR_NOTIFICATION_EMAIL || 'hr@neargrowads.com';
     let recipientList = hrEmails.length > 0 ? Array.from(new Set([...hrEmails, defaultHREmail])) : [defaultHREmail];
     
     // Safety guard for Resend onboarding domain testing
     if (process.env.RESEND_API_KEY && (!process.env.RESEND_FROM_EMAIL || process.env.RESEND_FROM_EMAIL.includes('onboarding@resend.dev'))) {
       recipientList = [defaultHREmail];
     }
-    const fromAddress = process.env.SMTP_FROM || `Trisage EMS <no-reply@trisagemarketing.com>`;
+    const fromAddress = process.env.SMTP_FROM || `NearGrow EMS <no-reply@neargrowads.com>`;
 
     const safeName = escapeHtml(employeeName || 'Employee');
     const safeEmpId = escapeHtml(employeeId || 'TR-EMP');
@@ -97,7 +97,7 @@ export class EmailService {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>New Leave Request Notification</title>
         <style>
-          body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 20px; color: #1e293b; }
+          body { font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 20px; color: #1e293b; }
           .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
           .header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); padding: 24px; text-align: center; color: #ffffff; }
           .header h2 { margin: 0; font-size: 20px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; }
@@ -118,7 +118,7 @@ export class EmailService {
       <body>
         <div class="container">
           <div class="header">
-            <h2>Trisage EMS</h2>
+            <h2>NearGrow EMS</h2>
             <p>HR & Employee Management Portal</p>
           </div>
           <div class="content">
@@ -162,7 +162,7 @@ export class EmailService {
             </div>
           </div>
           <div class="footer">
-            &copy; ${new Date().getFullYear()} Trisage Marketing Private Limited. Automated EMS Email System.
+            &copy; ${new Date().getFullYear()} NearGrow Ads. Automated EMS Email System.
           </div>
         </div>
       </body>
@@ -175,7 +175,7 @@ export class EmailService {
         const { Resend } = await import('resend');
         const resend = new Resend(process.env.RESEND_API_KEY);
         await resend.emails.send({
-          from: process.env.RESEND_FROM_EMAIL || 'Trisage EMS <onboarding@resend.dev>',
+          from: process.env.RESEND_FROM_EMAIL || 'NearGrow EMS <onboarding@resend.dev>',
           to: recipientList,
           subject,
           html: htmlContent,

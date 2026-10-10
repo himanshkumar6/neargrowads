@@ -226,7 +226,7 @@ export async function resolveBlogContent(
   // If string, return as-is
   if (typeof content === 'string') return content;
 
-  // 1. Automatically interlink mentions of Trisage services and CTAs
+  // 1. Automatically interlink mentions of NearGrow Ads services and CTAs
   const autoLinkedContent = autoLinkAst(content) || content;
 
   // Clone to avoid mutating cached references

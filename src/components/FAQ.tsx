@@ -38,23 +38,23 @@ export default function FAQ() {
          </div>
       </div>
 
-      <div className="container relative z-10 mx-auto px-4 md:px-8 max-w-4xl">
+      <div className="container relative z-10 mx-auto px-3 xs:px-4 md:px-8 max-w-4xl">
 
         {/* ── Section Header ── */}
-        <div className="text-center mb-12 md:mb-16">
+        <div className="text-center mb-10 xs:mb-12 md:mb-16">
           <motion.h2
             initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} variants={fadeUp}
-            className="font-sans font-black text-[8vw] sm:text-4xl md:text-6xl uppercase tracking-tight flex flex-wrap justify-center gap-2 mb-4"
+            className="font-sans font-semibold sm:font-bold text-2xl xs:text-3xl sm:text-4xl md:text-6xl uppercase tracking-tight flex flex-wrap justify-center gap-1.5 xs:gap-2 mb-3.5 xs:mb-4"
           >
-            <span className="text-primary-950 dark:text-white">Frequently</span>
-            <span className="text-primary-800 dark:text-white">Asked</span>
-             <span className="text-transparent bg-clip-text bg-linear-to-r from-primary-600 to-secondary-500 dark:from-primary-400 dark:to-secondary-400">Questions</span>
+            <span className="text-slate-900 dark:text-white">Frequently</span>
+            <span className="text-slate-900 dark:text-white">Asked</span>
+             <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary-500 to-amber-400">Questions</span>
           </motion.h2>
           <motion.p
             initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} variants={fadeUp}
-            className="font-sans font-medium text-lg sm:text-xl uppercase tracking-tight text-primary-700 dark:text-primary-300"
+            className="font-sans font-normal sm:font-medium text-sm xs:text-base sm:text-lg md:text-xl uppercase tracking-tight text-slate-600 dark:text-slate-400"
           >
-            Everything you need to know about working with <strong className="font-black text-primary-950 dark:text-white">Trisage</strong>.
+            Everything you need to know about working with <strong className="font-semibold text-slate-900 dark:text-white">NearGrow Ads</strong>.
           </motion.p>
         </div>
 
@@ -71,38 +71,31 @@ export default function FAQ() {
                 key={index}
                 className={`relative overflow-hidden rounded-2xl md:rounded-3xl border-2 transition-all duration-500 ${
                   isOpen
-                    ? "border-primary-200 dark:border-primary-700 shadow-[0_8px_40px_rgba(37,99,235,0.10)] dark:shadow-[0_8px_40px_rgba(37,99,235,0.15)]"
-                    : "border-primary-100 dark:border-primary-900 shadow-sm hover:border-primary-200 dark:hover:border-primary-800"
-                } bg-primary-50 dark:bg-primary-950`}
+                    ? "border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0a1222] shadow-[0_8px_40px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_40px_rgba(0,0,0,0.5)]"
+                    : "border-slate-200/90 dark:border-slate-800/80 bg-slate-50/80 dark:bg-[#080e1a]/90 hover:border-slate-300 dark:hover:border-slate-700 shadow-sm"
+                }`}
               >
-                {/* Corner Slash (same pattern as Testimonials) */}
+                {/* Corner Slash */}
                 <div
-                  className={`absolute bottom-0 right-0 w-[35%] h-[80%] pointer-events-none transition-opacity duration-500 ${isOpen ? "opacity-[0.10] dark:opacity-[0.18]" : "opacity-[0.05] dark:opacity-[0.08]"}`}
+                  className={`absolute bottom-0 right-0 w-[35%] h-[80%] pointer-events-none transition-opacity duration-500 ${isOpen ? "opacity-[0.08] dark:opacity-[0.14]" : "opacity-[0.03] dark:opacity-[0.06]"}`}
                   style={{
                     clipPath: "polygon(100% 0%, 100% 100%, 0% 100%)",
-                    background: "linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%)",
-                  }}
-                />
-                <div
-                  className={`absolute bottom-0 right-0 w-[20%] h-[60%] pointer-events-none transition-opacity duration-500 ${isOpen ? "opacity-[0.15] dark:opacity-[0.25]" : "opacity-[0.07] dark:opacity-[0.12]"}`}
-                  style={{
-                    clipPath: "polygon(100% 0%, 100% 100%, 0% 100%)",
-                    background: "linear-gradient(135deg, #22d3ee 0%, #0ea5e9 100%)",
+                    background: "linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)",
                   }}
                 />
 
                 {/* Question Row */}
                 <button
-                  className="relative z-10 w-full px-5 py-5 sm:px-7 sm:py-6 text-left flex justify-between items-center gap-4 focus:outline-none group"
+                  className="relative z-10 w-full px-3.5 xs:px-5 py-4 xs:py-5 sm:px-7 sm:py-6 text-left flex justify-between items-start gap-2.5 xs:gap-4 focus:outline-none group cursor-pointer"
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                   aria-expanded={isOpen}
                   aria-controls={panelId}
                 >
                   <span
-                    className={`font-sans font-black text-base sm:text-lg md:text-xl uppercase tracking-tight transition-colors duration-300 ${
+                    className={`font-sans font-semibold text-sm xs:text-base sm:text-lg md:text-xl uppercase tracking-tight transition-colors duration-300 flex-1 leading-snug pt-0.5 ${
                       isOpen
-                        ? "text-primary-600 dark:text-primary-400"
-                        : "text-primary-950 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400"
+                        ? "text-secondary-600 dark:text-secondary-400"
+                        : "text-slate-900 dark:text-white group-hover:text-secondary-600 dark:group-hover:text-secondary-400"
                     }`}
                   >
                     {faq.question}
@@ -110,13 +103,13 @@ export default function FAQ() {
 
                   {/* +/- Icon */}
                   <div
-                    className={`flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-300 border-2 ${
+                    className={`shrink-0 w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-300 border-2 mt-0.5 sm:mt-1 ${
                       isOpen
-                        ? "bg-primary-600 dark:bg-primary-500 border-primary-600 dark:border-primary-500 text-white rotate-0"
-                        : "bg-white dark:bg-primary-900 border-primary-200 dark:border-primary-700 text-primary-600 dark:text-primary-400 group-hover:border-primary-400 dark:group-hover:border-primary-500"
+                        ? "bg-secondary-500 border-secondary-500 text-white rotate-0 shadow-md shadow-secondary-500/25"
+                        : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 group-hover:border-secondary-400 dark:group-hover:border-secondary-400"
                     }`}
                   >
-                    {isOpen ? <Minus size={16} /> : <Plus size={16} />}
+                    {isOpen ? <Minus size={15} /> : <Plus size={15} />}
                   </div>
                 </button>
 
@@ -128,10 +121,9 @@ export default function FAQ() {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <div className="px-5 pb-6 sm:px-7 sm:pb-7 border-t-2 border-primary-100 dark:border-primary-800 pt-4">
-                        {/* Two-tone answer text — same MissionVision pattern */}
-                        <p className="font-sans font-medium text-base sm:text-lg leading-relaxed uppercase tracking-tight text-balance [&_strong]:font-black [&_strong]:text-primary-800 dark:[&_strong]:text-white">
-                          <span className="text-secondary-600 dark:text-secondary-400" dangerouslySetInnerHTML={{ __html: faq.answer }} />
+                    <div className="px-3.5 xs:px-5 pb-5 xs:pb-6 sm:px-7 sm:pb-7 border-t border-slate-200 dark:border-slate-800/80 pt-3.5 xs:pt-4">
+                        <p className="font-sans font-normal text-xs xs:text-sm sm:text-base md:text-lg leading-relaxed text-balance text-slate-700 dark:text-slate-300 [&_strong]:font-semibold [&_strong]:text-slate-900 dark:[&_strong]:text-white">
+                          <span dangerouslySetInnerHTML={{ __html: faq.answer }} />
                         </p>
                     </div>
                   </div>

@@ -45,7 +45,7 @@ export default function GlobalPresence() {
     // Graceful degradation: If data fails, don't crash the whole homepage.
     return (
       <section className="relative w-full py-24 bg-transparent flex items-center justify-center">
-        <p className="text-primary-900/50 dark:text-white/50 font-mono tracking-widest uppercase">Global Network Loading...</p>
+        <p className="text-primary-900/50 dark:text-white/50 tracking-widest uppercase">Global Network Loading...</p>
       </section>
     );
   }
@@ -58,21 +58,21 @@ export default function GlobalPresence() {
         <div className="w-100 h-100 bg-primary-200/60 dark:bg-primary-600/30 rounded-full mix-blend-multiply dark:mix-blend-screen" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-24 mb-8 md:mb-12 text-center md:text-left">
-        <h4 className="flex items-center justify-center md:justify-start gap-4 text-secondary-600 dark:text-secondary-400 font-mono tracking-[0.2em] text-sm uppercase mb-6" aria-label="Section Title">
-          <span className="w-8 h-px bg-secondary-600/50 dark:bg-secondary-400/50"></span>
-          India Presence
+      <div className="relative z-10 max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 md:px-12 lg:px-24 mb-6 xs:mb-8 md:mb-12 text-center md:text-left">
+        <h4 className="flex items-center justify-center md:justify-start gap-2.5 xs:gap-4 text-secondary-600 dark:text-secondary-400 tracking-[0.15em] xs:tracking-[0.2em] text-xs xs:text-sm uppercase mb-3 xs:mb-6" aria-label="Section Title">
+          <span className="w-6 xs:w-8 h-px bg-secondary-600/50 dark:bg-secondary-400/50"></span>
+          Regional Footprint
         </h4>
         
-        <h2 className="text-5xl md:text-6xl lg:text-7xl font-phudu font-bold text-primary-950 dark:text-white leading-[1.1] tracking-tight mb-8">
-          Premium Destinations. <br className="hidden md:block" />
+        <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-primary-950 dark:text-white leading-[1.15] tracking-tight mb-4 xs:mb-6 sm:mb-8">
+          Regional Markets. <br className="hidden md:block" />
           <span className="text-transparent bg-clip-text bg-linear-to-r from-secondary-600 to-primary-600 dark:from-secondary-300 dark:to-primary-300">
-            Unparalleled Experiences.
+            Localized Reach.
           </span>
         </h2>
         
-        <p className="max-w-2xl mx-auto md:mx-0 text-primary-800/80 dark:text-gray-300 font-rubik text-lg md:text-xl font-light leading-relaxed">
-          Empowering luxury hospitality across the subcontinent. From the spiritual sanctuaries of Haridwar to the serene valleys of Dehradun, explore our exclusive Indian portfolio of premium resorts and elite hotels.
+        <p className="max-w-2xl mx-auto md:mx-0 text-primary-800/80 dark:text-gray-300 text-xs xs:text-sm sm:text-base md:text-xl font-light leading-relaxed">
+          Supporting local businesses and regional enterprises across key regional markets. From bustling commercial districts to regional service hubs, we help businesses establish reliable search visibility, prominent map placements, and steady local customer acquisition.
         </p>
       </div>
 
@@ -97,7 +97,7 @@ export default function GlobalPresence() {
         `}
       </style>
       {/* Reduced bottom padding on mobile to fix the massive empty gap; added top padding so top ring/border is never clipped */}
-      <div className="relative z-10 w-full pt-3 md:pt-4 pb-4 md:pb-8 overflow-hidden">
+      <div className="relative z-10 w-full pt-2 xs:pt-3 md:pt-4 pb-4 md:pb-8 overflow-hidden">
         {/* MURPHY'S LAW FIX: Reduced quadrupled array to doubled array. 
             Quadrupling created 20+ heavy DOM nodes which caused massive memory lag and jitter on mobile.
             Doubling is perfectly sufficient for a seamless 50% translation width. */}
@@ -109,14 +109,14 @@ export default function GlobalPresence() {
             return (
               <div 
                 key={uniqueId} 
-                className="shrink-0 w-[92vw] sm:w-85 md:w-105 pr-4 md:pr-8 cursor-pointer"
+                className="shrink-0 w-[86vw] xs:w-[90vw] sm:w-85 md:w-105 pr-3 xs:pr-4 md:pr-8 cursor-pointer"
                 onClick={() => setActiveCard(isActive ? null : uniqueId)}
               >
                 
-                <div className={`group relative w-full h-105 sm:h-120 md:h-145 rounded-3xl md:rounded-4xl overflow-hidden border border-white/40 dark:border-white/10 bg-white/40 dark:bg-black/40 backdrop-blur-2xl shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] transition-all duration-700 hover:shadow-[0_12px_48px_0_rgba(31,38,135,0.15)] dark:hover:shadow-[0_12px_48px_0_rgba(0,0,0,0.5)] ${isActive ? 'ring-2 ring-inset ring-secondary-400 dark:ring-secondary-500' : ''}`}>
+                <div className={`group relative w-full h-96 xs:h-105 sm:h-120 md:h-145 rounded-2xl xs:rounded-3xl md:rounded-4xl overflow-hidden border border-white/40 dark:border-white/10 bg-white/40 dark:bg-black/40 backdrop-blur-2xl shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] transition-all duration-700 hover:shadow-[0_12px_48px_0_rgba(31,38,135,0.15)] dark:hover:shadow-[0_12px_48px_0_rgba(0,0,0,0.5)] ${isActive ? 'ring-2 ring-inset ring-secondary-400 dark:ring-secondary-500' : ''}`}>
                   
                   {/* Image Container with Parallax effect */}
-                  <div className="absolute inset-0 m-2 md:m-3 rounded-[1.25rem] md:rounded-3xl overflow-hidden bg-primary-100 dark:bg-[#0c162d]">
+                  <div className="absolute inset-0 m-2 md:m-3 rounded-xl xs:rounded-[1.25rem] md:rounded-3xl overflow-hidden bg-primary-100 dark:bg-[#0c162d]">
                     <div 
                       className={`absolute inset-0 bg-cover bg-center transform transition-transform duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] ${isActive ? 'scale-110' : 'scale-[1.03] group-hover:scale-110'}`}
                       style={{ backgroundImage: `url(${dest.heroImage || '/assets/placeholder-dest.jpg'})` }}
@@ -126,15 +126,15 @@ export default function GlobalPresence() {
                   </div>
 
                   {/* Content Container */}
-                  <div className="absolute inset-0 p-6 md:p-10 flex flex-col justify-end z-10 pointer-events-none">
+                  <div className="absolute inset-0 p-4 xs:p-6 md:p-10 flex flex-col justify-end z-10 pointer-events-none">
                     
                     {/* Header: Visible by default */}
                     <div className={`transform transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-auto ${isActive ? 'translate-y-0' : 'translate-y-6 group-hover:translate-y-0'}`}>
-                      <h4 className="text-secondary-300 dark:text-secondary-400 font-mono tracking-widest text-[9px] md:text-[10px] uppercase mb-2 md:mb-3 flex items-center gap-2 drop-shadow-md">
-                        <span className="w-4 h-px bg-secondary-300 dark:bg-secondary-400"></span>
+                      <h4 className="text-secondary-300 dark:text-secondary-400 tracking-widest text-[9px] md:text-[10px] uppercase mb-1.5 xs:mb-2 md:mb-3 flex items-center gap-2 drop-shadow-md">
+                        <span className="w-3 xs:w-4 h-px bg-secondary-300 dark:bg-secondary-400"></span>
                         {dest.subtitle || 'Premium Hub'}
                       </h4>
-                      <h3 className="text-3xl md:text-4xl font-phudu font-bold text-white drop-shadow-lg tracking-wide">
+                      <h3 className="text-2xl xs:text-3xl md:text-4xl font-bold text-white drop-shadow-lg tracking-wide">
                         {dest.title}
                       </h3>
                     </div>
@@ -146,12 +146,12 @@ export default function GlobalPresence() {
                         {/* Properties List */}
                         {dest.hospitalityHighlights && dest.hospitalityHighlights.length > 0 && (
                           <div className="pt-2 pb-4">
-                            <p className="text-[10px] text-gray-300 uppercase font-mono tracking-widest mb-3">Key Properties</p>
+                            <p className="text-[10px] text-gray-300 uppercase tracking-widest mb-3">Key Properties</p>
                             <ul className="space-y-1.5 transition-all duration-300">
                               {dest.hospitalityHighlights
                                 .slice(0, expandedProps[uniqueId] ? dest.hospitalityHighlights.length : 4)
                                 .map((highlight, idx) => (
-                                <li key={idx} className="text-[13px] text-white/95 font-rubik font-light flex items-start gap-2">
+                                <li key={idx} className="text-[13px] text-white/95 font-light flex items-start gap-2">
                                   <span className="text-secondary-400 mt-1 text-[10px]">♦</span>
                                   <span className={expandedProps[uniqueId] ? "wrap-break-word" : "line-clamp-1"}>{highlight}</span>
                                 </li>
@@ -160,7 +160,7 @@ export default function GlobalPresence() {
                                 <li>
                                   <button 
                                     onClick={(e) => toggleExpand(uniqueId, e)}
-                                    className="text-[11px] text-secondary-400 hover:text-secondary-300 font-rubik italic mt-1 bg-transparent border-none cursor-pointer focus:outline-none transition-colors"
+                                    className="text-[11px] text-secondary-400 hover:text-secondary-300 italic mt-1 bg-transparent border-none cursor-pointer focus:outline-none transition-colors"
                                   >
                                     {expandedProps[uniqueId] ? '- Show less' : `+ ${dest.hospitalityHighlights.length - 4} more properties`}
                                   </button>
@@ -174,8 +174,8 @@ export default function GlobalPresence() {
                         <div className="grid grid-cols-2 gap-6 pt-4 border-t border-white/20 dark:border-white/10 mt-2">
                           {(dest.statistics || []).slice(0, 2).map((stat, idx) => (
                             <div key={`stat-${idx}`} className="flex flex-col">
-                              <span className="text-xl text-white font-phudu font-light mb-1">{stat.value || '-'}</span>
-                              <span className="text-[9px] uppercase font-mono tracking-[0.2em] text-gray-300 dark:text-gray-400">{stat.label || 'Metric'}</span>
+                              <span className="text-xl text-white font-light mb-1">{stat.value || '-'}</span>
+                              <span className="text-[9px] uppercase tracking-[0.2em] text-gray-300 dark:text-gray-400">{stat.label || 'Metric'}</span>
                             </div>
                           ))}
                         </div>

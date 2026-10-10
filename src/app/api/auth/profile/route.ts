@@ -62,7 +62,7 @@ export async function PUT(req: NextRequest) {
     const { fullName, email, phone, bio, address, emergencyContact, avatarUrl, newPassword } = parseResult.data;
 
     // Prepare profile update object
-    const updatePayload: Record<string, any> = {
+    const updatePayload: Record<string, unknown> = {
       updated_at: new Date().toISOString(),
     };
 

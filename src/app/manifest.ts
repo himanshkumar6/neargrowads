@@ -2,9 +2,9 @@ import type { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Trisage Marketing | Hospitality Digital Marketing Agency',
-    short_name: 'Trisage Marketing',
-    description: 'Hospitality-focused digital marketing agency helping hotels and resorts scale direct bookings through SEO, social media, and performance marketing.',
+    name: 'NearGrow Ads | Growth-Driven Digital Marketing Agency',
+    short_name: 'NearGrow Ads',
+    description: 'Growth-driven digital marketing agency helping ambitious brands scale through SEO, performance marketing, and direct revenue growth.',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',

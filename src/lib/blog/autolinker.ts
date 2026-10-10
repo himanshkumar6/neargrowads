@@ -7,7 +7,7 @@ export interface KeywordLinkRule {
 }
 
 /**
- * Standard catalog of Trisage Core Services & CTAs for automatic interlinking.
+ * Standard catalog of NearGrow Ads Core Services & CTAs for automatic interlinking.
  * Ordered by length descending so longer, specific phrases match first.
  */
 export const DEFAULT_KEYWORD_RULES: KeywordLinkRule[] = [
@@ -29,7 +29,7 @@ export const DEFAULT_KEYWORD_RULES: KeywordLinkRule[] = [
 ];
 
 /**
- * Automatically walks a TipTap AST and converts mentions of Trisage services
+ * Automatically walks a TipTap AST and converts mentions of NearGrow Ads services
  * and audit CTAs into styled, clickable links without requiring manual linking in the editor.
  */
 export function autoLinkAst<T extends TiptapJSONContent | TiptapJSONContent[] | string | undefined>(
@@ -56,7 +56,7 @@ export function autoLinkAst<T extends TiptapJSONContent | TiptapJSONContent[] | 
 
     for (const node of nodes) {
       if (node.type === 'text') {
-        const hasLink = node.marks && node.marks.some((m: any) => m.type === 'link');
+        const hasLink = node.marks && node.marks.some((m: { type: string }) => m.type === 'link');
         if (hasLink || !node.text) {
           result.push(node);
           continue;
@@ -79,7 +79,7 @@ export function autoLinkAst<T extends TiptapJSONContent | TiptapJSONContent[] | 
           const nextSegments: TiptapJSONContent[] = [];
 
           for (const seg of currentSegments) {
-            const segHasLink = seg.marks && seg.marks.some((m: any) => m.type === 'link');
+            const segHasLink = seg.marks && seg.marks.some((m: { type: string }) => m.type === 'link');
             if (segHasLink || !seg.text) {
               nextSegments.push(seg);
               continue;
@@ -156,10 +156,10 @@ export function autoLinkAst<T extends TiptapJSONContent | TiptapJSONContent[] | 
     return processNodes(content) as T;
   }
 
-  if (content && typeof content === 'object' && 'content' in content && Array.isArray((content as any).content)) {
+  if (content && typeof content === 'object' && 'content' in content && Array.isArray((content as TiptapJSONContent).content)) {
     return {
       ...(content as object),
-      content: processNodes((content as any).content),
+      content: processNodes((content as TiptapJSONContent).content || []),
     } as T;
   }
 

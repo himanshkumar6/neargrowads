@@ -25,14 +25,14 @@ export default async function LeadsPage(props: { searchParams: Promise<{ [key: s
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#1f2a3e] border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
         <div className="space-y-1">
           <div className="flex items-center gap-2.5 flex-wrap">
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
               Master Lead Database
             </h1>
-            <span className="px-3 py-0.5 rounded-full bg-secondary-500/10 border border-secondary-500/20 text-secondary-600 dark:text-secondary-400 text-xs font-extrabold uppercase tracking-wider">
+            <span className="px-3 py-0.5 rounded-full bg-secondary-500/10 border border-secondary-500/20 text-secondary-600 dark:text-secondary-400 text-xs font-medium uppercase tracking-wider">
               {totalLeads || 0} Total Submissions
             </span>
           </div>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-normal">
             Complete database of incoming website contact inquiries, consultation requests, and booked meeting leads.
           </p>
         </div>
@@ -46,7 +46,7 @@ export default async function LeadsPage(props: { searchParams: Promise<{ [key: s
               <MessageSquare className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white">All Inquiries</h2>
+              <h2 className="text-lg sm:text-xl font-semibold text-slate-900 dark:text-white">All Inquiries</h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">Filterable database view sorted by newest submission first</p>
             </div>
           </div>

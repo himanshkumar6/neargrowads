@@ -19,14 +19,26 @@ export default async function AdminBlogEditorPage({ params }: { params: Promise<
     redirect('/auth/login');
   }
 
-  // Fetch blog data using privileged admin client to ensure accessibility regardless of author_id
+  // Fetch blog data using privileged admin client with fallback to ensure accessibility
   const adminSupabase = createAdminClient();
   
-  const { data: publishedData } = await adminSupabase
+  let publishedData = null;
+  const adminRes = await adminSupabase
     .from('blogs')
     .select('*')
     .eq('id', id)
-    .single();
+    .maybeSingle();
+
+  if (adminRes.data) {
+    publishedData = adminRes.data;
+  } else {
+    const pubRes = await supabase
+      .from('blogs')
+      .select('*')
+      .eq('id', id)
+      .maybeSingle();
+    publishedData = pubRes.data;
+  }
 
   if (!publishedData) {
     notFound();

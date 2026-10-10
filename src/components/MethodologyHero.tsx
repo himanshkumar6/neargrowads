@@ -6,12 +6,12 @@ import { fadeUp, staggerContainer } from "@/lib/animations";
 
 export default function MethodologyHero() {
   return (
-    <div className="relative pt-40 pb-24 text-center overflow-hidden">
+    <div className="relative pt-28 xs:pt-32 sm:pt-40 pb-16 xs:pb-20 sm:pb-24 text-center overflow-hidden">
       {/* Background Group Image */}
       <div className="absolute inset-0 z-0">
         <Image 
           src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=2000&q=80" 
-          alt="Trisage Methodology and Strategy" 
+          alt="NearGrow Ads Methodology and Strategy" 
           fill
           sizes="100vw"
           className="object-cover object-center"
@@ -29,19 +29,19 @@ export default function MethodologyHero() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: false, margin: "-50px" }}
-        className="relative z-20 container mx-auto px-4 md:px-8"
+        className="relative z-20 container mx-auto px-3 xs:px-4 md:px-8"
       >
         <motion.h1 
           variants={fadeUp}
-          className="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg tracking-tight"
+          className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 xs:mb-6 drop-shadow-lg tracking-tight"
         >
-          The Zero Gap Advantage
+          Practical Growth Methodology
         </motion.h1>
         <motion.p 
           variants={fadeUp}
-          className="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto drop-shadow-md font-medium"
+          className="text-sm xs:text-base sm:text-lg md:text-xl text-gray-200 max-w-4xl mx-auto drop-shadow-md font-medium leading-relaxed"
         >
-          Trisage is uniquely structured to connect guest psychology directly with hotel profitability. We combine 360° touchpoint control with hospitality-centric data so every piece of creative content is engineered to drive targeted yield and long-term asset value.
+          NearGrow Ads is built on a clear principle: local businesses grow when local search visibility, targeted paid advertising, and high-converting creatives work in unison. We replace disconnected tactics with an integrated system designed to attract, engage, and convert nearby customers.
         </motion.p>
       </motion.div>
     </div>

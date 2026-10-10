@@ -78,7 +78,11 @@ export async function GET(req: NextRequest) {
     
     // Murphy's Law: Protect map functions with fallback arrays
     const safeExistingRecords = existingRecords || [];
-    const attendedUserIds = new Set(safeExistingRecords.map((r: any) => r.user_id).filter(Boolean));
+    const attendedUserIds = new Set(
+      safeExistingRecords
+        .map((r: { user_id?: string | null }) => r.user_id)
+        .filter((id): id is string => Boolean(id))
+    );
 
     // 5. Fetch approved leaves for target date
     const { data: approvedLeaves, error: leaveErr } = await supabase
@@ -91,11 +95,15 @@ export async function GET(req: NextRequest) {
     if (leaveErr) console.warn("Murphy's Law: Error fetching leaves", leaveErr);
     
     const safeApprovedLeaves = approvedLeaves || [];
-    const onLeaveUserIds = new Set(safeApprovedLeaves.map((l: any) => l.user_id).filter(Boolean));
+    const onLeaveUserIds = new Set(
+      safeApprovedLeaves
+        .map((l: { user_id?: string | null }) => l.user_id)
+        .filter((id): id is string => Boolean(id))
+    );
 
     // 6. Identify absent employees 
     const absentEmployees = safeActiveEmployees.filter(
-      (emp: any) => emp?.id && !attendedUserIds.has(emp.id) && !onLeaveUserIds.has(emp.id)
+      (emp: { id?: string | null }) => emp?.id && !attendedUserIds.has(emp.id) && !onLeaveUserIds.has(emp.id)
     );
 
     if (absentEmployees.length === 0) {
@@ -107,7 +115,7 @@ export async function GET(req: NextRequest) {
     }
 
     // 7. Bulk insert absent records (Murphy's Law: Ensure no undefined fields are passed to DB)
-    const absentPayload = absentEmployees.map((emp: any) => ({
+    const absentPayload = absentEmployees.map((emp: { id: string }) => ({
       user_id: emp.id,
       work_date: targetDate,
       check_in_time: null,
@@ -136,12 +144,13 @@ export async function GET(req: NextRequest) {
       markedCount: absentEmployees.length
     });
     
-  } catch (error: any) {
+  } catch (error: unknown) {
     // Murphy's Law: The ultimate fallback catch block
     console.error('Auto Mark Absent Fatal Error (Murphy):', error);
+    const message = error instanceof Error ? error.message : 'Catastrophic internal server error';
     return NextResponse.json({ 
       success: false, 
-      error: error?.message || 'Catastrophic internal server error' 
+      error: message 
     }, { status: 500 });
   }
 }

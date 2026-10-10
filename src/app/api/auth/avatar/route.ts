@@ -93,10 +93,11 @@ export async function POST(req: NextRequest) {
       message: 'Avatar uploaded and profile updated successfully',
       avatarUrl: publicUrl,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Avatar Upload Exception:', error);
+    const message = error instanceof Error ? error.message : 'Internal server error during upload';
     return NextResponse.json(
-      { success: false, error: error?.message || 'Internal server error during upload' },
+      { success: false, error: message },
       { status: 500 }
     );
   }

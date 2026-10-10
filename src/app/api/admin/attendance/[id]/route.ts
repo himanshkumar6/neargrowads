@@ -22,7 +22,7 @@ export async function PUT(
       );
     }
 
-    const updatePayload: Record<string, any> = {
+    const updatePayload: Record<string, unknown> = {
       updated_at: new Date().toISOString(),
     };
 
@@ -47,8 +47,9 @@ export async function PUT(
       message: 'Attendance record updated successfully by HR Admin',
       record: updatedRecord,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Update Attendance Error:', error);
-    return NextResponse.json({ success: false, error: error?.message || 'Internal server error' }, { status: 500 });
+    const message = error instanceof Error ? error.message : 'Internal server error';
+    return NextResponse.json({ success: false, error: message }, { status: 500 });
   }
 }

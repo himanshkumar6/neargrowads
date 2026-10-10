@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { Search, Link2, Globe, FileText, Check, X, Loader2, ExternalLink } from "lucide-react";
 import { getPublishedBlogsForLinking } from "@/lib/blog/actions";
@@ -25,7 +25,7 @@ export default function InternalLinkModal({
   initialHref = "",
   isLinkActive = false,
 }: InternalLinkModalProps) {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(() => () => {}, () => true, () => false);
   const [activeTab, setActiveTab] = useState<"internal" | "custom">("internal");
   const [searchTerm, setSearchTerm] = useState("");
   const [blogs, setBlogs] = useState<PublishedBlogLinkOption[]>([]);
@@ -34,10 +34,20 @@ export default function InternalLinkModal({
   const [openInNewTab, setOpenInNewTab] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Portal mount check to prevent SSR hydration mismatch
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  // Synchronize state when modal opens
+  const [prevIsOpen, setPrevIsOpen] = useState(false);
+  if (isOpen && !prevIsOpen) {
+    setPrevIsOpen(true);
+    setCustomUrl(initialHref || "");
+    setSelectedBlog(null);
+    if (initialHref && !initialHref.startsWith("/blog/")) {
+      setActiveTab("custom");
+    } else {
+      setActiveTab("internal");
+    }
+  } else if (!isOpen && prevIsOpen) {
+    setPrevIsOpen(false);
+  }
 
   // Keyboard shortcut: Escape to close
   useEffect(() => {
@@ -54,9 +64,9 @@ export default function InternalLinkModal({
     if (!isOpen) return;
 
     let isMounted = true;
-    setIsLoading(true);
 
     const delayDebounce = setTimeout(async () => {
+      setIsLoading(true);
       try {
         const results = await getPublishedBlogsForLinking(searchTerm);
         if (isMounted) {
@@ -74,19 +84,6 @@ export default function InternalLinkModal({
       clearTimeout(delayDebounce);
     };
   }, [isOpen, searchTerm]);
-
-  // Reset or initialize state on open
-  useEffect(() => {
-    if (isOpen) {
-      setCustomUrl(initialHref || "");
-      setSelectedBlog(null);
-      if (initialHref && !initialHref.startsWith("/blog/")) {
-        setActiveTab("custom");
-      } else {
-        setActiveTab("internal");
-      }
-    }
-  }, [isOpen, initialHref]);
 
   if (!isOpen || !mounted) return null;
 
@@ -123,7 +120,7 @@ export default function InternalLinkModal({
 
   return createPortal(
     <div 
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 md:p-8 bg-black/80 backdrop-blur-md transition-all duration-300 overflow-y-auto overflow-x-hidden no-scrollbar font-rubik animate-in fade-in"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 md:p-8 bg-black/80 backdrop-blur-md transition-all duration-300 overflow-y-auto overflow-x-hidden no-scrollbar animate-in fade-in"
       onClick={onClose}
     >
       <div 
@@ -207,7 +204,7 @@ export default function InternalLinkModal({
                     }
                   }}
                   placeholder="Search articles or paste URL (e.g. /contact)..."
-                  className="w-full pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-[#070d1d] border border-gray-200 dark:border-slate-800 rounded-xl text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-rubik"
+                  className="w-full pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-[#070d1d] border border-gray-200 dark:border-slate-800 rounded-xl text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all"
                   autoFocus
                 />
               </div>
@@ -230,7 +227,7 @@ export default function InternalLinkModal({
                     <div className="flex items-center gap-2 min-w-0">
                       <Globe size={15} className="text-primary-600 dark:text-primary-400 shrink-0" />
                       <span className="text-xs sm:text-sm font-semibold text-primary-700 dark:text-primary-300 truncate">
-                        Use as Destination URL: <span className="font-mono underline">{searchTerm.trim()}</span>
+                        Use as Destination URL: <span className="underline">{searchTerm.trim()}</span>
                       </span>
                     </div>
                     <span className="text-xs px-2.5 py-1 bg-primary-600 text-white font-bold rounded-lg shrink-0 shadow-xs">
@@ -265,8 +262,8 @@ export default function InternalLinkModal({
                           <h4 className="font-semibold text-sm text-gray-900 dark:text-white line-clamp-1">
                             {blog.title}
                           </h4>
-                          <div className="flex items-center gap-2 mt-1 text-xs text-gray-400 font-mono">
-                            <span className="px-1.5 py-0.5 rounded-md bg-gray-200/60 dark:bg-slate-800 text-[11px] font-rubik font-medium text-gray-600 dark:text-gray-300">
+                          <div className="flex items-center gap-2 mt-1 text-xs text-gray-400">
+                            <span className="px-1.5 py-0.5 rounded-md bg-gray-200/60 dark:bg-slate-800 text-[11px] font-medium text-gray-600 dark:text-gray-300">
                               {blog.category || "General"}
                             </span>
                             <span className="truncate">/blog/{blog.slug}</span>
@@ -286,7 +283,7 @@ export default function InternalLinkModal({
               {selectedBlog && (
                 <div className="p-3 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 rounded-xl text-xs text-emerald-800 dark:text-emerald-300 flex items-center justify-between">
                   <span>Selected: <strong>{selectedBlog.title}</strong></span>
-                  <span className="font-mono text-[11px]">/blog/{selectedBlog.slug}</span>
+                  <span className="text-[11px]">/blog/{selectedBlog.slug}</span>
                 </div>
               )}
             </div>
@@ -309,7 +306,7 @@ export default function InternalLinkModal({
                       }
                     }}
                     placeholder="https://example.com or /contact"
-                    className="w-full pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-[#070d1d] border border-gray-200 dark:border-slate-800 rounded-xl text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all font-mono"
+                    className="w-full pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-[#070d1d] border border-gray-200 dark:border-slate-800 rounded-xl text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all"
                     autoFocus
                   />
                 </div>

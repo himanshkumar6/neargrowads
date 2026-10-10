@@ -57,11 +57,11 @@ export default function LoginPage() {
             <div className="mb-3 sm:mb-4">
               <Image
                 src="/logo.svg"
-                alt="Trisage Marketing"
+                alt="NearGrow Ads"
                 width={160}
                 height={45}
                 priority
-                className="h-8 sm:h-10 w-auto transition-all mix-blend-multiply dark:mix-blend-screen dark:invert dark:hue-rotate-180"
+                className="h-8 sm:h-10 w-auto transition-all mix-blend-multiply dark:mix-blend-screen"
               />
             </div>
             <p className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 tracking-wide uppercase">Secure Admin Portal</p>
@@ -79,7 +79,7 @@ export default function LoginPage() {
                   name="email"
                   required
                   className="w-full pl-9 sm:pl-10 pr-3.5 py-2.5 sm:py-3 bg-white/60 dark:bg-black/30 border border-gray-200 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all outline-none text-xs sm:text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-600 shadow-inner"
-                  placeholder="admin@trisagemarketing.com"
+                  placeholder="admin@neargrowads.com"
                 />
               </div>
             </div>

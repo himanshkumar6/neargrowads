@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import VillasitaCaseStudyClient from "./VillasitaCaseStudyClient";
 
 export const metadata: Metadata = {
-  title: "Villasita Resort Growth Case Study | Trisage Marketing",
-  description: "See how Trisage Marketing built Villasita Resort's digital growth system, scaling online revenue to approximately ₹1 crore with up to 10x ROAS.",
+  title: "Villasita Resort Growth Case Study | NearGrow Ads",
+  description: "See how NearGrow Ads built Villasita Resort's digital growth system, scaling online revenue to approximately ₹1 crore with up to 10x ROAS.",
   keywords: [
     "Villasita Resort Growth Case Study",
     "Haridwar Resort Marketing",
@@ -11,23 +11,23 @@ export const metadata: Metadata = {
     "Hotel Direct Booking Strategy",
     "Hotel OTA Revenue Management",
     "Resort Marketing Haridwar",
-    "Trisage Marketing Case Study",
+    "NearGrow Ads Case Study",
     "GEO Hospitality SEO"
   ],
   alternates: {
     canonical: "https://trisagemarketing.com/case-studies/villasita-resort-haridwar",
   },
   openGraph: {
-    title: "Villasita Resort Growth Case Study | Trisage Marketing",
-    description: "See how Trisage Marketing built Villasita Resort's digital growth system, scaling online revenue to approximately ₹1 crore with up to 10x ROAS.",
+    title: "Villasita Resort Growth Case Study | NearGrow Ads",
+    description: "See how NearGrow Ads built Villasita Resort's digital growth system, scaling online revenue to approximately ₹1 crore with up to 10x ROAS.",
     url: "https://trisagemarketing.com/case-studies/villasita-resort-haridwar",
-    siteName: "Trisage Marketing",
+    siteName: "NearGrow Ads",
     images: [
       {
         url: "https://ik.imagekit.io/rrcdbevrb/Hornbill%20post%20july%204.png",
         width: 1200,
         height: 630,
-        alt: "Villasita Resort Haridwar Case Study - Trisage Marketing",
+        alt: "Villasita Resort Haridwar Case Study - NearGrow Ads",
       },
     ],
     locale: "en_US",
@@ -35,8 +35,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Villasita Resort Growth Case Study | Trisage Marketing",
-    description: "See how Trisage Marketing built Villasita Resort's digital growth system, scaling online revenue to approximately ₹1 crore with up to 10x ROAS.",
+    title: "Villasita Resort Growth Case Study | NearGrow Ads",
+    description: "See how NearGrow Ads built Villasita Resort's digital growth system, scaling online revenue to approximately ₹1 crore with up to 10x ROAS.",
     images: ["https://ik.imagekit.io/rrcdbevrb/Hornbill%20post%20july%204.png"],
   },
 };
@@ -53,18 +53,18 @@ export default function VillasitaCaseStudyPage() {
           "@id": "https://trisagemarketing.com/case-studies/villasita-resort-haridwar"
         },
         "headline": "Villasita Resort Growth Case Study: From the Ground Up to a Scalable Digital Revenue Engine",
-        "description": "See how Trisage Marketing built Villasita Resort's digital growth system, scaling online revenue to approximately ₹1 crore with up to 10x ROAS.",
+        "description": "See how NearGrow Ads built Villasita Resort's digital growth system, scaling online revenue to approximately ₹1 crore with up to 10x ROAS.",
         "image": "https://ik.imagekit.io/rrcdbevrb/Hornbill%20post%20july%204.png",
         "datePublished": "2024-01-15T08:00:00+05:30",
         "dateModified": "2026-07-30T16:00:00+05:30",
         "author": {
           "@type": "Organization",
-          "name": "Trisage Marketing",
+          "name": "NearGrow Ads",
           "url": "https://trisagemarketing.com"
         },
         "publisher": {
           "@type": "Organization",
-          "name": "Trisage Marketing",
+          "name": "NearGrow Ads",
           "url": "https://trisagemarketing.com",
           "logo": {
             "@type": "ImageObject",

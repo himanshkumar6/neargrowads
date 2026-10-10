@@ -1,6 +1,12 @@
 import { toast } from 'sonner';
 import { createClient } from '@/lib/supabase/client';
 
+declare global {
+  interface Window {
+    __is_redirecting_to_login?: boolean;
+  }
+}
+
 /**
  * Defensive Murphy's Law Centralized Auth Guard Helper
  * Prevents race conditions, duplicate toasts, and infinite redirect loops.
@@ -9,12 +15,12 @@ export async function handleSessionExpired() {
   if (typeof window === 'undefined') return;
 
   // Murphy's Law Guard #1: Lock flag to prevent multiple concurrent execution loops
-  if ((window as any).__is_redirecting_to_login) return;
-  (window as any).__is_redirecting_to_login = true;
+  if (window.__is_redirecting_to_login) return;
+  window.__is_redirecting_to_login = true;
 
   // Murphy's Law Guard #2: Check if already on login page
   if (window.location.pathname.startsWith('/admin/login')) {
-    (window as any).__is_redirecting_to_login = false;
+    window.__is_redirecting_to_login = false;
     return;
   }
 
@@ -35,6 +41,7 @@ export async function handleSessionExpired() {
   });
 
   // Murphy's Law Guard #5: Immediate hard redirect to auth page
+  // eslint-disable-next-line @next/next/no-location-assign-relative-destination
   window.location.href = '/admin/login';
 }
 

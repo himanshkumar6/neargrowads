@@ -1,324 +1,327 @@
-import { Fingerprint, Headset, PenTool, Zap, Users, Briefcase, LayoutGrid } from 'lucide-react';
+import { Fingerprint, Headset, PenTool, Zap, Users, Briefcase, LayoutGrid, Globe } from 'lucide-react';
 
 export const services = [
   {
     id: 1,
     slug: "brand-strategy",
-    title: "Brand Strategy & Identity",
-    subheading: "Build a Brand Guests Remember",
-    description: "We define your market positioning through audience research, competitive analysis, guest behavior insights, and data-led objectives. From visual identity to brand messaging, we create a clear and consistent brand foundation across every touchpoint.",
-    longDescription: "A brand is the emotional connection between your business and your guests. We help ambitious hotels, resorts, and restaurants discover their unique voice, design stunning visual identities, and position themselves strategically in crowded markets. We create brands that are not just seen, but remembered, trusted, and booked.",
+    title: "Brand Identity & Strategy",
+    subheading: "Stand Out in Your Local Market",
+    description: "We help local businesses establish a cohesive brand identity, distinct visual positioning, and consistent messaging across all digital touchpoints.",
+    longDescription: "A strong brand gives local businesses credibility before a customer ever walks through the door or calls. NearGrow Ads crafts professional brand identities—from logo guidelines and color palettes to local market positioning and tone of voice—that help you stand out from local competitors and earn customer trust.",
     icon: Fingerprint,
     features: [
-      "Brand positioning",
-      "Visual identity system",
-      "Moodboard design",
+      "Local market positioning",
+      "Visual identity guidelines",
       "Typography and color palette",
-      "Messaging framework",
-      "Campaign concept direction"
+      "Messaging and tagline framework",
+      "Digital touchpoint consistency",
+      "Local competitor differentiation"
     ],
     benefits: [
-      "Stand out in highly competitive hospitality markets",
-      "Command premium pricing and higher RevPAR",
-      "Build deep trust and emotional connection with guests",
-      "Ensure absolute consistency across all touchpoints"
+      "Stand out clearly in competitive local markets",
+      "Build immediate trust with prospective local customers",
+      "Maintain consistent branding across all digital profiles",
+      "Establish a memorable, professional business identity"
     ],
     faqs: [
-          {
-                "question": "What is hospitality brand strategy?",
-                "answer": "Hospitality brand strategy defines how a hotel or resort communicates its unique value, aesthetic, and guest experience to stand out in a competitive market."
-          },
-          {
-                "question": "How does brand identity increase direct bookings?",
-                "answer": "A strong brand identity builds immediate trust and emotional connection. When guests trust a brand's direct channel, they are less likely to book through third-party OTAs, increasing your revenue."
-          }
+      {
+        question: "Why does brand identity matter for a local business?",
+        answer: "A professional, consistent visual identity builds immediate credibility. When local customers compare options, strong branding signals quality, reliability, and attention to detail."
+      },
+      {
+        question: "What deliverables are included in brand identity services?",
+        answer: "Deliverables typically include core logo usage guidelines, primary and secondary color palettes, font pairings, messaging pillars, and templates for digital touchpoints."
+      }
     ],
     relatedArticles: [
-          {
-                "title": "The Anatomy of a Luxury Hotel Brand",
-                "slug": "luxury-hotel-brand-anatomy"
-          }
+      {
+        title: "How Local Branding Influences Customer Trust",
+        slug: "local-branding-customer-trust"
+      }
     ]
   },
   {
     id: 2,
     slug: "revenue-management",
-    title: "Revenue Management",
-    subheading: "Revenue Strategies That Increase Profitability",
-    description: "We help hospitality brands optimize revenue through strategic pricing, OTA management, yield management, distribution optimization, competitor analysis, and revenue-focused campaign planning.",
-    longDescription: "Stop leaving money on the table. Our revenue management experts analyze market trends, competitor pricing, and historical data to implement dynamic pricing strategies. We optimize your distribution channels to ensure you sell the right room, to the right guest, at the exact right time and price.",
+    title: "Conversion Tracking & Analytics",
+    subheading: "Data-Driven Insights for Every Campaign",
+    description: "We configure conversion tracking, phone call tracking, WhatsApp click monitoring, and lead funnel analytics so you know which channels perform.",
+    longDescription: "Stop guessing what drives customer inquiries. NearGrow Ads sets up essential conversion tracking across Meta Pixel, Google Tag Manager, Google Analytics, and lead capture forms. We ensure every call, form submission, and WhatsApp inquiry is measured accurately so your marketing budget is invested wisely.",
     icon: Headset,
     features: [
-      "OTA management",
-      "Dynamic pricing support",
-      "Yield management",
-      "Distribution optimization",
-      "Competitor analysis",
-      "TRevPAR-focused strategy",
-      "Revenue growth planning"
+      "Google Tag Manager setup",
+      "Meta Pixel and event tracking",
+      "Google Ads conversion tracking",
+      "Phone call click tracking",
+      "WhatsApp click monitoring",
+      "Form submission tracking",
+      "Monthly performance reporting"
     ],
     benefits: [
-      "Maximize overall property revenue and profitability",
-      "Increase direct bookings to reduce OTA commissions",
-      "Optimize pricing during both peak and off-peak seasons",
-      "Make data-driven decisions rather than guessing"
+      "Gain complete transparency into where inquiries come from",
+      "Identify your highest-converting marketing channels",
+      "Eliminate wasted spend by tracking real business actions",
+      "Make informed marketing decisions backed by verified data"
     ],
     faqs: [
-          {
-                "question": "What is TRevPAR in hotel revenue management?",
-                "answer": "Total Revenue Per Available Room (TRevPAR) calculates all revenue generated by a hotel (including food, beverage, and spa), providing a holistic view of profitability."
-          },
-          {
-                "question": "How can dynamic pricing help my resort?",
-                "answer": "Dynamic pricing algorithms adjust room rates in real-time based on market demand, competitor pricing, and historical booking velocity, ensuring maximum yield."
-          }
+      {
+        question: "Why is conversion tracking essential for local advertising?",
+        answer: "Conversion tracking attributes real business actions—such as phone calls, WhatsApp messages, or form fills—back to specific ads or campaigns so you know exactly which marketing efforts produce results."
+      },
+      {
+        question: "Can you track phone calls and WhatsApp inquiries from our website?",
+        answer: "Yes. We configure click-to-call and WhatsApp click events via Google Tag Manager and analytics platforms to measure customer engagement accurately."
+      }
     ],
     relatedArticles: [
-          {
-                "title": "How to Increase Direct Bookings by 30%",
-                "slug": "increase-direct-bookings"
-          }
+      {
+        title: "Understanding Local Ad Tracking and Conversions",
+        slug: "understanding-ad-tracking"
+      }
     ]
   },
   {
     id: 3,
     slug: "website-design-seo",
-    title: "Website Design, SEO & GEO AI",
-    subheading: "Hotel Websites & AI-Ready Search Optimization",
-    description: "Your website is your owned booking channel. We design seamless, mobile-first websites with strong user experience, Generative Engine Optimization (GEO), AI-ready structured data, local & technical SEO, and conversion-focused layouts that drive direct bookings.",
-    longDescription: "Your website is your most profitable digital storefront. We design and develop lightning-fast, beautifully interactive websites optimized for conversions. Combined with our technical SEO and Generative Engine Optimization (GEO) expertise, we ensure your property ranks highly on Google and gets recommended across AI search engines like ChatGPT, Gemini, and Perplexity.",
+    title: "Landing Pages & Business Websites",
+    subheading: "Fast, Mobile-First Digital Storefronts",
+    description: "We build responsive, conversion-focused landing pages and small business websites engineered for speed, clean UX, and seamless lead capture.",
+    longDescription: "Your website is your central digital anchor. NearGrow Ads designs and develops mobile-first landing pages and small business websites focused on clarity and action. With fast load speeds, integrated WhatsApp and call buttons, and built-in local SEO foundations, we convert visitors into active inquiries.",
     icon: PenTool,
     features: [
-      "Hotel website design",
-      "Mobile-first architecture",
-      "Booking engine integration",
-      "Generative Engine Optimization (GEO)",
-      "AI Search positioning (ChatGPT & Gemini)",
-      "Technical & Local SEO",
-      "AI-ready Schema & structured data",
-      "Conversion-focused page structure"
+      "Mobile-first responsive design",
+      "Conversion-focused landing page layout",
+      "Click-to-call and WhatsApp integration",
+      "Contact and inquiry form setup",
+      "Fast load speed optimization",
+      "On-page local SEO foundations",
+      "Clear service and pricing presentation",
+      "Clean, modern typography and visuals"
     ],
     benefits: [
-      "Deliver a seamless, premium experience to your guests",
-      "Gain top recommendation positioning across AI-powered searches",
-      "Increase direct conversion rates with data-backed UX",
-      "Attract high-intent search traffic from Google & AI engines"
+      "Turn online visitors into direct phone and WhatsApp inquiries",
+      "Provide a clean, trustworthy digital impression for your brand",
+      "Ensure a flawless browsing experience across all mobile devices",
+      "Own your primary digital asset without third-party platform limitations"
     ],
     faqs: [
-          {
-                "question": "What is GEO (Generative Engine Optimization) for hotels?",
-                "answer": "GEO optimizes your hotel's website content, entity authority, and schema markup so AI engines (such as ChatGPT, Gemini, and Perplexity) recommend your property when users search for luxury stays and travel options."
-          },
-          {
-                "question": "Why is a custom hotel website better than a template?",
-                "answer": "Custom hotel websites are engineered for conversion optimization, fast load speeds, technical SEO, and AI search readiness, directly funneling users into your booking engine without friction."
-          }
+      {
+        question: "What is the difference between a landing page and a full business website?",
+        answer: "A landing page is a single, focused web page designed specifically to convert ad traffic for a particular campaign or service. A full business website includes multiple pages detailing your company, complete service range, about story, and contact channels."
+      },
+      {
+        question: "Are your websites optimized for mobile visitors?",
+        answer: "Yes. Over 70% of local searches happen on mobile devices. Every website and landing page we build is engineered mobile-first with fast load times and prominent call-to-action buttons."
+      }
     ],
     relatedArticles: [
-          {
-                "title": "Technical SEO & GEO Checklist for Hotels",
-                "slug": "hotel-seo-checklist"
-          }
+      {
+        title: "Key Elements of a High-Converting Local Business Website",
+        slug: "local-website-conversion-elements"
+      }
     ]
   },
   {
     id: 4,
     slug: "performance-marketing",
-    title: "Performance Marketing",
-    subheading: "Performance Marketing Focused on ROI",
-    description: "We execute highly targeted paid campaigns designed to capture demand, retarget interested audiences, and convert digital attention into bookings. Our campaigns focus on improving ROAS while lowering CPA.",
-    longDescription: "Stop guessing with your ad spend. Our performance marketing methodology relies on strict ROI tracking and relentless optimization. We deploy highly targeted campaigns across Google Ads and Meta to ensure every advertising dollar translates into scalable revenue for your property.",
+    title: "Meta Ads & Google Search Ads",
+    subheading: "Targeted Advertising for Local Customer Acquisition",
+    description: "We plan, launch, and manage targeted campaigns across Facebook, Instagram, and Google Search. Client ad spend is kept completely separate from management fees.",
+    longDescription: "Reach high-intent local buyers when they are actively looking for your products or services. NearGrow Ads manages targeted Google Search Ads capturing active searchers and Meta Ads (Facebook & Instagram) driving local awareness and direct inquiries. We structure campaigns carefully, review search queries, test creatives, and provide clear monthly reporting. Note: Client advertising spend is paid directly to advertising platforms and remains distinct from our management fee.",
     icon: Zap,
     features: [
-      "Meta Ads",
-      "Google Ads",
-      "Retargeting campaigns",
-      "Lead generation campaigns",
-      "Conversion-focused advertising",
-      "Peak-season demand campaigns",
-      "Budget allocation strategy",
-      "ROAS and CPA tracking"
+      "Meta Ads (Facebook & Instagram) management",
+      "Google Search Ads campaign setup & care",
+      "Local radius and geographic targeting",
+      "Ad creative design and copy variations",
+      "Search query reviews and negative keywords",
+      "Lead generation and message campaigns",
+      "Meta and Google Ads account audits",
+      "Monthly performance reviews"
     ],
     benefits: [
-      "Immediate visibility and direct booking generation",
-      "Highly predictable and scalable guest acquisition",
-      "Precise targeting of your ideal guest persona",
-      "Continuous optimization for the lowest possible CPA"
+      "Capture high-intent local searchers actively looking for your service",
+      "Build local brand familiarity across Facebook and Instagram feeds",
+      "Complete billing transparency with ad spend kept separate from management fees",
+      "Ongoing campaign refinement and negative keyword pruning to protect budgets"
     ],
     faqs: [
-          {
-                "question": "Which paid channels work best for luxury hotels?",
-                "answer": "Google Ads (Search and Hotel Ads) capture high-intent travelers, while Meta Ads (Instagram and Facebook) excel at demand generation and retargeting past guests."
-          },
-          {
-                "question": "How do you lower CPA in hospitality marketing?",
-                "answer": "We lower Cost Per Acquisition (CPA) by refining audience targeting, improving ad creative, and ensuring landing pages have a high conversion rate."
-          }
+      {
+        question: "Is advertising budget included in NearGrow Ads management fees?",
+        answer: "No. Advertising spend is paid directly to Meta or Google. Our fee covers strategy, campaign setup, creative design, copywriting, targeting, ongoing optimization, and performance reporting."
+      },
+      {
+        question: "Do you guarantee specific numbers of leads or sales?",
+        answer: "No. We never make speculative guarantees. Advertising performance depends on local market demand, competition, pricing, and campaign variables. We focus on data-driven best practices, continuous testing, and transparent reporting."
+      }
     ],
     relatedArticles: [
-          {
-                "title": "Lowering CPA with Meta Ads",
-                "slug": "meta-ads-cpa-guide"
-          }
+      {
+        title: "How Local Businesses Can Optimize Google Search Ads",
+        slug: "optimizing-google-search-ads"
+      }
     ]
   },
   {
     id: 5,
     slug: "seo-gmb",
-    title: "GEO & GMB",
-    subheading: "Control the First Trust Touchpoint",
-    description: "Before guests visit your website, they often discover you on Google. We optimize your Google Business Profile to improve local visibility, strengthen trust, manage reviews, upload high-quality assets, and drive users toward direct booking links.",
-    longDescription: "Local visibility is everything in hospitality. We hyper-optimize your Google Business Profile (GMB) and execute targeted local SEO strategies to ensure you own the 'near me' searches. From review management to authoritative local citations, we put your property on the map.",
+    title: "Google Business Profile & Local SEO",
+    subheading: "Improve Your Google Maps & Local Search Presence",
+    description: "We optimize your Google Business Profile (GBP) and local search foundations to improve visibility on Google Maps and help nearby customers find your business easily.",
+    longDescription: "When local customers search for services 'near me', your Google Business Profile is often their first impression. NearGrow Ads handles complete GBP setup, profile verification guidance, primary and secondary category selection, business description optimization, high-quality photo uploads, and review reply drafting. Paired with local citation consistency, we help strengthen your local search footprint.",
     icon: Users,
     features: [
-      "GEO & GMB",
-      "Review management",
-      "High-fidelity asset uploads",
-      "Local SEO improvement",
-      "Direct booking link integration",
-      "Map pack visibility strategy"
+      "Google Business Profile setup and claim assistance",
+      "Verification guidance and profile audit",
+      "Category and service list optimization",
+      "Compelling business description drafting",
+      "High-resolution photo and asset uploads",
+      "Google Business Profile weekly posts and updates",
+      "Review reply drafting and management guidance",
+      "Local citation consistency checks"
     ],
     benefits: [
-      "Dominate local Google Maps search results",
-      "Drive massive increases in phone calls and directions",
-      "Build trust through active review management",
-      "Capture high-intent local searchers instantly"
+      "Appear prominently when local customers search on Google Maps",
+      "Drive more phone calls, direction requests, and website visits",
+      "Build social proof through an active, professionally maintained profile",
+      "Ensure accurate business hours, phone number, and location details"
     ],
     faqs: [
-          {
-                "question": "Why is Google Business Profile important for hotels?",
-                "answer": "Google Business Profile dictates your visibility in the Google Local Pack and Maps. It is often the first touchpoint where potential guests see reviews, photos, and direct booking links."
-          },
-          {
-                "question": "How do we improve our local SEO ranking?",
-                "answer": "Local SEO is improved by generating consistent NAP (Name, Address, Phone) citations, actively responding to reviews, and uploading high-fidelity visual assets regularly."
-          }
+      {
+        question: "What is included in Google Business Profile (GBP) optimization?",
+        answer: "We optimize your business categories, service listings, business description, operating hours, photo gallery, and Google updates. We also provide verification guidance and draft professional review responses."
+      },
+      {
+        question: "Do you guarantee a top 3 ranking on Google Maps?",
+        answer: "No agency can ethically guarantee a top 3 placement on Google Maps, as Google's local algorithm considers proximity, relevance, and prominence. We implement proven local SEO best practices to maximize your ranking potential."
+      }
     ],
     relatedArticles: [
-          {
-                "title": "Dominating the Google Local Pack",
-                "slug": "google-local-pack-guide"
-          }
+      {
+        title: "Best Practices for Google Business Profile Optimization",
+        slug: "gbp-optimization-best-practices"
+      }
     ]
   },
   {
     id: 6,
     slug: "content-copywriting",
-    title: "Content Creation & Copywriting",
-    subheading: "Visual Storytelling That Reflects Luxury",
-    description: "Hospitality is experienced through visuals before it is experienced in person. We create hotel photography, video content, promotional shoots, reels, menus, tours, and brand stories that capture comfort, ambience, service, and experience.",
-    longDescription: "Content is the voice of your brand. Our expert writers produce high-value, evocative copy that transports guests to your property before they even book. From website copy that sells the experience to engaging blogs and newsletters, we write words that work.",
+    title: "Creative Services & Reel Editing",
+    subheading: "Engaging Visuals & High-Impact Video Editing",
+    description: "We design static social posts, informative carousels, and professionally edit short-form reels from client-supplied footage to keep your brand visually active.",
+    longDescription: "Consistent, high-quality visual content builds familiarity and trust in your local community. NearGrow Ads provides graphic design for static posts and educational carousels, alongside video editing for Instagram Reels and YouTube Shorts. We edit and polish client-provided footage with engaging pacing, captions, and branding to maximize viewer attention.",
     icon: Briefcase,
     features: [
-      "Hotel photography",
-      "Video production",
-      "Reels and short-form content",
-      "Promotional shoots",
-      "Storytelling concepts",
-      "Menu and experience content",
-      "Hospitality-focused copywriting"
+      "Branded static social post design",
+      "Multi-slide educational carousel design",
+      "Short-form reel and video editing",
+      "Client footage pacing, transitions, and audio sync",
+      "On-screen captions and engaging hooks",
+      "Promotional banner and poster design",
+      "Local business copywriting for social captions",
+      "On-site content shoot coordination (Optional)"
     ],
     benefits: [
-      "Create an emotional connection with potential guests",
-      "Persuade visitors to book direct with confidence",
-      "Provide massive value that builds immediate trust",
-      "Feed your SEO strategy with high-quality text"
+      "Maintain a polished, consistent visual standard on social feeds",
+      "Save significant time by outsourcing graphic design and editing",
+      "Engage prospective customers with modern short-form video formats",
+      "Communicate service benefits clearly through concise, persuasive copy"
     ],
     faqs: [
-          {
-                "question": "What makes good hospitality copywriting?",
-                "answer": "Good hospitality copywriting is evocative, descriptive, and emotionally engaging. It sells the experience and comfort of the property rather than just the physical amenities."
-          },
-          {
-                "question": "Do we need professional hotel photography?",
-                "answer": "Yes. High-quality visual assets are the single most important conversion factor for hotels. Poor photography directly reduces perceived value and lowers Average Daily Rate (ADR)."
-          }
+      {
+        question: "Do clients need to provide footage for reel editing?",
+        answer: "Yes, standard reel editing packages utilize client-supplied video footage and photos. We provide guidance on what to record. Optional on-site content shoots can be arranged depending on location and scope."
+      },
+      {
+        question: "What styles of social graphics do you produce?",
+        answer: "We produce clean static announcements, promotional creatives, customer testimonials, educational carousels, and seasonal service banners tailored to your brand colors and typography."
+      }
     ],
     relatedArticles: [
-          {
-                "title": "Writing Hotel Copy That Converts",
-                "slug": "hotel-copywriting-tips"
-          }
+      {
+        title: "Creating Engaging Short-Form Video for Local Businesses",
+        slug: "short-form-video-for-local-business"
+      }
     ]
   },
   {
     id: 7,
     slug: "influencer-pr",
-    title: "Influencer & PR Outreach",
-    subheading: "Amplify Reach Through Meaningful Collaborations",
-    description: "We collaborate with relevant travel creators, lifestyle influencers, and hospitality voices to build authentic brand awareness, trust, and audience engagement. From campaign planning to influencer coordination and content execution, we help brands create meaningful connections that drive visibility and conversions.",
-    longDescription: "Word of mouth is digital now. We connect your brand with highly vetted travel influencers, food bloggers, and digital publications. Our strategic outreach generates authentic buzz, stunning user-generated content, and authoritative backlinks that elevate your brand's prestige.",
-    icon: Users,
+    title: "Local Citations & Directory Listings",
+    subheading: "Consistent Business Information Across the Web",
+    description: "We submit and manage accurate Name, Address, and Phone (NAP) citations across top business directories to reinforce your local search authority.",
+    longDescription: "Search engines evaluate the credibility of local businesses by checking how consistently their details appear across the web. NearGrow Ads builds and audits local citations on reputable business directories, mapping platforms, and regional listings. We also help set up WhatsApp Business profiles to streamline direct customer communication.",
+    icon: Globe,
     features: [
-      "Influencer campaign planning",
-      "Creator shortlisting",
-      "Collaboration coordination",
-      "Content execution",
-      "PR outreach",
-      "Audience engagement strategy",
-      "Trust-building campaigns"
+      "NAP consistency audit (Name, Address, Phone)",
+      "Top Indian local directory submissions",
+      "Duplicate listing identification and cleanup guidance",
+      "WhatsApp Business profile setup and quick replies",
+      "Industry-specific regional directory listings",
+      "Consistent business category alignment",
+      "Local community and citation maintenance"
     ],
     benefits: [
-      "Tap into established, highly engaged audiences",
-      "Generate stunning, authentic user-generated content",
-      "Gain high-authority backlinks for SEO",
-      "Elevate brand prestige and social proof"
+      "Reinforce search engine confidence in your physical location data",
+      "Prevent customer confusion caused by outdated phone numbers or addresses",
+      "Create additional verified discovery touchpoints across the web",
+      "Strengthen your overall local SEO foundation"
     ],
     faqs: [
-          {
-                "question": "How do you measure ROI from travel influencers?",
-                "answer": "We measure influencer ROI through trackable affiliate links, dedicated promo codes, direct traffic spikes during campaigns, and the reuse value of the User-Generated Content (UGC) provided."
-          },
-          {
-                "question": "What is the difference between PR and Influencer Marketing?",
-                "answer": "PR secures authority features in digital publications and travel magazines for brand prestige, while Influencer Marketing taps into creator audiences for authentic social proof and visual content."
-          }
+      {
+        question: "What are local citations and why do they matter?",
+        answer: "Local citations are online mentions of your business Name, Address, and Phone number (NAP) on directories and portals. Consistent citations help search engines verify your legitimacy and improve local search confidence."
+      },
+      {
+        question: "How does WhatsApp Business setup support customer acquisition?",
+        answer: "Setting up a professional WhatsApp Business profile with verified hours, automated greeting messages, catalog links, and quick replies makes it effortless for local prospects to contact and inquire directly."
+      }
     ],
     relatedArticles: [
-          {
-                "title": "Vetting Travel Influencers in 2024",
-                "slug": "vetting-travel-influencers"
-          }
+      {
+        title: "The Importance of NAP Consistency in Local Search",
+        slug: "nap-consistency-local-seo"
+      }
     ]
   },
   {
     id: 8,
     slug: "social-media-management",
-    title: "Social Media Management",
-    subheading: "Social Media That Builds Brand Presence",
-    description: "We elevate visual storytelling and community engagement to transform passive scrollers into engaged audiences and confirmed guests. Our social media strategies are designed for hospitality brands that want stronger visibility, better engagement, and premium brand perception.",
-    longDescription: "Hospitality is visual, and social media is your digital lookbook. We craft data-driven social strategies that stop the scroll, spark wanderlust, and drive bookings across Instagram, Facebook, and TikTok. We handle everything from content creation to daily community engagement.",
+    title: "Organic Social Media Management",
+    subheading: "Consistent Presence Across Instagram & Facebook",
+    description: "We manage organic social media channels with scheduled posts, strategic content calendars, branded graphics, and profile optimization to keep your audience engaged.",
+    longDescription: "An active social media profile signals a thriving, reliable business to prospective customers. NearGrow Ads manages your organic presence across Instagram and Facebook. From profile bio optimization and monthly content calendars to regular scheduling and caption writing, we ensure your business maintains a professional, active community presence.",
     icon: LayoutGrid,
     features: [
-      "Instagram feed planning",
-      "Reels and story concepts",
-      "Monthly content calendars",
-      "Creative design",
-      "Caption and copywriting",
-      "Audience engagement",
-      "Campaign-led posting"
+      "Profile bio and highlight cover optimization",
+      "Monthly content calendar planning",
+      "Consistent post scheduling and publishing",
+      "Engaging caption writing with local hashtags",
+      "Story templates and announcement posts",
+      "Social profile audit and recommendations",
+      "Organic audience engagement best practices"
     ],
     benefits: [
-      "Showcase your property's unique aesthetic daily",
-      "Rapidly expand your reach and brand awareness",
-      "Drive highly engaged traffic to your booking engine",
-      "Build a loyal, vocal community of brand advocates"
+      "Keep your business top-of-mind with local customers and followers",
+      "Ensure new visitors see an active, trustworthy, and modern profile",
+      "Showcase your work, team, client reviews, and special offers consistently",
+      "Clearly separate organic brand building from paid advertising campaigns"
     ],
     faqs: [
-          {
-                "question": "How often should a hotel post on Instagram?",
-                "answer": "Hotels should aim for 3 to 5 high-quality posts per week, supplemented by daily Stories to showcase behind-the-scenes operations, guest experiences, and real-time events."
-          },
-          {
-                "question": "Does social media actually drive direct bookings?",
-                "answer": "Yes. A highly visual, engaged social media presence builds wanderlust and brand recall, often serving as the discovery platform before a user navigates to your booking engine."
-          }
+      {
+        question: "What is the difference between organic social media and paid ads?",
+        answer: "Organic social media focuses on maintaining an active, credible presence for people who visit your profile or follow your page. Paid ads (Meta Ads) proactively target new local users who do not yet follow your business to generate inquiries."
+      },
+      {
+        question: "How often will content be posted on our social media profiles?",
+        answer: "Posting frequency depends on your selected monthly package—typically ranging from 8 to 16 curated static/carousel posts and reels per month, supported by regular stories."
+      }
     ],
     relatedArticles: [
-          {
-                "title": "Instagram Strategies for Resorts",
-                "slug": "instagram-resort-strategy"
-          }
+      {
+        title: "Building an Organic Social Media Strategy for Local Brands",
+        slug: "organic-social-strategy-local-brands"
+      }
     ]
   }
 ];

@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
       notes: 'System Auto-Marked Absent (No Punch-In)',
     }));
 
-    const { data: inserted, error: insertErr } = await supabase
+    const { error: insertErr } = await supabase
       .from('attendance_records')
       .insert(absentPayload)
       .select('id, user_id, work_date, status');
@@ -90,8 +90,9 @@ export async function POST(req: NextRequest) {
         employee_id: e.employee_id,
       })),
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Mark Absent Error:', error);
-    return NextResponse.json({ success: false, error: error?.message || 'Internal server error' }, { status: 500 });
+    const message = error instanceof Error ? error.message : 'Internal server error';
+    return NextResponse.json({ success: false, error: message }, { status: 500 });
   }
 }

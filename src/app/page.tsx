@@ -1,34 +1,29 @@
 import type { Metadata } from "next";
 import Hero from "@/components/Hero";
 import MissionVision from "@/components/MissionVision";
-import BusinessPartners from "@/components/BusinessPartners";
 import HomeServices from "@/components/HomeServices";
 import DiverseSolutions from "@/components/DiverseSolutions";
-import GlobalPresence from "@/components/GlobalPresence";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import Process from "@/components/Process";
-import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
-import OurClients from "@/components/OurClients";
 import HomeBlog from "@/components/HomeBlog";
 import CTA from "@/components/CTA";
 import HomeBackground from "@/components/HomeBackground";
-import IndianFlagPlanes from "@/components/IndianFlagPlanes";
 import { createClient } from "@/lib/supabase/server";
 import FaqSchema from "@/components/Schema/FaqSchema";
 import { faqs } from "@/data/faqs";
 
 export const metadata: Metadata = {
-  title: "Trisage Marketing | Hospitality Digital Marketing Agency",
-  description: "Trisage Marketing is a hospitality digital marketing agency helping hotels & resorts scale direct bookings through SEO, social media, and performance marketing.",
+  title: "NearGrow Ads | Grow Local. Grow Smart. | Digital Marketing Agency",
+  description: "NearGrow Ads helps local businesses scale with Google Business Profile optimization, Local SEO, Meta Ads, Google Search Ads, and organic social media growth.",
   alternates: {
     canonical: "https://trisagemarketing.com",
   },
   openGraph: {
-    title: "Trisage Marketing | Hospitality Digital Marketing Agency",
-    description: "Trisage Marketing is a hospitality digital marketing agency helping hotels & resorts scale direct bookings through SEO, social media, and performance marketing.",
+    title: "NearGrow Ads | Grow Local. Grow Smart. | Digital Marketing Agency",
+    description: "NearGrow Ads helps local businesses scale with Google Business Profile optimization, Local SEO, Meta Ads, Google Search Ads, and organic social media growth.",
     url: "https://trisagemarketing.com",
-    siteName: "Trisage Marketing",
+    siteName: "NearGrow Ads",
     locale: "en_IN",
     type: "website",
     images: [
@@ -36,26 +31,41 @@ export const metadata: Metadata = {
         url: "/logo.png",
         width: 1200,
         height: 630,
-        alt: "Trisage Marketing - Hospitality Digital Marketing Agency",
+        alt: "NearGrow Ads - Digital Marketing Agency",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Trisage Marketing | Hospitality Digital Marketing Agency",
-    description: "Trisage Marketing is a hospitality digital marketing agency helping hotels & resorts scale direct bookings through SEO, social media, and performance marketing.",
+    title: "NearGrow Ads | Grow Local. Grow Smart. | Digital Marketing Agency",
+    description: "NearGrow Ads helps local businesses scale with Google Business Profile optimization, Local SEO, Meta Ads, Google Search Ads, and organic social media growth.",
     images: ["/logo.png"],
   },
 };
 
 export default async function Home() {
   const supabase = await createClient();
-  const { data: recentPosts, error } = await supabase
+  const { data: rawPosts, error } = await supabase
     .from("blogs")
-    .select("id, slug, title, excerpt, category, cover_image, published_at")
+    .select("id, slug, title, excerpt, featured_image, published_at, author_name, author_avatar, read_time, categories(name)")
     .eq("status", "published")
     .order("published_at", { ascending: false })
     .limit(3);
+
+  // Flatten the joined category name and cover_image so HomeBlog receives the expected shape
+  const recentPosts = (rawPosts || []).map((p) => {
+    const catName = Array.isArray(p.categories)
+      ? (p.categories[0] as { name?: string } | undefined)?.name
+      : (p.categories as { name?: string } | null)?.name;
+    return {
+      ...p,
+      category: catName ?? null,
+      cover_image: p.featured_image ?? null,
+      author_name: p.author_name || null,
+      author_avatar: p.author_avatar || null,
+      categories: undefined,
+    };
+  });
 
   if (error) {
     console.error("Supabase Error on Homepage:", error.message, error.hint);
@@ -75,13 +85,13 @@ export default async function Home() {
       <div className="homepage-wrapper relative z-10">
         <Hero />
         <MissionVision />
-        <BusinessPartners />
+        {/* <BusinessPartners /> */}
         <HomeServices />
         <DiverseSolutions />
-        <OurClients />
+        {/* <OurClients /> */}
         <WhyChooseUs />
         <Process />
-        <GlobalPresence />
+        {/* <GlobalPresence /> */}
         {/* Testimonials section hidden for all devices */}
         {/* <Testimonials /> */}
         <HomeBlog recentPosts={recentPosts || []} />

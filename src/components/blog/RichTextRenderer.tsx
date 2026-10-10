@@ -50,7 +50,7 @@ function renderBlockNoteInline(contentArr: TiptapJSONContent[] | undefined): Rea
     if (item.type === 'text') {
       let el: React.ReactNode = item.text;
       if (item.styles) {
-        if (item.styles.bold) el = <strong key={idx} className="font-extrabold text-gray-900 dark:text-white">{el}</strong>;
+        if (item.styles.bold) el = <strong key={idx} className="font-bold text-gray-900 dark:text-white">{el}</strong>;
         if (item.styles.italic) el = <em key={idx}>{el}</em>;
         if (item.styles.underline) el = <u key={idx}>{el}</u>;
         if (item.styles.strikethrough) el = <s key={idx}>{el}</s>;
@@ -90,20 +90,20 @@ function renderBlockNoteBlocks(blocks: TiptapJSONContent[]): React.ReactNode {
       const level = block.props?.level || 2;
       if (level === 1 || level === 2) {
         return (
-          <h2 key={block.id || idx} className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white mt-10 mb-4 leading-snug tracking-tight font-rubik">
+          <h2 key={block.id || idx} className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mt-10 mb-4 leading-snug tracking-tight">
             {inlineContent}
           </h2>
         );
       }
       if (level === 3) {
         return (
-          <h3 key={block.id || idx} className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-3 leading-snug tracking-tight font-rubik">
+          <h3 key={block.id || idx} className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-3 leading-snug tracking-tight">
             {inlineContent}
           </h3>
         );
       }
       return (
-        <h4 key={block.id || idx} className="text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-200 mt-6 mb-2.5 font-rubik">
+        <h4 key={block.id || idx} className="text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-200 mt-6 mb-2.5">
           {inlineContent}
         </h4>
       );
@@ -111,7 +111,7 @@ function renderBlockNoteBlocks(blocks: TiptapJSONContent[]): React.ReactNode {
 
     if (block.type === 'bulletListItem') {
       return (
-        <div key={block.id || idx} className="flex items-start gap-3 text-base sm:text-lg text-gray-700 dark:text-gray-300 my-1.5 pl-2 sm:pl-4 font-rubik">
+        <div key={block.id || idx} className="flex items-start gap-3 text-base sm:text-lg text-gray-700 dark:text-gray-300 my-1.5 pl-2 sm:pl-4">
           <span className="mt-2.5 w-2 h-2 rounded-full bg-primary-500 shrink-0" />
           <div className="flex-1">{inlineContent}</div>
         </div>
@@ -120,7 +120,7 @@ function renderBlockNoteBlocks(blocks: TiptapJSONContent[]): React.ReactNode {
 
     if (block.type === 'numberedListItem') {
       return (
-        <div key={block.id || idx} className="flex items-start gap-3 text-base sm:text-lg text-gray-700 dark:text-gray-300 my-1.5 pl-2 sm:pl-4 font-rubik">
+        <div key={block.id || idx} className="flex items-start gap-3 text-base sm:text-lg text-gray-700 dark:text-gray-300 my-1.5 pl-2 sm:pl-4">
           <span className="font-bold text-primary-600 dark:text-primary-400 shrink-0 min-w-[20px]">{idx + 1}.</span>
           <div className="flex-1">{inlineContent}</div>
         </div>
@@ -128,9 +128,9 @@ function renderBlockNoteBlocks(blocks: TiptapJSONContent[]): React.ReactNode {
     }
 
     if (block.type === 'checkListItem') {
-      const isChecked = block.props?.checked || false;
+      const isChecked = Boolean(block.props?.checked);
       return (
-        <div key={block.id || idx} className="flex items-center gap-3 text-base sm:text-lg text-gray-700 dark:text-gray-300 my-1.5 font-rubik">
+        <div key={block.id || idx} className="flex items-center gap-3 text-base sm:text-lg text-gray-700 dark:text-gray-300 my-1.5">
           <input type="checkbox" checked={isChecked} readOnly className="w-5 h-5 rounded border-gray-300 text-primary-600 accent-primary-600 shrink-0" />
           <span className={isChecked ? "line-through opacity-70" : ""}>{inlineContent}</span>
         </div>
@@ -138,15 +138,16 @@ function renderBlockNoteBlocks(blocks: TiptapJSONContent[]): React.ReactNode {
     }
 
     if (block.type === 'image') {
-      const url = block.props?.url;
+      const url = typeof block.props?.url === 'string' ? block.props.url : '';
       if (!url) return null;
+      const caption = typeof block.props?.caption === 'string' ? block.props.caption : undefined;
       return (
         <figure key={block.id || idx} className="my-8 w-full">
           <div className="relative w-full aspect-[16/9] overflow-hidden rounded-2xl shadow-lg border border-gray-100 dark:border-white/5 bg-gray-100 dark:bg-gray-800">
-            <Image src={getSafeUrl(url)} alt={block.props?.caption || "Blog image"} fill className="object-cover" sizes="(max-width: 768px) 100vw, 768px" />
+            <Image src={getSafeUrl(url)} alt={caption || "Blog image"} fill className="object-cover" sizes="(max-width: 768px) 100vw, 768px" />
           </div>
-          {block.props?.caption && (
-            <figcaption className="text-center text-xs text-gray-400 dark:text-gray-500 mt-2.5 italic font-rubik">{block.props.caption}</figcaption>
+          {caption && (
+            <figcaption className="text-center text-xs text-gray-400 dark:text-gray-500 mt-2.5 italic">{caption}</figcaption>
           )}
         </figure>
       );
@@ -154,7 +155,7 @@ function renderBlockNoteBlocks(blocks: TiptapJSONContent[]): React.ReactNode {
 
     // Default Paragraph
     return (
-      <p key={block.id || idx} className="text-base sm:text-lg leading-[1.8] text-gray-700 dark:text-gray-300 mb-6 font-normal font-rubik">
+      <p key={block.id || idx} className="text-base sm:text-lg leading-[1.8] text-gray-700 dark:text-gray-300 mb-6 font-normal">
         {inlineContent}
       </p>
     );
@@ -174,7 +175,7 @@ function resolveFallbackUrl(text: string): string | null {
     return '/contact';
   }
 
-  // Known Trisage Services
+  // Known NearGrow Ads Services
   if (t.includes('brand strategy') || t.includes('brand identity')) {
     return '/services/brand-strategy';
   }
@@ -209,7 +210,7 @@ function renderInlineNodes(nodes: TiptapJSONContent[] | undefined): React.ReactN
     if (node.type === 'text') {
       let el: React.ReactNode = node.text;
       const marks = node.marks || [];
-      const linkMark = marks.find((m: any) => m.type === 'link');
+      const linkMark = marks.find((m: { type: string; attrs?: Record<string, unknown> }) => m.type === 'link');
       const hasLink = !!linkMark;
 
       // 1. Apply styling marks first (bold, italic, underline, strike, code)
@@ -242,7 +243,7 @@ function renderInlineNodes(nodes: TiptapJSONContent[] | undefined): React.ReactN
       // 2. Wrap with Link as the outermost component if link mark exists
       if (linkMark) {
         const isUnpublished = linkMark.attrs?.isUnpublished;
-        let rawHref = linkMark.attrs?.href ?? (linkMark as any).href;
+        let rawHref = (linkMark.attrs?.href as string | undefined) ?? (linkMark as { href?: string }).href;
 
         // Resilient fallback: If mark is 'link' but rawHref is empty/missing, resolve known CTAs & services
         if (!rawHref || rawHref === '#' || rawHref === 'null' || rawHref === 'undefined') {
@@ -288,7 +289,7 @@ function renderNodes(nodes: TiptapJSONContent[] | undefined): React.ReactNode {
     // 2. Paragraph
     if (node.type === 'paragraph') {
       return (
-        <p key={idx} className="text-base sm:text-lg leading-[1.8] text-gray-700 dark:text-gray-300 mb-6 font-normal font-rubik">
+        <p key={idx} className="text-base sm:text-lg leading-[1.8] text-gray-700 dark:text-gray-300 mb-6 font-normal">
           {renderInlineNodes(node.content)}
         </p>
       );
@@ -300,20 +301,20 @@ function renderNodes(nodes: TiptapJSONContent[] | undefined): React.ReactNode {
       const content = renderInlineNodes(node.content);
       if (level === 1 || level === 2) {
         return (
-          <h2 key={idx} className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white mt-10 mb-4 leading-snug tracking-tight font-rubik">
+          <h2 key={idx} className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mt-10 mb-4 leading-snug tracking-tight">
             {content}
           </h2>
         );
       }
       if (level === 3) {
         return (
-          <h3 key={idx} className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-3 leading-snug tracking-tight font-rubik">
+          <h3 key={idx} className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-3 leading-snug tracking-tight">
             {content}
           </h3>
         );
       }
       return (
-        <h4 key={idx} className="text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-200 mt-6 mb-2.5 font-rubik">
+        <h4 key={idx} className="text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-200 mt-6 mb-2.5">
           {content}
         </h4>
       );
@@ -340,7 +341,7 @@ function renderNodes(nodes: TiptapJSONContent[] | undefined): React.ReactNode {
             />
           </div>
           {caption && (
-            <figcaption className="text-center text-xs text-gray-400 dark:text-gray-500 mt-2.5 italic font-rubik">
+            <figcaption className="text-center text-xs text-gray-400 dark:text-gray-500 mt-2.5 italic">
               {caption}
             </figcaption>
           )}
@@ -351,7 +352,7 @@ function renderNodes(nodes: TiptapJSONContent[] | undefined): React.ReactNode {
     // 5. Bullet Lists
     if (node.type === 'bulletList') {
       return (
-        <ul key={idx} className="my-5 pl-6 space-y-2 list-disc text-gray-700 dark:text-gray-300 font-rubik text-base sm:text-lg">
+        <ul key={idx} className="my-5 pl-6 space-y-2 list-disc text-gray-700 dark:text-gray-300 text-base sm:text-lg">
           {node.content?.map((item, itemIdx) => (
             <li key={itemIdx} className="leading-relaxed">
               {renderNodes(item.content)}
@@ -364,7 +365,7 @@ function renderNodes(nodes: TiptapJSONContent[] | undefined): React.ReactNode {
     // 6. Ordered Lists
     if (node.type === 'orderedList') {
       return (
-        <ol key={idx} className="my-5 pl-6 space-y-2 list-decimal text-gray-700 dark:text-gray-300 font-rubik text-base sm:text-lg">
+        <ol key={idx} className="my-5 pl-6 space-y-2 list-decimal text-gray-700 dark:text-gray-300 text-base sm:text-lg">
           {node.content?.map((item, itemIdx) => (
             <li key={itemIdx} className="leading-relaxed">
               {renderNodes(item.content)}
@@ -382,7 +383,7 @@ function renderNodes(nodes: TiptapJSONContent[] | undefined): React.ReactNode {
     // 8. Blockquotes
     if (node.type === 'blockquote') {
       return (
-        <blockquote key={idx} className="my-6 pl-5 border-l-4 border-primary-500 bg-gray-50/50 dark:bg-gray-800/30 py-3 pr-4 rounded-r-xl italic text-gray-700 dark:text-gray-300 font-rubik text-lg">
+        <blockquote key={idx} className="my-6 pl-5 border-l-4 border-primary-500 bg-gray-50/50 dark:bg-gray-800/30 py-3 pr-4 rounded-r-xl italic text-gray-700 dark:text-gray-300 text-lg">
           {renderNodes(node.content)}
         </blockquote>
       );
@@ -406,7 +407,7 @@ function renderNodes(nodes: TiptapJSONContent[] | undefined): React.ReactNode {
     if (node.type === 'table') {
       return (
         <div key={idx} className="my-8 w-full overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-800 shadow-xs">
-          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800 text-left font-rubik text-sm">
+          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-800 text-left text-sm">
             {node.content?.map((row, rowIdx) => (
               <tr key={rowIdx} className={rowIdx === 0 ? "bg-gray-50 dark:bg-gray-900 font-bold text-gray-900 dark:text-white" : "hover:bg-gray-50/50 dark:hover:bg-gray-800/50"}>
                 {row.content?.map((cell, cellIdx) => {
@@ -434,12 +435,78 @@ function renderNodes(nodes: TiptapJSONContent[] | undefined): React.ReactNode {
 }
 
 // =======================
+// HTML STRING ENHANCEMENT ENGINE
+// =======================
+function enhanceBlogHtml(rawHtml: string): string {
+  if (!rawHtml || typeof rawHtml !== 'string') return '';
+  let html = rawHtml;
+
+  // 1. Strip destructive inline styles (font-size, font-family overrides from editor pastes)
+  html = html.replace(/style="[^"]*font-size:[^"]*"/gi, '');
+  html = html.replace(/style="[^"]*font-family:[^"]*"/gi, '');
+  html = html.replace(/<span[^>]*style="[^"]*"[^>]*>/gi, (match) => {
+    const cleaned = match.replace(/font-size:\s*[^;"]+;?/gi, '').replace(/font-family:\s*[^;"]+;?/gi, '');
+    return cleaned === '<span>' || cleaned.includes('style=""') ? '<span>' : cleaned;
+  });
+
+  // Remove empty/redundant span tags
+  html = html.replace(/<span\s*>(.*?)<\/span>/gi, '$1');
+  html = html.replace(/<span\s+style="\s*"\s*>(.*?)<\/span>/gi, '$1');
+
+  // 2. Detect Key Takeaway / Pro Tip blocks and transform into modern callout cards
+  html = html.replace(
+    /(?:<p>\s*(?:<span[^>]*>)?\s*<strong>(?:<u[^>]*>)?\s*(Key Takeaway|Pro Tip|Takeaway|Important Note)\s*(?:<\/u>)?<\/strong>(?:<\/span>)?\s*<\/p>)\s*<p>(?:<span[^>]*>)?(.*?)(?:<\/span>)?<\/p>/gi,
+    '<div class="blog-callout-box my-8 not-prose p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 shadow-sm"><div class="flex items-center gap-2 font-semibold text-emerald-600 dark:text-emerald-400 text-xs tracking-wider uppercase mb-2"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0 animate-pulse"></span><span>$1</span></div><p class="text-base sm:text-lg font-medium text-slate-800 dark:text-slate-200 leading-relaxed mb-0">$2</p></div>'
+  );
+
+  // 3. Detect Standalone Bold Paragraphs as Headings (H2 / H3) with anchor IDs
+  html = html.replace(/<p>\s*(?:<span[^>]*>)?\s*<strong>(.*?)<\/strong>\s*(?:<\/span>)?\s*<\/p>/gi, (match, inner) => {
+    const cleanText = inner.replace(/<[^>]+>/g, '').trim();
+    if (!cleanText || cleanText.length < 3 || cleanText.length > 120) return match;
+    // Don't convert if it ends with a period and looks like a full sentence (> 8 words)
+    if (cleanText.endsWith('.') && cleanText.split(' ').length > 8) return match;
+    if (cleanText.toLowerCase().includes('key takeaway')) return match;
+
+    const slug = cleanText.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    const isNumbered = /^[0-9]+[\.\)]\s/.test(cleanText);
+
+    if (isNumbered) {
+      return `<h3 id="${slug}" class="blog-subheading">${cleanText}</h3>`;
+    }
+    return `<h2 id="${slug}" class="blog-heading">${cleanText}</h2>`;
+  });
+
+  // 4. Enhance FAQ accordions: Strip conflicting inline styles from details/summary/faq-content
+  html = html.replace(/<details([^>]*)>/gi, (match, attrs) => {
+    let cleanedAttrs = attrs.replace(/style="[^"]*"/gi, '');
+    if (!cleanedAttrs.includes('class=')) {
+      cleanedAttrs += ' class="faq-item"';
+    } else if (!cleanedAttrs.includes('faq-item')) {
+      cleanedAttrs = cleanedAttrs.replace(/class="([^"]*)"/i, 'class="$1 faq-item"');
+    }
+    return `<details${cleanedAttrs}>`;
+  });
+
+  html = html.replace(/<summary([^>]*)>/gi, (match, attrs) => {
+    const cleanedAttrs = attrs.replace(/style="[^"]*"/gi, '');
+    return `<summary${cleanedAttrs}>`;
+  });
+
+  html = html.replace(/<div([^>]*)class="[^"]*faq-content[^"]*"([^>]*)>/gi, (match, a1, a2) => {
+    const cleaned = (a1 + ' ' + a2).replace(/style="[^"]*"/gi, '');
+    return `<div class="faq-content"${cleaned}>`;
+  });
+
+  return html;
+}
+
+// =======================
 // MAIN EXPORT
 // =======================
 export default function RichTextRenderer({ content }: { content: TiptapJSONContent | TiptapJSONContent[] | string }) {
   if (!content) {
     return (
-      <div className="text-gray-400 italic text-center py-16 font-rubik">
+      <div className="text-gray-400 italic text-center py-16">
         No content available yet.
       </div>
     );
@@ -448,7 +515,7 @@ export default function RichTextRenderer({ content }: { content: TiptapJSONConte
   // Handle BlockNote Array of Blocks
   if (Array.isArray(content)) {
     return (
-      <article className="w-full max-w-full overflow-x-hidden break-words font-rubik">
+      <article className="blog-prose w-full max-w-full overflow-x-hidden break-words">
         {renderBlockNoteBlocks(content)}
       </article>
     );
@@ -457,7 +524,7 @@ export default function RichTextRenderer({ content }: { content: TiptapJSONConte
   // Handle Tiptap AST object with .content
   if (typeof content !== 'string' && content.content && Array.isArray(content.content)) {
     return (
-      <article className="w-full max-w-full overflow-x-hidden break-words font-rubik">
+      <article className="blog-prose w-full max-w-full overflow-x-hidden break-words">
         {renderNodes(content.content)}
       </article>
     );
@@ -465,8 +532,12 @@ export default function RichTextRenderer({ content }: { content: TiptapJSONConte
 
   // Handle String content (HTML or Plain Text)
   if (typeof content === 'string') {
+    const enhancedHtml = enhanceBlogHtml(content);
     return (
-      <article className="w-full max-w-full overflow-x-hidden break-words font-rubik prose sm:prose-lg dark:prose-invert" dangerouslySetInnerHTML={{ __html: content }} />
+      <article
+        className="blog-prose w-full max-w-full overflow-x-hidden break-words"
+        dangerouslySetInnerHTML={{ __html: enhancedHtml }}
+      />
     );
   }
 

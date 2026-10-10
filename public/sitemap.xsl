@@ -8,7 +8,7 @@
   <xsl:template match="/">
     <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
       <head>
-        <title>XML Sitemap | Trisage Marketing</title>
+        <title>XML Sitemap | NearGrow Ads</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
         <link rel="icon" href="/favicon.ico" />
@@ -18,12 +18,12 @@
         <style type="text/css">
           /* <![CDATA[ */
           :root {
-            --primary: #243384;
-            --primary-dark: #192361;
-            --primary-light: #eef2ff;
-            --secondary: #0ea5e9;
-            --secondary-dark: #0284c7;
-            --accent: #10b981;
+            --primary: #4e993d;
+            --primary-dark: #3d7931;
+            --primary-light: #f3f9f1;
+            --secondary: #fbaf35;
+            --secondary-dark: #e08d18;
+            --accent: #68b955;
             --bg-page: #f8fafc;
             --bg-card: #ffffff;
             --text-main: #0f172a;
@@ -636,13 +636,13 @@
                 <span>Hospitality Digital Marketing</span>
               </div>
               <a href="https://trisagemarketing.com" class="site-link" target="_blank" rel="noopener noreferrer">
-                Visit trisagemarketing.com &#8599;
+                Visit NearGrow Ads &#8599;
               </a>
             </div>
             <h1>XML Sitemap Index</h1>
             <p class="description">
               This is a stylized XML Sitemap generated for search engines (Google, Bing, Yahoo) and human visitors.
-              It lists the canonical crawlable URLs for <strong>Trisage Marketing</strong>, structured for optimal indexing and discovery.
+              It lists the canonical crawlable URLs for <strong>NearGrow Ads</strong>, structured for optimal indexing and discovery.
             </p>
           </div>
 
@@ -662,7 +662,7 @@
             </div>
             <div class="stat-card">
               <span class="stat-label">Primary Entity</span>
-              <span class="stat-value" style="font-size: 20px; color: var(--primary);">Trisage Marketing</span>
+              <span class="stat-value" style="font-size: 20px; color: var(--primary);">NearGrow Ads</span>
             </div>
           </div>
 
@@ -745,7 +745,7 @@
               <span>•</span>
               <a href="https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview" target="_blank" rel="noopener noreferrer">Google Sitemaps Guide &#8599;</a>
             </div>
-            <p>Trisage Marketing — Hospitality Digital Marketing Agency in India. All Rights Reserved.</p>
+            <p>NearGrow Ads — Growth-Driven Digital Marketing Agency. All Rights Reserved.</p>
           </div>
 
         </div>
