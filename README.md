@@ -1,6 +1,6 @@
-# Trisage Marketing Website
+# NearGrow Ads Website
 
-Official marketing website for **Trisage Marketing** — fast, responsive, and designed for growth.
+Official website for **NearGrow Ads** — fast, responsive, and designed for digital growth.
 
 ## Tech Stack
 
@@ -24,3 +24,4 @@ npm run dev
 ```
 
 Open `http://localhost:3000` in your browser.
+"# neargrowads" 
