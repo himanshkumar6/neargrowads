@@ -56,7 +56,7 @@ export const getAllPublishedPosts = cache(async (): Promise<Blog[]> => {
   const supabase = createPublicClient();
   const { data: posts } = await supabase
     .from('blogs')
-    .select('*, categories(name)')
+    .select('id, title, slug, excerpt, featured_image, category_id, tags, published_at, read_time, author_name, author_avatar, categories(name)')
     .eq('status', 'published')
     .order('published_at', { ascending: false, nullsFirst: false });
 

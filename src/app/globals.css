@@ -1326,3 +1326,65 @@ aside *::-webkit-scrollbar-thumb {
   background: rgba(148, 163, 184, 0.2);
   border-radius: 9999px;
 }
+
+/* ── Branded Page Transition Loader Wave Animations ── */
+@keyframes liquidWaveMove {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes liquidWaveMoveReverse {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* ── Repeating Liquid Fill Cycle Animation (Empty -> Full -> Clean Reset) ── */
+@keyframes liquidFillCycle {
+  0% {
+    transform: translate3d(0, 115%, 0);
+    opacity: 1;
+  }
+  82% {
+    transform: translate3d(0, -20%, 0);
+    opacity: 1;
+  }
+  90% {
+    transform: translate3d(0, -20%, 0);
+    opacity: 1;
+  }
+  96% {
+    transform: translate3d(0, -20%, 0);
+    opacity: 0;
+  }
+  96.1% {
+    transform: translate3d(0, 115%, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(0, 115%, 0);
+    opacity: 1;
+  }
+}
+
+.animate-liquid-fill-cycle {
+  animation: liquidFillCycle 1.8s cubic-bezier(0.35, 0, 0.25, 1) infinite;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-liquid-wave,
+  .animate-liquid-wave-reverse,
+  .animate-liquid-fill-cycle {
+    animation: none !important;
+  }
+}
+
+

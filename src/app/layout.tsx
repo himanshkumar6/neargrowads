@@ -7,6 +7,8 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import LayoutWrapper from "@/components/LayoutWrapper";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import { Toaster } from "sonner";
+import { Suspense } from "react";
+import BrandedPageLoader from "@/components/BrandedPageLoader";
 import ChatWidget from "@/components/chat/ChatWidget";
 import CookieConsentBanner from "@/components/CookieConsentBanner";
 
@@ -174,6 +176,9 @@ export default function RootLayout({
             />
             {/* <GlobalClickSpark /> */}
             <AnalyticsTracker />
+            <Suspense fallback={null}>
+              <BrandedPageLoader />
+            </Suspense>
             <LayoutWrapper>
               {children}
             </LayoutWrapper>
