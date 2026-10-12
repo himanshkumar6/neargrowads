@@ -37,7 +37,7 @@ export default async function AdminBlogDashboard() {
       status: b.status,
       views: b.views ?? 0,
       category_name: catName || null,
-      author_name: b.author_name || null,
+      author_name: b.author_name?.trim() || "NearGrow Team",
       published_at: b.published_at || null,
       created_at: b.created_at || null,
       cover_image: b.featured_image || null,
@@ -45,9 +45,5 @@ export default async function AdminBlogDashboard() {
     };
   });
 
-  return (
-    <div className="p-4 sm:p-6 md:p-10 max-w-7xl mx-auto">
-      <BlogsListAdmin initialBlogs={mappedBlogs} />
-    </div>
-  );
+  return <BlogsListAdmin initialBlogs={mappedBlogs} />;
 }

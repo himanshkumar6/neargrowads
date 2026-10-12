@@ -7,18 +7,21 @@ import Image from "next/image";
 import { teamMembers } from "@/data/teamMembers";
 import { fadeUp } from "@/lib/animations";
 
-const Card = ({ member, index, total, globalRotation }: { member: (typeof teamMembers)[0]; index: number; total: number; globalRotation: MotionValue<number> }) => {
+const Card = ({ 
+  member, 
+  index, 
+  total, 
+  globalRotation,
+  isMobile 
+}: { 
+  member: (typeof teamMembers)[0]; 
+  index: number; 
+  total: number; 
+  globalRotation: MotionValue<number>;
+  isMobile: boolean;
+}) => {
   const prefersReducedMotion = useReducedMotion();
-
   const mounted = useSyncExternalStore(() => () => {}, () => true, () => false);
-  const isMobile = useSyncExternalStore(
-    (onStoreChange) => {
-      window.addEventListener('resize', onStoreChange);
-      return () => window.removeEventListener('resize', onStoreChange);
-    },
-    () => window.innerWidth < 768,
-    () => false
-  );
 
   const angleIncrement = 360 / total;
   
@@ -85,13 +88,24 @@ const Card = ({ member, index, total, globalRotation }: { member: (typeof teamMe
       
       <div className="absolute bottom-0 left-0 w-full p-3.5 xs:p-4 md:p-6 text-left pointer-events-none transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
         <h3 className="text-white text-base xs:text-lg md:text-2xl font-bold tracking-tight mb-0.5 xs:mb-1 drop-shadow-md leading-tight">{member.name}</h3>
-        <p className="text-gray-200 text-[11px] xs:text-xs md:text-sm font-medium uppercase tracking-wider drop-shadow-md">{member.role}</p>
+        {member.role ? (
+          <p className="text-gray-200 text-[11px] xs:text-xs md:text-sm font-medium uppercase tracking-wider drop-shadow-md">{member.role}</p>
+        ) : null}
       </div>
     </motion.div>
   );
 };
 
 export default function TeamShowcase() {
+  const isMobile = useSyncExternalStore(
+    (onStoreChange) => {
+      window.addEventListener('resize', onStoreChange);
+      return () => window.removeEventListener('resize', onStoreChange);
+    },
+    () => window.innerWidth < 768,
+    () => false
+  );
+
   const loopedMembers = [...teamMembers, ...teamMembers, ...teamMembers];
   const angleIncrement = 360 / loopedMembers.length;
   const globalRotation = useMotionValue(0);
@@ -136,19 +150,19 @@ export default function TeamShowcase() {
 
       <div className="container mx-auto px-3 xs:px-4 md:px-8 text-center relative z-20 mb-8 xs:mb-10 md:mb-20 mt-4 xs:mt-6 md:mt-1">
         <motion.span 
-          initial="hidden" whileInView="visible" viewport={{ once: false }} variants={fadeUp}
+          initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
           className="text-primary-600 dark:text-primary-400 font-semibold tracking-wider uppercase text-xs xs:text-sm"
         >
           Leadership Team
         </motion.span>
         <motion.h2 
-          initial="hidden" whileInView="visible" viewport={{ once: false }} variants={fadeUp}
+          initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
           className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mt-3 xs:mt-4 mb-3 xs:mb-4 md:mb-6 leading-tight tracking-tight"
         >
           Team Work Makes the Dream Work
         </motion.h2>
         <motion.p 
-          initial="hidden" whileInView="visible" viewport={{ once: false }} variants={fadeUp}
+          initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
           className="text-gray-600 dark:text-gray-300 text-sm xs:text-base md:text-xl max-w-2xl mx-auto leading-relaxed"
         >
           Meet the brilliant minds behind our award-winning campaigns. We combine data-driven precision with world-class creativity to scale your brand.
@@ -183,24 +197,25 @@ export default function TeamShowcase() {
               index={i} 
               total={loopedMembers.length} 
               globalRotation={globalRotation} 
+              isMobile={isMobile}
             />
           ))}
         </motion.div>
 
-        <div className="hidden md:flex items-center gap-6 mt-4 relative z-50">
+        <div className="flex items-center gap-4 sm:gap-6 mt-2 sm:mt-4 relative z-50">
           <button 
             onClick={handlePrev} 
-            className="w-14 h-14 rounded-full flex items-center justify-center bg-black/5 dark:bg-white/10 backdrop-blur-md border border-black/10 dark:border-white/10 text-gray-900 dark:text-white hover:bg-black/10 dark:hover:bg-white/20 transition-all shadow-sm hover:scale-105 active:scale-95 will-change-transform transform-gpu"
+            className="w-11 h-11 sm:w-14 sm:h-14 rounded-full flex items-center justify-center bg-black/5 dark:bg-white/10 backdrop-blur-md border border-black/10 dark:border-white/10 text-gray-900 dark:text-white hover:bg-black/10 dark:hover:bg-white/20 transition-all shadow-sm hover:scale-105 active:scale-95 will-change-transform transform-gpu cursor-pointer"
             aria-label="Previous team member"
           >
-            <ChevronLeft size={28} />
+            <ChevronLeft className="w-5 h-5 sm:w-7 sm:h-7" />
           </button>
           <button 
             onClick={handleNext}
-            className="w-14 h-14 rounded-full flex items-center justify-center bg-black/5 dark:bg-white/10 backdrop-blur-md border border-black/10 dark:border-white/10 text-gray-900 dark:text-white hover:bg-black/10 dark:hover:bg-white/20 transition-all shadow-sm hover:scale-105 active:scale-95 will-change-transform transform-gpu"
+            className="w-11 h-11 sm:w-14 sm:h-14 rounded-full flex items-center justify-center bg-black/5 dark:bg-white/10 backdrop-blur-md border border-black/10 dark:border-white/10 text-gray-900 dark:text-white hover:bg-black/10 dark:hover:bg-white/20 transition-all shadow-sm hover:scale-105 active:scale-95 will-change-transform transform-gpu cursor-pointer"
             aria-label="Next team member"
           >
-            <ChevronRight size={28} />
+            <ChevronRight className="w-5 h-5 sm:w-7 sm:h-7" />
           </button>
         </div>
       </div>

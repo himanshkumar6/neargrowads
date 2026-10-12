@@ -49,7 +49,7 @@ export default function LoginPage() {
           </Link>
         </div>
 
-        <div className="relative group bg-white/70 dark:bg-[#0a1220]/70 backdrop-blur-2xl border border-white/50 dark:border-white/5 rounded-2xl sm:rounded-[2rem] p-5 sm:p-8 shadow-[0_8px_40px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_40px_rgb(0,0,0,0.2)]">
+        <div className="relative group bg-white/90 dark:bg-[#0d1526]/90 backdrop-blur-2xl border border-slate-200/80 dark:border-white/10 rounded-2xl sm:rounded-[2rem] p-5 sm:p-8 shadow-[0_8px_40px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_40px_rgb(0,0,0,0.2)]">
           {/* Subtle top gradient line */}
           <div className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-primary-500/50 to-transparent opacity-50" />
           
@@ -78,7 +78,7 @@ export default function LoginPage() {
                   type="email" 
                   name="email"
                   required
-                  className="w-full pl-9 sm:pl-10 pr-3.5 py-2.5 sm:py-3 bg-white/60 dark:bg-black/30 border border-gray-200 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all outline-none text-xs sm:text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-600 shadow-inner"
+                  className="w-full pl-9 sm:pl-10 pr-3.5 py-3 sm:py-3 min-h-[44px] bg-white dark:bg-[#050b14]/80 border border-slate-200/90 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-[#68b955]/30 focus:border-[#68b955] transition-all outline-none text-base sm:text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 shadow-inner"
                   placeholder="admin@neargrowads.com"
                 />
               </div>
@@ -94,7 +94,7 @@ export default function LoginPage() {
                   type="password" 
                   name="password"
                   required
-                  className="w-full pl-9 sm:pl-10 pr-3.5 py-2.5 sm:py-3 bg-white/60 dark:bg-black/30 border border-gray-200 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all outline-none text-xs sm:text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-600 shadow-inner"
+                  className="w-full pl-9 sm:pl-10 pr-3.5 py-3 sm:py-3 min-h-[44px] bg-white dark:bg-[#050b14]/80 border border-slate-200/90 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-[#68b955]/30 focus:border-[#68b955] transition-all outline-none text-base sm:text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 shadow-inner"
                   placeholder="••••••••"
                 />
               </div>
@@ -103,7 +103,7 @@ export default function LoginPage() {
             <button 
               type="submit" 
               disabled={isPending}
-              className="w-full flex items-center justify-center py-3 sm:py-3.5 px-5 sm:px-6 rounded-xl text-white text-xs sm:text-sm font-bold tracking-wide bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-500 hover:to-secondary-500 shadow-lg shadow-primary-500/20 hover:shadow-primary-500/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed active:scale-98 mt-2 cursor-pointer"
+              className="w-full flex items-center justify-center py-3 sm:py-3.5 px-5 sm:px-6 min-h-[44px] rounded-xl text-white text-sm font-bold tracking-wide bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-500 hover:to-secondary-500 shadow-lg shadow-primary-500/20 hover:shadow-primary-500/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed active:scale-98 mt-2 cursor-pointer"
             >
               {isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : "Sign In Securely"}
             </button>

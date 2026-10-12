@@ -42,12 +42,13 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
     };
 
     gsap.ticker.add(updateLenisWithGsap);
-    gsap.ticker.lagSmoothing(0); // Prevents lag spikes from causing scroll jumps
+    gsap.ticker.lagSmoothing(500, 33); // Normalizes frame delta to prevent sudden jarring scroll jumps
 
     return () => {
       gsap.ticker.remove(updateLenisWithGsap);
       lenis.off("scroll", ScrollTrigger.update);
       lenis.destroy();
+      gsap.ticker.lagSmoothing(500, 33);
     };
   }, [pathname]);
 

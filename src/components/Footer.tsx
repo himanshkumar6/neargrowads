@@ -6,11 +6,11 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { services } from "@/data/services";
 import { motion } from "framer-motion";
-import { Plus, Minus, Mail, Phone, MapPin } from "lucide-react";
+import { ChevronDown, Mail, Phone, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // Social Icons
-const Email = ({ size = 20 }: { size?: number }) => (
+const Email = ({ size = 18 }: { size?: number }) => (
   <svg
     width={size}
     height={size}
@@ -25,36 +25,44 @@ const Email = ({ size = 20 }: { size?: number }) => (
     <path d="M3 7l9 6 9-6" />
   </svg>
 );
-const Linkedin = ({ size = 20 }: { size?: number }) => (
+const Linkedin = ({ size = 18 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg>
 );
-const Instagram = ({ size = 20 }: { size?: number }) => (
+const Instagram = ({ size = 18 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>
 );
 
-// Mobile Accordion
-function FooterAccordion({ title, children }: { title: string; children: React.ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false);
+// Mobile & Tablet Responsive Accordion (tight, professional spacing)
+function FooterAccordion({ 
+  title, 
+  defaultOpen = false,
+  children 
+}: { 
+  title: string; 
+  defaultOpen?: boolean;
+  children: React.ReactNode 
+}) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <div className="w-full border-b border-slate-200 dark:border-slate-800/80 md:border-none">
+    <div className="w-full border-b border-slate-200/80 dark:border-slate-800/80 sm:border-none">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex py-3.5 xs:py-4 min-h-[44px] w-full items-center justify-between md:justify-start lg:w-full md:cursor-default md:pointer-events-none group md:py-0 md:mb-5"
+        className="flex py-2.5 sm:py-0 w-full items-center justify-between sm:cursor-default sm:pointer-events-none group sm:mb-2.5 min-h-[38px] sm:min-h-0 text-left cursor-pointer"
         aria-expanded={isOpen}
       >
-        <h3 className="w-full text-left font-bold text-xs uppercase tracking-wider text-slate-900 dark:text-white">
+        <h3 className="font-bold text-xs sm:text-[13px] uppercase tracking-wider text-slate-900 dark:text-white flex-1 leading-snug">
           {title}
         </h3>
-        <span className="md:hidden text-slate-400 dark:text-slate-500 group-hover:text-primary-500 transition-colors shrink-0 ml-2">
-          {isOpen ? <Minus size={15} /> : <Plus size={15} />}
+        <span className="sm:hidden w-6 h-6 rounded-full flex items-center justify-center bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 group-hover:text-[#68B955] transition-colors shrink-0 ml-2">
+          <ChevronDown size={13} className={cn("transition-transform duration-200", isOpen && "rotate-180 text-[#68B955]")} />
         </span>
       </button>
 
       <div
         className={cn(
-          "grid transition-all duration-300 ease-in-out md:grid-rows-[1fr] md:opacity-100",
-          isOpen ? "grid-rows-[1fr] opacity-100 pb-4 md:pb-0" : "grid-rows-[0fr] opacity-0 pb-0"
+          "grid transition-all duration-300 ease-in-out sm:grid-rows-[1fr] sm:opacity-100",
+          isOpen ? "grid-rows-[1fr] opacity-100 pb-2 sm:pb-0" : "grid-rows-[0fr] opacity-0 pb-0"
         )}
       >
         <div className="overflow-hidden">{children}</div>
@@ -75,7 +83,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-white dark:bg-[#050b14] pt-16 pb-0 border-t border-slate-200 dark:border-slate-800 overflow-hidden">
+    <footer className="relative bg-white dark:bg-[#050b14] pt-8 sm:pt-10 md:pt-12 pb-0 border-t border-slate-200 dark:border-slate-800 overflow-hidden">
 
       {/* ── Mesh Orbs (Brand Green & Amber) ── */}
       <div
@@ -88,11 +96,11 @@ export default function Footer() {
       />
 
       {/* ── Scrolling Marquee Background ── */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden pointer-events-none opacity-40 select-none z-0">
+      <div className="absolute bottom-0 left-0 w-full max-w-full overflow-hidden pointer-events-none opacity-40 select-none z-0">
         <motion.div
           animate={{ x: [0, "-50%"] }}
           transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
-          className="flex w-max whitespace-nowrap"
+          className="flex w-max whitespace-nowrap will-change-transform transform-gpu"
         >
           {[...Array(4)].map((_, i) => (
             <span
@@ -106,52 +114,52 @@ export default function Footer() {
         </motion.div>
       </div>
 
-      <div className="container mx-auto px-3 xs:px-4 md:px-8 relative z-10 max-w-7xl">
+      <div className="container mx-auto px-4 xs:px-6 md:px-8 relative z-10 max-w-7xl">
 
-        {/* ── Main Grid ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-8 lg:gap-10 items-start mb-4 md:mb-8">
+        {/* ── Main Grid: Balanced tight layout across Mobile, Tablet, and Desktop ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 lg:gap-8 items-start mb-4 sm:mb-6">
 
           {/* Column 1: Brand */}
-          <div className="flex flex-col gap-5 mb-8 md:mb-0 border-b border-slate-200 dark:border-slate-800 pb-6 md:border-none md:pb-0">
+          <div className="flex flex-col gap-3 sm:gap-3.5 pb-4 sm:pb-0 border-b border-slate-200/80 dark:border-slate-800/80 sm:border-none">
             <Link 
               href="/" 
-              className="inline-flex items-center gap-2.5 sm:gap-3 group cursor-pointer shrink-0"
+              className="inline-flex items-center gap-2 sm:gap-2.5 group cursor-pointer shrink-0"
               onClick={(e) => handleSamePageScroll(e, "/")}
             >
               <Image
                 src="/icon.png"
                 alt="NearGrow Ads"
-                width={40}
-                height={40}
-                className="h-9 w-9 md:h-10 md:w-10 object-contain transition-transform duration-300 group-hover:scale-105"
+                width={36}
+                height={36}
+                className="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 object-contain transition-transform duration-300 group-hover:scale-105"
               />
               <div className="flex items-center leading-none">
-                <span className="font-hero font-bold tracking-[0.03em] text-xl md:text-2xl text-slate-900 dark:text-white transition-colors whitespace-nowrap">
+                <span className="font-hero font-bold tracking-[0.03em] text-lg sm:text-xl md:text-2xl text-slate-900 dark:text-white transition-colors whitespace-nowrap">
                   NEAR<span className="text-[#68B955]">GROW</span> <span className="text-[#FBAF35] ml-1">ADS</span>
                 </span>
               </div>
             </Link>
 
             {/* Brand description — Clean sentence case, high readability */}
-            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-sm font-normal">
+            <p className="text-xs sm:text-[13px] text-slate-600 dark:text-slate-400 leading-relaxed max-w-sm font-normal">
               Dedicated local business growth agency helping nearby retail shops, clinics, restaurants, and service providers scale through <strong className="font-semibold text-slate-900 dark:text-white">Google Maps visibility</strong>, <strong className="font-semibold text-slate-900 dark:text-white">targeted local advertising</strong>, and high-converting creative execution.
             </p>
 
             {/* Social icons */}
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2 pt-0.5">
               {[
-                { href: "mailto:info@neargrowads.in", icon: <Email size={17} />, label: "Email" },
+                { href: "mailto:info@neargrowads.in", icon: <Email size={15} />, label: "Email" },
                 { 
                   href: "https://wa.me/919289810149?text=Hello%20NearGrow%20Ads!%20I%20would%20like%20to%20inquire%20about%20your%20digital%20marketing%20services.", 
                   icon: (
-                    <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
                       <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.705 1.754zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l.999 1.594-1.066 3.896 3.99-1.045 1.82 1.222zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
                     </svg>
                   ), 
                   label: "WhatsApp" 
                 },
-                { href: "https://linkedin.com/company/neargrow-ads/", icon: <Linkedin size={17} />, label: "LinkedIn" },
-                { href: "https://instagram.com/neargrowads", icon: <Instagram size={17} />, label: "Instagram" },
+                { href: "https://linkedin.com/company/neargrow-ads/", icon: <Linkedin size={15} />, label: "LinkedIn" },
+                { href: "https://instagram.com/neargrowads", icon: <Instagram size={15} />, label: "Instagram" },
               ].map(({ href, icon, label }) => (
                 <a
                   key={label}
@@ -159,7 +167,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-9 h-9 rounded-full flex items-center justify-center border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-[#68B955] dark:hover:border-[#68B955] hover:text-[#68B955] dark:hover:text-[#68B955] hover:bg-slate-50 dark:hover:bg-slate-900 transition-all duration-300"
+                  className="w-9 h-9 min-w-[36px] min-h-[36px] rounded-full flex items-center justify-center border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-[#68B955] dark:hover:border-[#68B955] hover:text-[#68B955] dark:hover:text-[#68B955] hover:bg-slate-50 dark:hover:bg-slate-900 transition-all duration-300"
                 >
                   {icon}
                 </a>
@@ -168,10 +176,10 @@ export default function Footer() {
           </div>
 
           {/* Column 2: Company */}
-          <div className="border-t border-slate-200 dark:border-slate-800/80 md:border-none mt-4 md:mt-0">
-            <FooterAccordion title="Company">
+          <div className="w-full">
+            <FooterAccordion title="Company" defaultOpen={true}>
               <nav aria-label="Company Navigation">
-                <ul className="flex flex-col gap-2.5 text-sm lg:pr-4">
+                <ul className="flex flex-col gap-0.5 text-sm lg:pr-4">
                   {[
                     { href: "/about", label: "About Us" },
                     { href: "/services", label: "Our Services" },
@@ -183,10 +191,10 @@ export default function Footer() {
                       <Link
                         href={href}
                         onClick={(e) => handleSamePageScroll(e, href)}
-                        className="font-medium text-slate-600 dark:text-slate-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors duration-200 flex items-center gap-1.5 group"
+                        className="py-1 font-medium text-xs sm:text-[13px] text-slate-600 dark:text-slate-400 hover:text-[#68B955] dark:hover:text-[#68B955] transition-colors duration-200 flex items-center gap-1.5 group min-h-[30px]"
                       >
-                        <span className="w-0 group-hover:w-1.5 h-0.5 bg-primary-500 transition-all duration-300 rounded-full" />
-                        {label}
+                        <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:w-2 group-hover:bg-[#68B955] transition-all duration-200" />
+                        <span>{label}</span>
                       </Link>
                     </li>
                   ))}
@@ -196,105 +204,115 @@ export default function Footer() {
           </div>
 
           {/* Column 3: Services */}
-          <FooterAccordion title="Services">
-            <nav aria-label="Services Navigation">
-              <ul className="flex flex-col gap-2.5 text-sm">
-                {services.map((service) => {
-                  const serviceHref = `/services/${service.slug}`;
-                  return (
-                    <li key={service.id}>
-                      <Link
-                        href={serviceHref}
-                        onClick={(e) => handleSamePageScroll(e, serviceHref)}
-                        className="font-medium text-slate-600 dark:text-slate-400 hover:text-secondary-500 dark:hover:text-secondary-400 transition-colors duration-200 flex items-center gap-1.5 group"
-                      >
-                        <span className="w-0 group-hover:w-1.5 h-0.5 bg-secondary-500 transition-all duration-300 rounded-full" />
-                        {service.title}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </nav>
-          </FooterAccordion>
+          <div className="w-full">
+            <FooterAccordion title="Services" defaultOpen={false}>
+              <nav aria-label="Services Navigation">
+                <ul className="flex flex-col gap-0.5 text-sm">
+                  {services.map((service) => {
+                    const serviceHref = `/services/${service.slug}`;
+                    return (
+                      <li key={service.id}>
+                        <Link
+                          href={serviceHref}
+                          onClick={(e) => handleSamePageScroll(e, serviceHref)}
+                          className="py-1 font-medium text-xs sm:text-[13px] text-slate-600 dark:text-slate-400 hover:text-[#FBAF35] dark:hover:text-[#FBAF35] transition-colors duration-200 flex items-center gap-1.5 group min-h-[30px]"
+                        >
+                          <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:w-2 group-hover:bg-[#FBAF35] transition-all duration-200" />
+                          <span className="truncate sm:whitespace-normal">{service.title}</span>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
+            </FooterAccordion>
+          </div>
 
           {/* Column 4: Contact */}
-          <FooterAccordion title="Contact Info">
-            <ul className="flex flex-col gap-4 text-sm pt-1">
-              <li>
-                <a
-                  href="tel:+919289810149"
-                  className="flex items-center gap-3 text-slate-700 dark:text-slate-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors group font-medium"
-                >
-                  <Phone size={18} className="text-primary-500 dark:text-primary-400 shrink-0 group-hover:scale-110 transition-transform" />
-                  <span>+91 92898 10149</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="mailto:info@neargrowads.in"
-                  className="flex items-center gap-3 text-slate-700 dark:text-slate-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors group font-medium"
-                >
-                  <Mail size={18} className="text-primary-500 dark:text-primary-400 shrink-0 group-hover:scale-110 transition-transform" />
-                  <span>info@neargrowads.in</span>
-                </a>
-              </li>
-              <li className="pt-1">
-                <a 
-                  href="https://www.google.com/maps/search/?api=1&query=Pillar+no.+781,+B-1,+Bhagwati+Garden+Rd,+near+dwarka+mor,+Uttam+Nagar,+Bhagwati+Garden,+Nawada,+New+Delhi,+Delhi+110059" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-start gap-3 text-slate-700 dark:text-slate-300 hover:text-secondary-500 dark:hover:text-secondary-400 transition-colors leading-relaxed group font-medium text-xs sm:text-sm"
-                >
-                  <MapPin size={18} className="text-secondary-500 dark:text-secondary-400 shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
-                  <span>
-                    Pillar no. 781, B-1, Bhagwati Garden Rd,<br />
-                    near dwarka mor, Uttam Nagar,<br />
-                    Bhagwati Garden, Nawada,<br />
-                    New Delhi, Delhi, 110059
-                  </span>
-                </a>
-              </li>
-            </ul>
-          </FooterAccordion>
+          <div className="w-full">
+            <FooterAccordion title="Contact Info" defaultOpen={true}>
+              <ul className="flex flex-col gap-1.5 text-sm pt-0.5">
+                <li>
+                  <a
+                    href="tel:+919289810149"
+                    className="flex items-center gap-2.5 py-0.5 text-slate-700 dark:text-slate-300 hover:text-[#68B955] dark:hover:text-[#68B955] transition-colors group font-medium min-h-[34px]"
+                  >
+                    <div className="w-7 h-7 rounded-lg bg-[#68B955]/10 dark:bg-[#68B955]/15 flex items-center justify-center shrink-0 text-[#68B955] group-hover:bg-[#68B955] group-hover:text-white transition-all">
+                      <Phone size={13} />
+                    </div>
+                    <span className="text-xs sm:text-[13px]">+91 92898 10149</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="mailto:info@neargrowads.in"
+                    className="flex items-center gap-2.5 py-0.5 text-slate-700 dark:text-slate-300 hover:text-[#68B955] dark:hover:text-[#68B955] transition-colors group font-medium min-h-[34px]"
+                  >
+                    <div className="w-7 h-7 rounded-lg bg-[#68B955]/10 dark:bg-[#68B955]/15 flex items-center justify-center shrink-0 text-[#68B955] group-hover:bg-[#68B955] group-hover:text-white transition-all">
+                      <Mail size={13} />
+                    </div>
+                    <span className="text-xs sm:text-[13px] break-all">info@neargrowads.in</span>
+                  </a>
+                </li>
+                <li className="pt-0.5">
+                  <a 
+                    href="https://www.google.com/maps/search/?api=1&query=Pillar+no.+781,+B-1,+Bhagwati+Garden+Rd,+near+dwarka+mor,+Uttam+Nagar,+Bhagwati+Garden,+Nawada,+New+Delhi,+Delhi+110059" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-2.5 py-0.5 text-slate-700 dark:text-slate-300 hover:text-[#FBAF35] dark:hover:text-[#FBAF35] transition-colors leading-relaxed group font-medium text-xs sm:text-[13px]"
+                  >
+                    <div className="w-7 h-7 rounded-lg bg-[#FBAF35]/10 dark:bg-[#FBAF35]/15 flex items-center justify-center shrink-0 text-[#FBAF35] group-hover:bg-[#FBAF35] group-hover:text-white transition-all mt-0.5">
+                      <MapPin size={13} />
+                    </div>
+                    <span className="leading-snug">
+                      Pillar no. 781, B-1, Bhagwati Garden Rd,<br />
+                      near dwarka mor, Uttam Nagar,<br />
+                      Bhagwati Garden, Nawada,<br />
+                      New Delhi, Delhi, 110059
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </FooterAccordion>
+          </div>
 
         </div>
 
-        {/* ── Bottom Bar ── */}
-        <div className="border-t border-slate-200 dark:border-slate-800 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+        {/* ── Bottom Bar: Sleek, compact, professional padding across screen sizes ── */}
+        <div className="border-t border-slate-200 dark:border-slate-800 py-3 sm:py-3.5 pb-16 sm:pb-4 md:py-3.5 flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4">
           {/* Copyright */}
-          <p className="font-medium text-xs text-slate-500 dark:text-slate-400 text-center md:text-left order-2 md:order-1 leading-relaxed">
-            <strong className="block md:inline font-semibold text-slate-800 dark:text-slate-200">
+          <p className="font-medium text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 text-center sm:text-left order-2 sm:order-1 leading-normal">
+            <strong className="block sm:inline font-semibold text-slate-800 dark:text-slate-200">
               © {currentYear} NearGrow Ads.
             </strong>
-            <span className="hidden md:inline mx-2 text-slate-300 dark:text-slate-700">·</span>
-            <span className="block text-slate-500 dark:text-slate-400 mt-1 md:mt-0 md:inline">
+            <span className="hidden sm:inline mx-1.5 text-slate-300 dark:text-slate-700">·</span>
+            <span className="block text-slate-500 dark:text-slate-400 mt-0.5 sm:mt-0 sm:inline">
               All rights reserved. Grow Local. Grow Smart.
             </span>
           </p>
 
-          {/* Legal links */}
-          <div className="flex flex-wrap justify-center items-center gap-x-3 gap-y-2 xs:gap-x-5 order-1 md:order-2">
+          {/* Legal policy links */}
+          <div className="flex flex-wrap justify-center items-center gap-x-3 gap-y-1 order-1 sm:order-2">
             <Link
               href="/privacy"
               onClick={(e) => handleSamePageScroll(e, "/privacy")}
-              className="text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors"
+              className="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-[#68B955] dark:hover:text-[#68B955] transition-colors py-1 px-1 min-h-[30px] inline-flex items-center"
             >
               Privacy Policy
             </Link>
-            <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700" />
+            <span className="text-slate-300 dark:text-slate-700 select-none text-[10px]">•</span>
             <Link
               href="/terms-and-conditions"
               onClick={(e) => handleSamePageScroll(e, "/terms-and-conditions")}
-              className="text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-secondary-500 dark:hover:text-secondary-400 transition-colors"
+              className="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-[#FBAF35] dark:hover:text-[#FBAF35] transition-colors py-1 px-1 min-h-[30px] inline-flex items-center"
             >
               Terms of Service
             </Link>
-            <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700" />
+            <span className="text-slate-300 dark:text-slate-700 select-none text-[10px]">•</span>
             <Link
               href="/sitemap"
               onClick={(e) => handleSamePageScroll(e, "/sitemap")}
-              className="text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors"
+              className="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-[#68B955] dark:hover:text-[#68B955] transition-colors py-1 px-1 min-h-[30px] inline-flex items-center"
             >
               Sitemap
             </Link>

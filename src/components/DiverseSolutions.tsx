@@ -152,7 +152,7 @@ export default function DiverseSolutions() {
             {[...solutions, ...solutions].map((solution, index) => (
               <div key={index} className="shrink-0 w-[85vw] sm:w-[320px] md:w-[360px] lg:w-[400px] pr-4 sm:pr-6 h-auto">
                 {/* 4:5 Aspect Ratio Glass Card Shell */}
-                <div className="group relative w-full aspect-4/5 rounded-2xl xs:rounded-[2.2rem] overflow-hidden flex flex-col justify-between transform-gpu will-change-transform bg-gray-900 border border-white/20 dark:border-white/10 shadow-lg hover:shadow-2xl transition-all duration-500">
+                <div className="group relative w-full aspect-4/5 rounded-2xl xs:rounded-[2.2rem] overflow-hidden flex flex-col justify-between transform-gpu bg-gray-900 border border-white/20 dark:border-white/10 shadow-lg hover:shadow-2xl transition-all duration-500">
                   
                   {/* Background Image with Hover Scale */}
                   <div className="absolute inset-0 z-0">
@@ -162,7 +162,8 @@ export default function DiverseSolutions() {
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover transform-gpu transition-transform duration-[1.5s] ease-out group-hover:scale-[1.05]"
-                      quality={90}
+                      quality={75}
+                      loading="lazy"
                     />
                   </div>
 

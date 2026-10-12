@@ -3,6 +3,7 @@ import { z } from "zod";
 // Shared Zod schema for validating a Lead submission
 export const leadSubmissionSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters.").max(100, "Name is too long."),
+  company: z.string().max(100, "Company name is too long.").optional(),
   email: z.string().email("Please provide a valid email address.").max(150, "Email is too long.").optional().or(z.literal("")),
   phone: z.string().min(7, "Please provide a valid phone number.").max(30, "Phone number is too long.").optional().or(z.literal("")),
   service: z.string().min(1, "Please select a service.").max(150, "Service name is too long."),

@@ -11,8 +11,7 @@ import BlogViewTracker from "@/components/blog/BlogViewTracker";
 import BlogReadingExperience from "@/components/blog/BlogReadingExperience";
 import BlogCard from "@/components/blog/BlogCard";
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 60;
 
 // ==========================================
 // DYNAMIC METADATA + JSON-LD
@@ -44,11 +43,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
 
   if (!post) notFound();
 
-  // Dynamically resolve internal blog links and media references
-  const resolvedContent = await resolveBlogContent(post.content);
-
-  // Fetch related articles for the bottom section
-  const allPosts = await getAllPublishedPosts();
+  // Dynamically resolve internal blog links and fetch related articles in parallel
+  const [resolvedContent, allPosts] = await Promise.all([
+    resolveBlogContent(post.content),
+    getAllPublishedPosts(),
+  ]);
   const relatedPosts = allPosts
     .filter((p) => p.id !== post.id)
     .slice(0, 3);

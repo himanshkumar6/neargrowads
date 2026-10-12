@@ -137,7 +137,7 @@ export default function Navbar() {
 
             {/* Mobile Navigation Toggle Button */}
             <button
-              className="lg:hidden w-9 h-9 sm:w-10 sm:h-10 shrink-0 flex items-center justify-center text-slate-700 dark:text-slate-200 hover:text-[#68B955] dark:hover:text-[#68B955] transition-colors rounded-lg cursor-pointer"
+              className="lg:hidden w-11 h-11 min-w-[44px] min-h-[44px] shrink-0 flex items-center justify-center text-slate-700 dark:text-slate-200 hover:text-[#68B955] dark:hover:text-[#68B955] transition-colors rounded-lg cursor-pointer"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
               aria-expanded={isMobileMenuOpen}

@@ -57,12 +57,12 @@ export default function DeleteBlogButton({ id, title }: DeleteBlogButtonProps) {
           />
 
           {/* Modal Container */}
-          <div className="relative w-full max-w-md bg-white dark:bg-[#0a1220] border border-gray-200 dark:border-gray-800 rounded-2xl shadow-2xl overflow-hidden z-10 p-6 text-left my-auto">
+          <div className="relative w-full max-w-md bg-white dark:bg-[#0d1526] border border-slate-200/80 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden z-10 p-6 text-left my-auto">
             {/* Close Icon */}
             <button
               onClick={() => !isDeleting && setIsOpen(false)}
               disabled={isDeleting}
-              className="absolute top-4 right-4 p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors disabled:opacity-50"
+              className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors disabled:opacity-50"
             >
               <X size={18} />
             </button>
@@ -73,22 +73,22 @@ export default function DeleteBlogButton({ id, title }: DeleteBlogButtonProps) {
                 <AlertTriangle size={20} />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-tight">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white leading-tight">
                   Delete Blog Post?
                 </h3>
-                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">
-                  Are you sure you want to permanently delete <strong className="text-gray-800 dark:text-gray-200">&quot;{title}&quot;</strong>? This action cannot be undone.
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                  Are you sure you want to permanently delete <strong className="text-slate-800 dark:text-slate-200">&quot;{title}&quot;</strong>? This action cannot be undone.
                 </p>
               </div>
             </div>
 
             {/* Modal Actions */}
-            <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 mt-6 pt-4 border-t border-gray-100 dark:border-gray-800">
+            <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 mt-6 pt-4 border-t border-slate-200/80 dark:border-white/10">
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
                 disabled={isDeleting}
-                className="w-full sm:w-auto px-4 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors disabled:opacity-50 cursor-pointer text-center"
+                className="w-full sm:w-auto px-4 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10 rounded-xl transition-colors disabled:opacity-50 cursor-pointer text-center"
               >
                 Cancel
               </button>

@@ -11,12 +11,13 @@ export const metadata: Metadata = {
   },
 };
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default async function BlogPage() {
-  const blogs = await getAllPublishedPosts();
-  const dbCategories = await getAllCategories();
+  const [blogs, dbCategories] = await Promise.all([
+    getAllPublishedPosts(),
+    getAllCategories(),
+  ]);
 
   return (
     <main className="min-h-screen bg-white dark:bg-[#050b14] relative overflow-hidden">

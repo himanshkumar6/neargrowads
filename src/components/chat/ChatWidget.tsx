@@ -25,48 +25,59 @@ export default function ChatWidget() {
   const [mounted, setMounted] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [vvStyle, setVvStyle] = useState<React.CSSProperties>({});
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const { state, toggleOpen, handleInputSubmit, handleOptionSelect, resetSession } = useChatbot();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Prevent background scrolling and rubber-banding when chat is open on mobile
+  // Prevent background scrolling cleanly when chat is open on mobile
   useEffect(() => {
     if (typeof window === 'undefined' || isEmsPage) return;
     
     if (state.isOpen && window.innerWidth < 640) {
-      const scrollY = window.scrollY;
-      
-      // Lock the body to completely prevent background scrolling/swiping
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = '100%';
+      const originalBodyOverflow = document.body.style.overflow;
+      const originalHtmlOverflow = document.documentElement.style.overflow;
+      const originalTouchAction = document.body.style.touchAction;
+
+      // Lock scroll without setting position: fixed on body to avoid iOS Safari viewport detachment
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
       document.body.style.touchAction = 'none';
 
       return () => {
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
-        document.body.style.overflow = '';
-        document.body.style.touchAction = '';
-        // Restore scroll position precisely
-        window.scrollTo(0, scrollY);
+        document.body.style.overflow = originalBodyOverflow;
+        document.documentElement.style.overflow = originalHtmlOverflow;
+        document.body.style.touchAction = originalTouchAction;
       };
     }
   }, [state.isOpen, isEmsPage]);
 
-  // Bulletproof mobile and tablet keyboard fix using Visual Viewport API
+  // Bulletproof mobile and tablet keyboard fix using Visual Viewport API (Only attached when open)
   useEffect(() => {
-    if (typeof window === 'undefined' || !window.visualViewport || isEmsPage) return;
+    if (typeof window === 'undefined' || !window.visualViewport || isEmsPage || !state.isOpen) {
+      setVvStyle({});
+      setIsKeyboardOpen(false);
+      return;
+    }
+
+    const vv = window.visualViewport;
     
     const handleResize = () => {
-      if (!window.visualViewport) return;
+      if (!vv) return;
       const isMobile = window.innerWidth < 640;
-      const vv = window.visualViewport;
 
       if (isMobile) {
+        // Detect if virtual keyboard is active (height significantly smaller than window height)
+        const keyboardActive = vv.height < window.innerHeight - 60;
+        setIsKeyboardOpen(keyboardActive);
+
+        // Keep page scroll anchored at 0 so browser doesn't drift visual viewport
+        if (window.scrollY !== 0) {
+          window.scrollTo(0, 0);
+        }
+
         setVvStyle({
           height: `${vv.height}px`,
           top: `${vv.offsetTop}px`,
@@ -74,6 +85,7 @@ export default function ChatWidget() {
           width: `${vv.width}px`,
         });
       } else {
+        setIsKeyboardOpen(false);
         // Tablet (Portrait & Landscape) and Desktop keyboard/height adaptation:
         const keyboardOffset = Math.max(0, window.innerHeight - (vv.offsetTop + vv.height));
         
@@ -99,15 +111,13 @@ export default function ChatWidget() {
       }
     };
 
-    // The scroll event is critical on iOS/Android because the keyboard forces a scroll
-    // without triggering a resize if the visual viewport shrinks natively.
-    window.visualViewport.addEventListener('resize', handleResize);
-    window.visualViewport.addEventListener('scroll', handleResize);
-    handleResize(); // Initial measurement
+    vv.addEventListener('resize', handleResize);
+    vv.addEventListener('scroll', handleResize);
+    handleResize(); // Initial measurement when chat is opened
 
     return () => {
-      window.visualViewport?.removeEventListener('resize', handleResize);
-      window.visualViewport?.removeEventListener('scroll', handleResize);
+      vv.removeEventListener('resize', handleResize);
+      vv.removeEventListener('scroll', handleResize);
     };
   }, [state.isOpen, isEmsPage]);
 
@@ -120,52 +130,53 @@ export default function ChatWidget() {
       <AnimatePresence>
         {state.isOpen && (
           <>
-            {/* Dark Backdrop to prevent background interactions on mobile */}
+            {/* Backdrop for tablet/desktop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-[999] bg-black/40 backdrop-blur-sm sm:hidden"
+              className="fixed inset-0 z-[1050] bg-black/40 backdrop-blur-xs sm:hidden"
               onClick={toggleOpen}
             />
 
             <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95, transition: { duration: 0.2 } }}
-            transition={{ type: "spring", stiffness: 350, damping: 25 }}
-            style={Object.keys(vvStyle).length > 0 ? vvStyle : {}}
-            data-lenis-prevent="true"
-            className="fixed top-0 left-0 z-[1000] w-full h-[100dvh] sm:h-[520px] sm:max-h-[calc(100dvh-100px)] sm:inset-auto sm:bottom-20 md:bottom-24 sm:right-4 md:right-6 sm:w-[380px] origin-bottom-right flex flex-col shadow-2xl"
-          >
-            <ChatInterface 
-              state={state}
-              inputValue={inputValue}
-              onInputChange={setInputValue}
-              onSubmit={() => {
-                if (!inputValue.trim()) return;
-                handleInputSubmit(inputValue);
-                setInputValue("");
-              }}
-              onOptionSelect={(option) => {
-                if (state.step === CHAT_STEPS.SERVICE) {
-                  setInputValue((prev) => {
-                    if (!prev) return option;
-                    const items = prev.split(',').map(s => s.trim()).filter(Boolean);
-                    if (items.includes(option)) {
-                      return items.filter(s => s !== option).join(', ');
-                    } else {
-                      return `${prev}, ${option}`;
-                    }
-                  });
-                } else {
-                  handleOptionSelect(option);
-                }
-              }}
-              onClose={toggleOpen}
-              onReset={resetSession}
-            />
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 15, transition: { duration: 0.15 } }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              style={Object.keys(vvStyle).length > 0 ? vvStyle : {}}
+              data-lenis-prevent="true"
+              className="fixed top-0 left-0 z-[1100] w-full h-[100dvh] bg-white dark:bg-[#07111e] sm:h-[520px] sm:max-h-[calc(100dvh-100px)] sm:inset-auto sm:bottom-20 md:bottom-24 sm:right-4 md:right-6 sm:w-[380px] sm:bg-transparent origin-bottom-right flex flex-col shadow-2xl overflow-hidden"
+            >
+              <ChatInterface 
+                state={state}
+                inputValue={inputValue}
+                onInputChange={setInputValue}
+                isKeyboardOpen={isKeyboardOpen}
+                onSubmit={() => {
+                  if (!inputValue.trim()) return;
+                  handleInputSubmit(inputValue);
+                  setInputValue("");
+                }}
+                onOptionSelect={(option) => {
+                  if (state.step === CHAT_STEPS.SERVICE) {
+                    setInputValue((prev) => {
+                      if (!prev) return option;
+                      const items = prev.split(',').map(s => s.trim()).filter(Boolean);
+                      if (items.includes(option)) {
+                        return items.filter(s => s !== option).join(', ');
+                      } else {
+                        return `${prev}, ${option}`;
+                      }
+                    });
+                  } else {
+                    handleOptionSelect(option);
+                  }
+                }}
+                onClose={toggleOpen}
+                onReset={resetSession}
+              />
             </motion.div>
           </>
         )}

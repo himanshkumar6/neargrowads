@@ -26,7 +26,7 @@ export default function AboutHero() {
         variants={staggerContainer}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: false, margin: "-50px" }}
+        viewport={{ once: true, margin: "-50px" }}
         className="relative z-20 container mx-auto px-3 xs:px-4 md:px-8"
       >
         <motion.h1 

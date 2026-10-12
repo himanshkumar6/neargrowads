@@ -68,7 +68,7 @@ const SplitChars = ({ text }: { text: string }) => {
       {parseBoldWords(text).map((word, wordIndex) => (
         <span 
           key={wordIndex} 
-          className={`inline-block mr-[0.25em] char-drop will-change-transform transform-gpu ${word.isBold ? 'font-semibold text-secondary-300' : 'font-normal'}`}
+          className={`inline-block mr-[0.25em] char-drop ${word.isBold ? 'font-semibold text-secondary-300' : 'font-normal'}`}
         >
           {word.text}
         </span>
@@ -133,50 +133,73 @@ export default function WhyChooseUs() {
     gsap.fromTo(
       headingRef.current.querySelectorAll('.heading-word'),
       {
-        y: 50,
+        y: 40,
         opacity: 0,
-        rotateX: -60,
+        rotateX: -40,
       },
       {
         y: 0,
         opacity: 1,
         rotateX: 0,
-        duration: 1,
-        stagger: 0.15,
-        ease: "power2.out", // Smoother for scrubbing
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: headingRef.current,
-          start: "top 95%", // Start as soon as it enters the bottom of the screen
-          end: "top 50%", // Finish exactly when it reaches the middle of the screen
-          scrub: 1.5, // 1.5 second smoothing effect ties the animation perfectly to the scroll wheel!
+          start: "top 95%",
+          end: "top 55%",
+          scrub: 1,
         }
       }
     );
 
     if (!paraRef.current) return;
 
-    // Character Drop from Sky Animation (Optimized)
-    gsap.fromTo(
-      paraRef.current.querySelectorAll('.char-drop'),
-      {
-        y: -150,
-        opacity: 0,
-        scale: 1.2,
-      },
-      {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        stagger: 0.05,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: paraRef.current,
-          start: "top 95%",
-          end: "top 65%",
-          scrub: 1.5,
+    const isMobileOrReduced =
+      typeof window !== "undefined" &&
+      window.matchMedia("(pointer: coarse), (max-width: 767px), (prefers-reduced-motion: reduce)").matches;
+
+    if (isMobileOrReduced) {
+      // Lightweight batch reveal on mobile/reduced-motion to maintain 60fps touch scrolling
+      gsap.fromTo(
+        paraRef.current,
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: paraRef.current,
+            start: "top 90%",
+            toggleActions: "play none none none",
+          }
         }
-      }
-    );
+      );
+    } else {
+      // Smooth word drop on desktop without permanent compositor layers
+      gsap.fromTo(
+        paraRef.current.querySelectorAll('.char-drop'),
+        {
+          y: -60,
+          opacity: 0,
+          scale: 1.1,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          stagger: 0.03,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: paraRef.current,
+            start: "top 95%",
+            end: "top 65%",
+            scrub: 1,
+          }
+        }
+      );
+    }
 
     if (!listRef.current) return;
 

@@ -1,13 +1,15 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { 
   Phone,
   Target,
   Users,
-  TrendingUp
+  TrendingUp,
+  Volume2,
+  VolumeX
 } from "lucide-react";
 
 if (typeof window !== "undefined") {
@@ -19,6 +21,20 @@ export default function Hero() {
   const leftColRef = useRef<HTMLDivElement>(null);
   const rightColRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const toggleSound = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.muted) {
+      video.muted = false;
+      setIsMuted(false);
+    } else {
+      video.muted = true;
+      setIsMuted(true);
+    }
+  };
 
   // ── High-Performance Video Lifecycle & Autoplay Handling ──
   useEffect(() => {
@@ -230,6 +246,27 @@ export default function Hero() {
                 >
                   <source src="/hero-bg.mp4" type="video/mp4" />
                 </video>
+
+                {/* Mute / Unmute Sound Control Button */}
+                <button
+                  type="button"
+                  onClick={toggleSound}
+                  className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-20 flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-slate-950/75 hover:bg-slate-950/90 text-white backdrop-blur-md border border-white/20 shadow-lg active:scale-95 transition-all duration-200 cursor-pointer"
+                  aria-label={isMuted ? "Unmute video audio" : "Mute video audio"}
+                  title={isMuted ? "Unmute sound" : "Mute sound"}
+                >
+                  {isMuted ? (
+                    <>
+                      <VolumeX className="w-4 h-4 text-white/90" />
+                      <span className="text-[11px] sm:text-xs font-semibold tracking-wide">Unmute</span>
+                    </>
+                  ) : (
+                    <>
+                      <Volume2 className="w-4 h-4 text-[#00c371] dark:text-[#68B955]" />
+                      <span className="text-[11px] sm:text-xs font-semibold tracking-wide text-[#00c371] dark:text-[#68B955]">Mute</span>
+                    </>
+                  )}
+                </button>
               </div>
 
             </div>

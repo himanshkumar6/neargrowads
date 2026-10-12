@@ -13,11 +13,11 @@ export default function HRAdminLoading() {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#f8fafc] dark:bg-[#0f172a] flex flex-col items-center justify-center p-6 text-slate-900 dark:text-white font-sans animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 bg-[#f8fafc]/95 dark:bg-[#050b14]/95 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-slate-900 dark:text-white font-sans animate-in fade-in duration-200">
       <div className="flex flex-col items-center gap-4 text-center">
         {/* Dual Ring Spinner Loader */}
         <div className="relative flex items-center justify-center">
-          <div className="w-10 h-10 border-3 border-slate-200 dark:border-slate-800 border-t-secondary-500 rounded-full animate-spin" />
+          <div className="w-10 h-10 border-3 border-slate-200 dark:border-white/10 border-t-[#68b955] rounded-full animate-spin" />
         </div>
 
         {/* Loading... Text */}

@@ -197,30 +197,30 @@ export default function MediaPickerModal({
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-4xl h-145 max-h-[90vh] bg-white dark:bg-[#0b1329] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl shadow-black/70 dark:shadow-[0_25px_70px_rgba(0,0,0,0.85)] flex flex-col my-auto overflow-hidden animate-in zoom-in-95 duration-200 select-none"
+        className="relative w-full max-w-4xl h-145 max-h-[90vh] bg-white dark:bg-[#0d1526] border border-slate-200/80 dark:border-white/10 rounded-2xl shadow-2xl shadow-black/70 dark:shadow-[0_25px_70px_rgba(0,0,0,0.85)] flex flex-col my-auto overflow-hidden animate-in zoom-in-95 duration-200 select-none"
         onClick={(e) => e.stopPropagation()}
       >
 
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-3.5 border-b border-gray-100 dark:border-white/10 bg-gray-50/80 dark:bg-[#0e1736]/80 backdrop-blur-sm shrink-0">
+        <div className="flex items-center justify-between px-6 py-3.5 border-b border-slate-200/80 dark:border-white/10 bg-slate-50/80 dark:bg-[#07111e]/90 backdrop-blur-sm shrink-0">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-primary-500/10 dark:bg-primary-500/15 border border-primary-500/20 flex items-center justify-center text-primary-600 dark:text-primary-400">
               <ImageIcon size={16} />
             </div>
             <div>
-              <h3 className="font-bold text-gray-900 dark:text-white text-sm leading-tight">Insert Media</h3>
-              <p className="text-[11px] text-gray-500 dark:text-slate-400">Select, upload, or paste an image for your article</p>
+              <h3 className="font-bold text-slate-900 dark:text-white text-sm leading-tight">Insert Media</h3>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">Select, upload, or paste an image for your article</p>
             </div>
           </div>
 
           {/* Navigation Tabs in Header */}
-          <div className="flex items-center bg-gray-200/70 dark:bg-slate-800/80 p-1 rounded-xl border border-gray-300/40 dark:border-slate-700/60">
+          <div className="flex items-center bg-slate-100 dark:bg-[#050b14]/80 p-1 rounded-xl border border-slate-200/80 dark:border-white/10">
             <button
               type="button"
               onClick={() => setActiveTab("upload")}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${activeTab === "upload"
-                ? "bg-white dark:bg-[#0b1329] text-primary-600 dark:text-primary-400 shadow-xs"
-                : "text-gray-500 hover:text-gray-900 dark:hover:text-white"
+                ? "bg-white dark:bg-[#0d1526] text-primary-600 dark:text-primary-400 shadow-xs"
+                : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
                 }`}
             >
               <UploadCloud size={13} />
@@ -230,8 +230,8 @@ export default function MediaPickerModal({
               type="button"
               onClick={() => setActiveTab("library")}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${activeTab === "library"
-                ? "bg-white dark:bg-[#0b1329] text-primary-600 dark:text-primary-400 shadow-xs"
-                : "text-gray-500 hover:text-gray-900 dark:hover:text-white"
+                ? "bg-white dark:bg-[#0d1526] text-primary-600 dark:text-primary-400 shadow-xs"
+                : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
                 }`}
             >
               <ImageIcon size={13} />
@@ -241,8 +241,8 @@ export default function MediaPickerModal({
               type="button"
               onClick={() => setActiveTab("url")}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${activeTab === "url"
-                ? "bg-white dark:bg-[#0b1329] text-primary-600 dark:text-primary-400 shadow-xs"
-                : "text-gray-500 hover:text-gray-900 dark:hover:text-white"
+                ? "bg-white dark:bg-[#0d1526] text-primary-600 dark:text-primary-400 shadow-xs"
+                : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
                 }`}
             >
               <Globe size={13} />
@@ -253,7 +253,7 @@ export default function MediaPickerModal({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors cursor-pointer"
             title="Close (Esc)"
           >
             <X size={16} />
@@ -264,7 +264,7 @@ export default function MediaPickerModal({
         <div className="flex-1 min-h-0 flex flex-col md:flex-row overflow-hidden">
 
           {/* LEFT PANEL: Full Cover Image / Dropzone / Library Grid */}
-          <div className="w-full md:w-7/12 lg:w-3/5 p-5 bg-gray-50/50 dark:bg-[#070d1d]/60 border-b md:border-b-0 md:border-r border-gray-100 dark:border-white/10 flex flex-col overflow-hidden">
+          <div className="w-full md:w-7/12 lg:w-3/5 p-5 bg-slate-50/50 dark:bg-[#07111e]/70 border-b md:border-b-0 md:border-r border-slate-200/80 dark:border-white/10 flex flex-col overflow-hidden">
 
             {/* 1. Upload Tab */}
             {activeTab === "upload" && (
@@ -407,9 +407,9 @@ export default function MediaPickerModal({
                             setSelectedLibraryItem(item);
                             if (!altText) setAltText(item.name.replace(/\.[^/.]+$/, ""));
                           }}
-                          className={`relative aspect-video rounded-xl overflow-hidden border-2 transition-all cursor-pointer group bg-gray-100 dark:bg-slate-800 ${isSelected
+                          className={`relative aspect-video rounded-xl overflow-hidden border-2 transition-all cursor-pointer group bg-slate-100 dark:bg-[#07111e] ${isSelected
                             ? "border-primary-600 ring-2 ring-primary-500/20 shadow-md"
-                            : "border-transparent hover:border-gray-300 dark:hover:border-slate-600"
+                            : "border-transparent hover:border-slate-300 dark:hover:border-white/20"
                             }`}
                         >
                           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -457,12 +457,12 @@ export default function MediaPickerModal({
           </div>
 
           {/* RIGHT PANEL: Attachment Details & SEO Metadata */}
-          <div className="w-full md:w-5/12 lg:w-2/5 p-5 bg-white dark:bg-[#0b1329] flex flex-col justify-between overflow-y-auto no-scrollbar">
+          <div className="w-full md:w-5/12 lg:w-2/5 p-5 bg-white dark:bg-[#0d1526] flex flex-col justify-between overflow-y-auto no-scrollbar">
 
             <div className="space-y-4">
               {/* Header inside right panel */}
-              <div className="flex items-center justify-between pb-2 border-b border-gray-100 dark:border-white/10">
-                <span className="text-[11px] font-bold tracking-wider uppercase text-gray-400">Attachment Details</span>
+              <div className="flex items-center justify-between pb-2 border-b border-slate-200/80 dark:border-white/10">
+                <span className="text-[11px] font-bold tracking-wider uppercase text-slate-400">Attachment Details</span>
                 {activeTab === "upload" && (localPreviewUrl || uploadedUrl) && (
                   <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-[10px] font-bold">
                     {isUploading ? "Uploading..." : "Ready"}
@@ -478,7 +478,7 @@ export default function MediaPickerModal({
               {/* URL Input (if on URL tab) */}
               {activeTab === "url" && (
                 <div>
-                  <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                     Image Source URL <span className="text-rose-500">*</span>
                   </label>
                   <input
@@ -486,7 +486,7 @@ export default function MediaPickerModal({
                     value={externalUrl}
                     onChange={(e) => setExternalUrl(e.target.value)}
                     placeholder="https://images.unsplash.com/..."
-                    className="w-full px-3 py-2 bg-gray-50 dark:bg-[#070d1d] border border-gray-200 dark:border-slate-800 rounded-xl text-xs text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all"
+                    className="w-full px-3 py-2 bg-slate-50 dark:bg-[#050b14]/80 border border-slate-200/80 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all"
                     autoFocus
                   />
                 </div>
@@ -495,7 +495,7 @@ export default function MediaPickerModal({
               {/* Alt Text Input */}
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
+                  <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                     Alt Text (Alternative Text)
                   </label>
                   <span className="text-[10px] text-primary-500 font-medium">Google SEO</span>
@@ -505,9 +505,9 @@ export default function MediaPickerModal({
                   value={altText}
                   onChange={(e) => setAltText(e.target.value)}
                   placeholder="e.g., Luxury hotel boutique suite with private balcony"
-                  className="w-full px-3.5 py-2 bg-gray-50 dark:bg-[#070d1d] border border-gray-200 dark:border-slate-800 rounded-xl text-xs text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all"
+                  className="w-full px-3.5 py-2 bg-slate-50 dark:bg-[#050b14]/80 border border-slate-200/80 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all"
                 />
-                <p className="text-[11px] text-gray-400 mt-1 leading-relaxed">
+                <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">
                   Describe the purpose of the image. Crucial for Google image rankings and screen readers.
                 </p>
               </div>
@@ -515,19 +515,19 @@ export default function MediaPickerModal({
               {/* Caption Input */}
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
+                  <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                     Caption (Optional)
                   </label>
-                  <span className="text-[10px] text-gray-400">Editorial</span>
+                  <span className="text-[10px] text-slate-400">Editorial</span>
                 </div>
                 <textarea
                   rows={2}
                   value={caption}
                   onChange={(e) => setCaption(e.target.value)}
                   placeholder="e.g., Figure 1: Oceanfront suite view during sunset"
-                  className="w-full px-3.5 py-2 bg-gray-50 dark:bg-[#070d1d] border border-gray-200 dark:border-slate-800 rounded-xl text-xs text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all resize-none"
+                  className="w-full px-3.5 py-2 bg-slate-50 dark:bg-[#050b14]/80 border border-slate-200/80 dark:border-white/10 rounded-xl text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all resize-none"
                 />
-                <p className="text-[11px] text-gray-400 mt-1 leading-relaxed">
+                <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">
                   Will be displayed as a styled figcaption underneath the photo in the published article.
                 </p>
               </div>
@@ -541,7 +541,7 @@ export default function MediaPickerModal({
             </div>
 
             {/* Bottom info inside right panel */}
-            <div className="pt-3 border-t border-gray-100 dark:border-white/10 flex items-center justify-between text-[11px] text-gray-400">
+            <div className="pt-3 border-t border-slate-200/80 dark:border-white/10 flex items-center justify-between text-[11px] text-slate-400">
               <span>Target: TipTap Rich Content</span>
               <span>CDN: Cloudinary</span>
             </div>
@@ -551,8 +551,8 @@ export default function MediaPickerModal({
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between px-6 py-3.5 border-t border-gray-100 dark:border-white/10 bg-gray-50/80 dark:bg-[#0e1736]/80 shrink-0">
-          <div className="text-xs text-gray-500 dark:text-slate-400">
+        <div className="flex items-center justify-between px-6 py-3.5 border-t border-slate-200/80 dark:border-white/10 bg-slate-50/80 dark:bg-[#07111e]/90 shrink-0">
+          <div className="text-xs text-slate-500 dark:text-slate-400">
             {activeTab === "upload" && (localPreviewUrl || uploadedUrl) && (
               <span className="text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1.5">
                 <Check size={13} /> Image ready to embed

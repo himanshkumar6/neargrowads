@@ -8,6 +8,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { fadeUp } from "@/lib/animations";
+import { submitContactForm } from "@/app/actions/contact";
 
 const formSchema = z.object({
   fullName: z.string().min(2, "Name must be at least 2 characters"),
@@ -61,9 +62,10 @@ export default function ContactForm() {
     setIsSubmitting(true);
     
     try {
-      const { submitContactForm } = await import("@/app/actions/contact");
-      
-      const result = await submitContactForm(data);
+      const result = await submitContactForm({
+        ...data,
+        source: "contact_us",
+      });
       
       if (result.success) {
         setIsSuccess(true);
@@ -82,12 +84,12 @@ export default function ContactForm() {
   };
 
   const inputClasses = (hasError: boolean) => 
-    `w-full px-3.5 xs:px-4 py-2.5 xs:py-3 rounded-xl border text-sm xs:text-base ${hasError ? "border-red-500 focus:ring-red-500" : "border-gray-200 dark:border-gray-700 focus:border-primary-500 dark:focus:border-primary-400 focus:ring-primary-500 dark:focus:ring-primary-400"} bg-transparent dark:bg-gray-900 text-gray-900 dark:text-white dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-colors`;
+    `w-full px-3.5 xs:px-4 py-2.5 xs:py-3 rounded-xl border text-base ${hasError ? "border-red-500 focus:ring-red-500" : "border-gray-200 dark:border-gray-700 focus:border-primary-500 dark:focus:border-primary-400 focus:ring-primary-500 dark:focus:ring-primary-400"} bg-transparent dark:bg-gray-900 text-gray-900 dark:text-white dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-colors`;
 
   return (
     <motion.section 
       aria-labelledby="contact-form-heading"
-      initial="hidden" whileInView="visible" viewport={{ once: false }} variants={fadeUp}
+      initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
       className="bg-white dark:bg-gray-950 rounded-2xl xs:rounded-3xl p-4 xs:p-6 sm:p-8 md:p-12 shadow-xl border border-gray-100 dark:border-gray-800"
     >
       <h2 id="contact-form-heading" className="text-xl xs:text-2xl font-bold text-gray-900 dark:text-white mb-5 sm:mb-6">Send us a message</h2>

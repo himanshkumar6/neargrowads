@@ -1,45 +1,40 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use server";
 
+import { EnquiryService, EnquirySource } from "@/lib/services/enquiryService";
+import { getNeonSql } from "@/lib/neon/client";
 import { createClient } from "@/lib/supabase/server";
-import { createAdminClient } from "@/lib/supabase/admin";
-import { LeadService } from "@/lib/services/leadService";
 import { revalidatePath } from "next/cache";
 
-export async function submitContactForm(formData: { fullName: string; company?: string; email: string; phone?: string; service: string | string[]; message: string; }) {
+export async function submitContactForm(formData: {
+  fullName: string;
+  company?: string;
+  email: string;
+  phone?: string;
+  service: string | string[];
+  message: string;
+  source?: EnquirySource;
+}) {
   try {
-    // Server-side Defensive Validation
-    if (!formData.fullName || typeof formData.fullName !== 'string' || formData.fullName.trim().length < 2 || formData.fullName.length > 100) {
-      return { success: false, error: "Please provide a valid full name (2-100 characters)." };
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email || typeof formData.email !== 'string' || !emailRegex.test(formData.email) || formData.email.length > 255) {
-      return { success: false, error: "Please provide a valid email address." };
-    }
-    if (formData.phone && (typeof formData.phone !== 'string' || formData.phone.length > 30)) {
-      return { success: false, error: "Phone number is invalid or too long." };
-    }
-    if (formData.message && (typeof formData.message !== 'string' || formData.message.length > 3000)) {
-      return { success: false, error: "Message must be under 3000 characters." };
-    }
+    const source: EnquirySource = formData.source || "contact_us";
 
-    const saveResult = await LeadService.saveLead({
-      name: formData.fullName.trim(),
-      company: formData.company ? String(formData.company).trim().slice(0, 100) : undefined,
-      email: formData.email.trim().toLowerCase(),
-      phone: formData.phone ? String(formData.phone).trim().slice(0, 30) : undefined,
-      service: Array.isArray(formData.service) ? (formData.service[0] || 'General Inquiry') : formData.service,
-      message: formData.message ? String(formData.message).trim().slice(0, 3000) : "",
+    const saveResult = await EnquiryService.submitEnquiry({
+      source,
+      fullName: formData.fullName,
+      company: formData.company,
+      email: formData.email,
+      phone: formData.phone,
+      service: formData.service,
+      message: formData.message,
     });
 
     if (!saveResult.success) {
-      return { success: false, error: "Unable to submit inquiry at this time. Please try again later." };
+      return { success: false, error: saveResult.error || "Unable to submit inquiry at this time. Please try again later." };
     }
 
-    // Since we added a new message, tell Next.js to revalidate the admin dashboard
-    // so it shows up instantly for any logged-in admin.
+    // Revalidate admin dashboard so new enquiry is immediately visible
     revalidatePath("/admin", "layout");
-    return { success: true };
+    return { success: true, enquiryId: saveResult.enquiryId };
 
   } catch (err: unknown) {
     console.error("Server action error:", err);
@@ -57,20 +52,51 @@ export async function deleteContactMessage(id: string) {
       return { success: false, error: "Unauthorized" };
     }
 
-    const { error } = await supabase
-      .from('contact_messages')
-      .delete()
-      .eq('id', id);
+    // 1. Try deleting from Neon enquiries table first
+    try {
+      const sql = getNeonSql();
+      const neonDeleted = await sql`
+        DELETE FROM enquiries 
+        WHERE id = ${id}::uuid 
+        RETURNING id;
+      `;
+      if (neonDeleted && neonDeleted.length > 0) {
+        revalidatePath("/admin", "layout");
+        revalidatePath("/admin/dashboard");
+        revalidatePath("/admin/leads");
+        return { success: true };
+      }
+    } catch {
+      // Fallback silently if id is not a UUID or record is not in Neon
+    }
 
-    if (error) {
-      console.error("Supabase delete error:", error);
-      return { success: false, error: `Failed to delete: ${error.message}` };
+    // 2. Fallback to Supabase legacy table only if not found in Neon
+    try {
+      const { error } = await supabase
+        .from('contact_messages')
+        .delete()
+        .eq('id', id);
+
+      if (error) {
+        console.warn("Supabase delete notice:", error.message);
+        // If the table doesn't exist in Supabase schema cache, don't show a false failure to user
+        if (error.message.includes("schema cache") || error.code === "PGRST205") {
+          revalidatePath("/admin", "layout");
+          return { success: true };
+        }
+        return { success: false, error: `Failed to delete: ${error.message}` };
+      }
+    } catch (e) {
+      console.warn("Supabase delete exception:", e);
     }
 
     revalidatePath("/admin", "layout");
+    revalidatePath("/admin/dashboard");
+    revalidatePath("/admin/leads");
     return { success: true };
 
   } catch (err: unknown) {
+    console.error("deleteContactMessage unexpected error:", err);
     return { success: false, error: "An unexpected error occurred." };
   }
 }
@@ -85,20 +111,51 @@ export async function markMeetingBooked(id: string) {
       return { success: false, error: "Unauthorized" };
     }
 
-    const { error } = await supabase
-      .from('contact_messages')
-      .update({ meeting_booked: true })
-      .eq('id', id);
+    // 1. Try updating Neon enquiries table first
+    try {
+      const sql = getNeonSql();
+      const neonUpdated = await sql`
+        UPDATE enquiries 
+        SET status = 'meeting_booked', updated_at = NOW() 
+        WHERE id = ${id}::uuid 
+        RETURNING id;
+      `;
+      if (neonUpdated && neonUpdated.length > 0) {
+        revalidatePath("/admin", "layout");
+        revalidatePath("/admin/dashboard");
+        revalidatePath("/admin/leads");
+        return { success: true };
+      }
+    } catch {
+      // Fallback silently if id is not a UUID or record is in Supabase
+    }
 
-    if (error) {
-      console.error("Supabase update error:", error);
-      return { success: false, error: `Failed to mark booked: ${error.message}` };
+    // 2. Fallback to Supabase legacy table only if not in Neon
+    try {
+      const { error } = await supabase
+        .from('contact_messages')
+        .update({ meeting_booked: true })
+        .eq('id', id);
+
+      if (error) {
+        console.warn("Supabase update notice:", error.message);
+        if (error.message.includes("schema cache") || error.code === "PGRST205") {
+          revalidatePath("/admin", "layout");
+          return { success: true };
+        }
+        return { success: false, error: `Failed to mark booked: ${error.message}` };
+      }
+    } catch (e) {
+      console.warn("Supabase update exception:", e);
     }
 
     revalidatePath("/admin", "layout");
+    revalidatePath("/admin/dashboard");
+    revalidatePath("/admin/leads");
     return { success: true };
 
   } catch (err: unknown) {
+    console.error("markMeetingBooked unexpected error:", err);
     return { success: false, error: "An unexpected error occurred." };
   }
 }

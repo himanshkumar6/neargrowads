@@ -1,34 +1,34 @@
 export interface TeamMember {
   id: string;
   name: string;
-  role: string;
+  role?: string;
   image: string;
 }
 
 export const teamMembers: TeamMember[] = [
   {
     id: "1",
-    name: "Saurav Sharma",
-    role: "Senior Video Editor",
-    image: "https://ik.imagekit.io/rrcdbevrb/file_00000000274072089de387902cd31ad3.png",
+    name: "Brijgopal",
+    role: "",
+    image: "/assets/brijgopal 2.jpg",
   },
   {
     id: "2",
-    name: "Adarsh kushwaha",
-    role: "Senior Graphic Designer",
-    image: "https://ik.imagekit.io/rrcdbevrb/ChatGPT%20Image%20Jun%2026,%202026,%2003_02_50%20PM.png",
+    name: "Kritika",
+    role: "",
+    image: "/assets/Kritika.jpg",
   },
-  // {
-  //   id: "3",
-  //   name: "Abhi",
-  //   role: "Digital Marketer",
-  //   image: "https://ik.imagekit.io/rrcdbevrb/ChatGPT%20Image%20Jun%2026,%202026,%2003_17_55%20PM.png",
-  // },
+  {
+    id: "3",
+    name: "Harsh",
+    role: "",
+    image: "/assets/Harsh.jpg",
+  },
   {
     id: "4",
-    name: "Himanshu Kumar",
-    role: "Full Stack Web Developer",
-    image: "https://ik.imagekit.io/rrcdbevrb/WhatsApp%20Image%202026-06-26%20at%203.25.31%20PM.jpeg",
+    name: "Aditya",
+    role: "",
+    image: "/assets/Aditya.jpeg",
   },
   // {
   //   id: "5",

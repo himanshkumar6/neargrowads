@@ -57,23 +57,30 @@ export default function HomeBackground() {
     setMounted(true); 
   }, []);
 
-  // Synchronized GSAP Ticker Parallax Updates (Zero competing scroll listeners or extra rAF loops)
+  // Synchronized GSAP Ticker Parallax Updates (Scoped to Hero container only)
   useGSAP(() => {
-    if (!mounted) return;
+    if (!mounted || !rootRef.current) return;
 
-    const setY1 = gsap.quickSetter(p1Ref.current, "y", "px");
-    const setY2 = gsap.quickSetter(p2Ref.current, "y", "px");
-    const setY3 = gsap.quickSetter(p3Ref.current, "y", "px");
+    // On mobile devices or reduced motion, skip scroll parallax to maintain native 60fps touch scrolling
+    const shouldSkipParallax = window.matchMedia(
+      "(pointer: coarse), (max-width: 767px), (prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (shouldSkipParallax) return;
+
+    const setY1 = p1Ref.current ? gsap.quickSetter(p1Ref.current, "y", "px") : null;
+    const setY2 = p2Ref.current ? gsap.quickSetter(p2Ref.current, "y", "px") : null;
+    const setY3 = p3Ref.current ? gsap.quickSetter(p3Ref.current, "y", "px") : null;
 
     ScrollTrigger.create({
-      trigger: document.body,
+      trigger: rootRef.current,
       start: "top top",
-      end: "bottom bottom",
+      end: "bottom top", // Automatically goes idle once hero area leaves the viewport
       onUpdate: () => {
         const sy = window.scrollY;
-        setY1(sy * -0.15);
-        setY2(sy * -0.3);
-        setY3(sy * -0.5);
+        if (setY1) setY1(sy * -0.15);
+        if (setY2) setY2(sy * -0.3);
+        if (setY3) setY3(sy * -0.5);
       }
     });
   }, { scope: rootRef, dependencies: [mounted] });

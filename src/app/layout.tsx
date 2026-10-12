@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import "./globals.css";
 import LenisProvider from "@/components/LenisProvider";
@@ -9,6 +9,17 @@ import AnalyticsTracker from "@/components/AnalyticsTracker";
 import { Toaster } from "sonner";
 import ChatWidget from "@/components/chat/ChatWidget";
 import CookieConsentBanner from "@/components/CookieConsentBanner";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  interactiveWidget: "resizes-content",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#050b14" },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://trisagemarketing.com'),
@@ -126,12 +137,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="scroll-smooth">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap" rel="stylesheet" />
+        <link rel="preload" as="image" href="/hero-bg-poster.webp" type="image/webp" fetchPriority="high" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(globalJsonLd) }}
@@ -148,7 +160,7 @@ export default function RootLayout({
               toastOptions={{
                 unstyled: true,
                 classNames: {
-                  toast: "w-auto max-w-[calc(100vw-24px)] flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white/95 dark:bg-[#1f2a3e]/95 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800 shadow-2xl text-slate-900 dark:text-white font-sans text-[11px] sm:text-xs font-medium z-[9999999] mx-auto shrink-0 whitespace-nowrap overflow-hidden text-ellipsis transition-all",
+                  toast: "w-auto max-w-[calc(100vw-24px)] flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white/95 dark:bg-[#07111e]/95 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-2xl text-slate-900 dark:text-white font-sans text-[11px] sm:text-xs font-medium z-[9999999] mx-auto shrink-0 whitespace-nowrap overflow-hidden text-ellipsis transition-all",
                   title: "font-semibold text-slate-900 dark:text-white text-[11px] sm:text-xs leading-tight font-sans whitespace-nowrap truncate",
                   description: "text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs font-normal leading-tight whitespace-nowrap truncate",
                   actionButton: "bg-secondary-500 text-white font-semibold text-[10px] sm:text-xs px-2.5 py-1 rounded-full shrink-0 whitespace-nowrap",

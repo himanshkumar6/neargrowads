@@ -22,7 +22,7 @@ export default function DirectorsVision() {
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, margin: "-100px" }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
           className="relative rounded-2xl xs:rounded-3xl md:rounded-[2.5rem] overflow-hidden bg-primary-900 shadow-2xl"
         >

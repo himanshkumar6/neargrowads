@@ -162,12 +162,12 @@ export default function BlogEditor({
       TableRow,
       TableHeader.configure({
         HTMLAttributes: {
-          class: "border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 px-3.5 py-2.5 text-left font-bold text-gray-900 dark:text-white text-sm",
+          class: "border border-slate-200/80 dark:border-white/10 bg-slate-50 dark:bg-[#07111e]/90 px-3.5 py-2.5 text-left font-bold text-slate-900 dark:text-white text-sm",
         },
       }),
       TableCell.configure({
         HTMLAttributes: {
-          class: "border border-gray-200 dark:border-gray-800 px-3.5 py-2 text-gray-800 dark:text-gray-200 align-top text-sm",
+          class: "border border-slate-200/80 dark:border-white/10 px-3.5 py-2 text-slate-800 dark:text-slate-200 align-top text-sm",
         },
       }),
       Placeholder.configure({
@@ -182,7 +182,7 @@ export default function BlogEditor({
     editable,
     editorProps: {
       attributes: {
-        class: "prose sm:prose-lg dark:prose-invert max-w-none focus:outline-none min-h-[340px] p-3.5 sm:p-4 text-gray-900 dark:text-white leading-relaxed",
+        class: "prose sm:prose-lg dark:prose-invert max-w-none focus:outline-none min-h-[340px] p-3.5 sm:p-4 text-slate-900 dark:text-white leading-relaxed",
       },
     },
     onUpdate: ({ editor }) => {
@@ -213,7 +213,7 @@ export default function BlogEditor({
   }, [editor, editor?.state.doc, onAutoSave]);
 
   if (!editor) {
-    return <div className="h-[500px] w-full animate-pulse bg-gray-50 dark:bg-gray-800/50 rounded-2xl border border-gray-200 dark:border-gray-800" />;
+    return <div className="h-[500px] w-full animate-pulse bg-slate-50 dark:bg-[#07111e]/50 rounded-2xl border border-slate-200/80 dark:border-white/10" />;
   }
 
   // Open Link Modal with snapshot of current selection
@@ -406,10 +406,10 @@ export default function BlogEditor({
   };
 
   return (
-    <div className="relative border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden bg-white dark:bg-[#0a1220] shadow-sm">
+    <div className="relative border border-slate-200/80 dark:border-white/10 rounded-2xl overflow-hidden bg-white dark:bg-[#0d1526] shadow-xs">
       
       {/* Top Toolbar */}
-      <div className="sticky top-0 z-20 flex flex-wrap items-center gap-1 px-2.5 py-1.5 bg-gray-50/95 dark:bg-[#0d1728]/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 select-none">
+      <div className="sticky top-0 z-20 flex flex-wrap items-center gap-1 px-2.5 py-1.5 bg-slate-50/95 dark:bg-[#07111e]/95 backdrop-blur-md border-b border-slate-200/80 dark:border-white/10 select-none">
         
         {/* Undo / Redo */}
         <EditorButton onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().undo()} title="Undo (Ctrl+Z)">
@@ -557,29 +557,29 @@ export default function BlogEditor({
                   </div>
                   <div>
                     <div className="font-bold text-gray-900 dark:text-white">Insert Comparison Table</div>
-                    <div className="text-[11px] text-gray-500 dark:text-gray-400 font-normal">Hotel Agency vs In-House (10 rows)</div>
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400 font-normal">Hotel Agency vs In-House (10 rows)</div>
                   </div>
                 </button>
 
-                <div className="border-t border-gray-100 dark:border-gray-800/80 my-1" />
+                <div className="border-t border-slate-100 dark:border-white/10 my-1" />
 
                 <button
                   type="button"
                   onClick={handleInsertBlankTable}
-                  className="w-full text-left px-3 py-2 text-xs font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/80 rounded-lg flex items-center gap-2.5 transition-colors cursor-pointer"
+                  className="w-full text-left px-3 py-2 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10 rounded-lg flex items-center gap-2.5 transition-colors cursor-pointer"
                 >
-                  <div className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-500 flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-[#050b14]/80 text-slate-500 flex items-center justify-center shrink-0">
                     <Plus size={16} />
                   </div>
                   <div>
-                    <div className="font-semibold text-gray-900 dark:text-gray-200">Insert Blank Table</div>
-                    <div className="text-[11px] text-gray-400">Standard 3 × 3 grid</div>
+                    <div className="font-semibold text-slate-900 dark:text-slate-200">Insert Blank Table</div>
+                    <div className="text-[11px] text-slate-400">Standard 3 × 3 grid</div>
                   </div>
                 </button>
 
                 {editor.isActive("table") && (
                   <>
-                    <div className="border-t border-gray-100 dark:border-gray-800/80 my-1" />
+                    <div className="border-t border-slate-100 dark:border-white/10 my-1" />
                     <button
                       type="button"
                       onClick={() => {
@@ -659,7 +659,7 @@ export default function BlogEditor({
       </div>
 
       {/* Editor Status Bar / Footer (Properly Justified & Responsive) */}
-      <div className="flex flex-wrap items-center justify-between gap-2 px-3.5 sm:px-4 py-2 bg-gray-50/80 dark:bg-[#0c1424]/80 border-t border-gray-200/80 dark:border-gray-800/80 text-xs text-gray-500 dark:text-gray-400 select-none">
+      <div className="flex flex-wrap items-center justify-between gap-2 px-3.5 sm:px-4 py-2 bg-slate-50/80 dark:bg-[#07111e]/90 border-t border-slate-200/80 dark:border-white/10 text-xs text-gray-500 dark:text-gray-400 select-none">
         <div className="flex items-center gap-2 text-[11px] sm:text-xs">
           <span className="font-semibold text-gray-700 dark:text-gray-300">
             {editor.getText().trim() ? editor.getText().trim().split(/\s+/).length : 0}

@@ -127,19 +127,19 @@ export default function Services() {
       <div className="container mx-auto px-3 xs:px-4 md:px-8 max-w-7xl">
         <div className="text-center max-w-5xl mx-auto mb-8 xs:mb-10 lg:mb-16">
           <motion.span 
-            initial="hidden" whileInView="visible" viewport={{ once: false }} variants={fadeUp}
+            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
             className="text-primary-600 dark:text-primary-400 font-semibold tracking-wider uppercase text-xs xs:text-sm"
           >
             Our Services
           </motion.span>
           <motion.h2 
-            initial="hidden" whileInView="visible" viewport={{ once: false }} variants={fadeUp}
+            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
             className="text-2xl xs:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mt-3 xs:mt-4 mb-4 xs:mb-6 tracking-tight"
           >
             Modular Growth Services for Local Businesses
           </motion.h2>
           <motion.p 
-            initial="hidden" whileInView="visible" viewport={{ once: false }} variants={fadeUp}
+            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
             className="text-gray-700 dark:text-gray-300 text-sm xs:text-base md:text-lg leading-relaxed max-w-3xl mx-auto"
           >
             From Google Maps optimization and local SEO to targeted Meta & Google Ads, choose individual services or combine them for complete local market coverage.
@@ -150,7 +150,7 @@ export default function Services() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, margin: "-100px" }}
+          viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8"
         >
           {services.map((service) => (

@@ -116,12 +116,12 @@ export function CloudinaryUploader({
             value={inputUrl}
             onChange={(e) => setInputUrl(e.target.value)}
             placeholder="https://example.com/image.jpg"
-            className="flex-1 px-3 py-2 text-xs border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:text-white"
+            className="flex-1 px-3 py-2 min-h-[38px] text-base sm:text-xs border border-slate-300 dark:border-white/10 rounded-lg focus:ring-2 focus:ring-[#68b955]/30 focus:border-[#68b955] dark:bg-[#050b14]/80 dark:text-white outline-none"
           />
           <button
             type="button"
             onClick={handleApplyUrl}
-            className="px-3 py-2 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold rounded-lg text-xs transition-colors"
+            className="px-3 py-2 min-h-[38px] bg-[#68b955] hover:bg-[#4e993d] text-white font-bold rounded-lg text-xs transition-colors cursor-pointer flex items-center justify-center shrink-0"
           >
             Apply
           </button>
@@ -139,14 +139,14 @@ export function CloudinaryUploader({
       {isAvatar ? (
         /* 👤 AVATAR PREVIEW MODE (1:1 Ratio, Circular Headshot) */
         isUploading ? (
-          <div className="flex items-center gap-4 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40">
-            <div className="relative w-20 h-20 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 flex flex-col items-center justify-center shrink-0">
+          <div className="flex items-center gap-4 p-3.5 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/70 dark:bg-[#07111e]/90">
+            <div className="relative w-20 h-20 rounded-full border border-slate-200/80 dark:border-white/10 bg-slate-100 dark:bg-[#050b14]/80 flex flex-col items-center justify-center shrink-0">
               <Loader2 className="w-6 h-6 text-emerald-500 animate-spin" />
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-xs font-bold text-slate-800 dark:text-slate-200">Uploading Avatar...</p>
               <p className="text-[11px] text-slate-400 mt-0.5">{progress}% Complete</p>
-              <div className="w-full max-w-[180px] h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden mt-2">
+              <div className="w-full max-w-[180px] h-1.5 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden mt-2">
                 <div
                   className="h-full bg-emerald-500 transition-all duration-300"
                   style={{ width: `${progress}%` }}
@@ -155,7 +155,7 @@ export function CloudinaryUploader({
             </div>
           </div>
         ) : value ? (
-          <div className="flex items-center gap-4 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/30">
+          <div className="flex items-center gap-4 p-3.5 rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/70 dark:bg-[#07111e]/90">
             {/* Round Avatar Thumbnail */}
             <div className="relative w-20 h-20 sm:w-22 sm:h-22 rounded-full ring-2 ring-emerald-500/40 dark:ring-emerald-500/30 overflow-hidden shadow-md shrink-0 bg-slate-900 group">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -201,7 +201,7 @@ export function CloudinaryUploader({
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
+                  className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 text-slate-700 dark:text-slate-200 border border-slate-200/60 dark:border-white/10 transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
                 >
                   <RefreshCcw size={12} className="text-emerald-500" />
                   <span>Change</span>
@@ -209,7 +209,7 @@ export function CloudinaryUploader({
                 <button
                   type="button"
                   onClick={() => onChange("")}
-                  className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-red-50 hover:bg-red-100 dark:bg-red-950/40 dark:hover:bg-red-900/40 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/40 transition-colors flex items-center gap-1.5 cursor-pointer"
+                  className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-rose-50 hover:bg-rose-100 dark:bg-rose-500/10 dark:hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-200/60 dark:border-rose-500/20 transition-colors flex items-center gap-1.5 cursor-pointer"
                 >
                   <X size={12} />
                   <span>Remove</span>
@@ -220,9 +220,9 @@ export function CloudinaryUploader({
         ) : (
           <div
             onClick={() => fileInputRef.current?.click()}
-            className="flex items-center gap-4 p-3.5 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 bg-slate-50/70 dark:bg-slate-800/30 hover:bg-emerald-50/20 dark:hover:bg-emerald-500/5 transition-all cursor-pointer group"
+            className="flex items-center gap-4 p-3.5 rounded-2xl border-2 border-dashed border-slate-300 dark:border-white/10 hover:border-[#68b955] dark:hover:border-[#68b955] bg-slate-50/70 dark:bg-[#07111e]/90 hover:bg-[#68b955]/5 dark:hover:bg-[#68b955]/10 transition-all cursor-pointer group"
           >
-            <div className="w-16 h-16 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 flex items-center justify-center text-slate-400 group-hover:text-emerald-500 group-hover:scale-105 transition-all shadow-xs shrink-0">
+            <div className="w-16 h-16 rounded-full border border-slate-200/80 dark:border-white/10 bg-white dark:bg-[#050b14]/80 flex items-center justify-center text-slate-400 group-hover:text-[#68b955] group-hover:scale-105 transition-all shadow-xs shrink-0">
               <User size={24} />
             </div>
             <div className="flex-1 min-w-0">
@@ -242,11 +242,11 @@ export function CloudinaryUploader({
       ) : (
         /* 🖼️ BANNER PREVIEW MODE (16:9 Ratio, Featured/OG Image) */
         isUploading ? (
-          <div className="relative w-full aspect-video sm:h-36 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex flex-col items-center justify-center p-4">
+          <div className="relative w-full aspect-video sm:h-36 rounded-xl border border-slate-200/80 dark:border-white/10 bg-slate-50/70 dark:bg-[#07111e]/90 flex flex-col items-center justify-center p-4">
             <Loader2 className="w-6 h-6 text-emerald-500 animate-spin mb-2" />
             <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">Uploading & Optimizing...</p>
             <p className="text-[11px] text-slate-400 mt-1">{progress}% Complete</p>
-            <div className="w-3/4 max-w-xs h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden mt-2">
+            <div className="w-3/4 max-w-xs h-1.5 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden mt-2">
               <div
                 className="h-full bg-emerald-500 transition-all duration-300"
                 style={{ width: `${progress}%` }}
@@ -254,7 +254,7 @@ export function CloudinaryUploader({
             </div>
           </div>
         ) : value ? (
-          <div className="relative w-full aspect-video sm:h-36 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden group bg-slate-900">
+          <div className="relative w-full aspect-video sm:h-36 rounded-xl border border-slate-200/80 dark:border-white/10 overflow-hidden group bg-slate-900">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={value}
@@ -286,12 +286,12 @@ export function CloudinaryUploader({
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="w-full aspect-video sm:h-36 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 bg-slate-50 dark:bg-slate-800/40 hover:bg-emerald-50/20 dark:hover:bg-emerald-500/5 transition-all flex flex-col items-center justify-center p-4 cursor-pointer group"
+            className="w-full aspect-video sm:h-36 rounded-xl border-2 border-dashed border-slate-300 dark:border-white/10 hover:border-[#68b955] dark:hover:border-[#68b955] bg-slate-50/70 dark:bg-[#07111e]/90 hover:bg-[#68b955]/5 dark:hover:bg-[#68b955]/10 transition-all flex flex-col items-center justify-center p-4 cursor-pointer group"
           >
-            <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 group-hover:text-emerald-500 transition-colors mb-2">
+            <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-[#050b14]/80 flex items-center justify-center text-slate-400 group-hover:text-[#68b955] transition-colors mb-2">
               <UploadCloud size={20} />
             </div>
-            <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 group-hover:text-emerald-500 transition-colors">
+            <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 group-hover:text-[#68b955] transition-colors">
               Upload Image
             </span>
             <span className="text-[11px] text-slate-400 mt-0.5">JPG, PNG, WEBP, SVG up to 15MB</span>

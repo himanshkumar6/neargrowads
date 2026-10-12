@@ -49,7 +49,7 @@ export default function DeviceManagement() {
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, margin: "-50px" }}
+            viewport={{ once: true, margin: "-50px" }}
             className="flex flex-col space-y-6 xs:space-y-8"
           >
             <div className="space-y-3 xs:space-y-4">
@@ -98,7 +98,7 @@ export default function DeviceManagement() {
           <motion.div 
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, margin: "-50px" }}
+            viewport={{ once: true, margin: "-50px" }}
             variants={fadeUp}
             className="relative w-full flex items-center justify-center my-2 sm:my-4 lg:my-0"
           >

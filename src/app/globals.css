@@ -1309,5 +1309,20 @@ body.modal-open #cookie-consent-banner {
   transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease !important;
 }
 
+/* ── Global Scrollbar Optimization for Admin & Modern Layouts ── */
+aside, 
+aside * {
+  scrollbar-width: thin;
+}
 
+aside::-webkit-scrollbar,
+aside *::-webkit-scrollbar {
+  width: 4px;
+  height: 0px !important; /* Suppress horizontal scrollbar completely */
+}
 
+aside::-webkit-scrollbar-thumb,
+aside *::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 9999px;
+}

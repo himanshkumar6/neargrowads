@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { leadSubmissionSchema } from "@/lib/validations/chatbotSchema";
-import { LeadService } from "@/lib/services/leadService";
+import { EnquiryService } from "@/lib/services/enquiryService";
 
 // Simple in-memory rate limiter (Note: Resets on serverless cold boots, but effective for basic spam bursts)
 const rateLimitMap = new Map<string, { count: number; timestamp: number }>();
@@ -59,14 +59,35 @@ export async function POST(request: Request) {
     // 3. Attach metadata
     const userAgent = request.headers.get("user-agent") || undefined;
     
-    // 4. Save to Database using the Service Layer
-    await LeadService.saveLead({
-      ...leadData,
-      user_agent: userAgent,
+    // 4. Save to Neon PostgreSQL Database using the EnquiryService
+    const saveResult = await EnquiryService.submitEnquiry({
+      source: "chatbot",
+      fullName: leadData.name,
+      company: leadData.company,
+      email: leadData.email,
+      phone: leadData.phone,
+      service: leadData.service,
+      message: leadData.message,
+      pageUrl: leadData.page_url,
+      metadata: {
+        userAgent,
+        ip: ip !== "unknown-ip" ? ip : undefined,
+      },
+      honeypot: leadData.honeypot,
     });
 
+    if (!saveResult.success) {
+      return NextResponse.json(
+        { error: saveResult.error || "Failed to record enquiry" },
+        { status: 500 }
+      );
+    }
+
     // 5. Return success
-    return NextResponse.json({ success: true }, { status: 200 });
+    return NextResponse.json({
+      success: true,
+      enquiryId: saveResult.enquiryId,
+    }, { status: 200 });
 
   } catch (error: unknown) {
     console.error("[Chatbot API] Error processing submission:", error);

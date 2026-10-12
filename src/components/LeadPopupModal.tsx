@@ -103,7 +103,10 @@ export default function LeadPopupModal() {
     setIsSubmitting(true);
 
     try {
-      const res = await submitContactForm(formData);
+      const res = await submitContactForm({
+        ...formData,
+        source: "get_in_touch",
+      });
       if (res.success) {
         setIsSubmitted(true);
         sessionStorage.setItem("neargrow_lead_modal_dismissed", "true");
@@ -220,7 +223,7 @@ export default function LeadPopupModal() {
                           value={formData.fullName}
                           onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                           placeholder="e.g. Vikramaditya Roy"
-                          className="w-full pl-10 pr-4 py-2 xs:py-2.5 text-xs sm:text-sm rounded-xl border border-white/10 bg-[#0A120D] text-white placeholder:text-white/45 hover:border-[#68B955]/30 focus:outline-none focus:border-[#68B955]/75 focus:ring-2 focus:ring-[#68B955]/15 transition-all"
+                          className="w-full pl-10 pr-4 py-2 xs:py-2.5 text-base sm:text-sm rounded-xl border border-white/10 bg-[#0A120D] text-white placeholder:text-white/45 hover:border-[#68B955]/30 focus:outline-none focus:border-[#68B955]/75 focus:ring-2 focus:ring-[#68B955]/15 transition-all"
                         />
                       </div>
                     </div>
@@ -239,7 +242,7 @@ export default function LeadPopupModal() {
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             placeholder="admin@brand.com"
-                            className="w-full pl-10 pr-4 py-2 xs:py-2.5 text-xs sm:text-sm rounded-xl border border-white/10 bg-[#0A120D] text-white placeholder:text-white/45 hover:border-[#68B955]/30 focus:outline-none focus:border-[#68B955]/75 focus:ring-2 focus:ring-[#68B955]/15 transition-all"
+                            className="w-full pl-10 pr-4 py-2 xs:py-2.5 text-base sm:text-sm rounded-xl border border-white/10 bg-[#0A120D] text-white placeholder:text-white/45 hover:border-[#68B955]/30 focus:outline-none focus:border-[#68B955]/75 focus:ring-2 focus:ring-[#68B955]/15 transition-all"
                           />
                         </div>
                       </div>
@@ -256,7 +259,7 @@ export default function LeadPopupModal() {
                             value={formData.phone}
                             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                             placeholder="+91 9217989768"
-                            className="w-full pl-10 pr-4 py-2 xs:py-2.5 text-xs sm:text-sm rounded-xl border border-white/10 bg-[#0A120D] text-white placeholder:text-white/45 hover:border-[#68B955]/30 focus:outline-none focus:border-[#68B955]/75 focus:ring-2 focus:ring-[#68B955]/15 transition-all"
+                            className="w-full pl-10 pr-4 py-2 xs:py-2.5 text-base sm:text-sm rounded-xl border border-white/10 bg-[#0A120D] text-white placeholder:text-white/45 hover:border-[#68B955]/30 focus:outline-none focus:border-[#68B955]/75 focus:ring-2 focus:ring-[#68B955]/15 transition-all"
                           />
                         </div>
                       </div>
@@ -274,7 +277,7 @@ export default function LeadPopupModal() {
                           value={formData.company}
                           onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                           placeholder="e.g. Apex Dental Clinic or City Cafe"
-                          className="w-full pl-10 pr-4 py-2 xs:py-2.5 text-xs sm:text-sm rounded-xl border border-white/10 bg-[#0A120D] text-white placeholder:text-white/45 hover:border-[#68B955]/30 focus:outline-none focus:border-[#68B955]/75 focus:ring-2 focus:ring-[#68B955]/15 transition-all"
+                          className="w-full pl-10 pr-4 py-2 xs:py-2.5 text-base sm:text-sm rounded-xl border border-white/10 bg-[#0A120D] text-white placeholder:text-white/45 hover:border-[#68B955]/30 focus:outline-none focus:border-[#68B955]/75 focus:ring-2 focus:ring-[#68B955]/15 transition-all"
                         />
                       </div>
                     </div>
@@ -289,7 +292,7 @@ export default function LeadPopupModal() {
                         <button
                           type="button"
                           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                          className="w-full px-3.5 py-2 xs:py-2.5 text-xs sm:text-sm text-left rounded-xl border border-white/10 bg-[#0A120D] text-white hover:border-[#68B955]/30 focus:outline-none focus:border-[#68B955]/75 focus:ring-2 focus:ring-[#68B955]/15 transition-all cursor-pointer flex items-center justify-between"
+                          className="w-full px-3.5 py-2 xs:py-2.5 text-base sm:text-sm text-left rounded-xl border border-white/10 bg-[#0A120D] text-white hover:border-[#68B955]/30 focus:outline-none focus:border-[#68B955]/75 focus:ring-2 focus:ring-[#68B955]/15 transition-all cursor-pointer flex items-center justify-between"
                         >
                           <span className="truncate pr-2">{formData.service}</span>
                           <ChevronDown size={15} className={`text-white/60 shrink-0 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180 text-[#68B955]' : ''}`} />
@@ -302,7 +305,7 @@ export default function LeadPopupModal() {
                             setFormData({ ...formData, service: e.target.value });
                             setIsDropdownOpen(false);
                           }}
-                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer sm:hidden z-20 bg-[#0A120D] text-white"
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer sm:hidden z-20 bg-[#0A120D] text-white text-base"
                         >
                           {serviceOptions.map((option) => (
                             <option key={option} value={option} className="bg-[#0A120D] text-white">{option}</option>
@@ -354,7 +357,7 @@ export default function LeadPopupModal() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="group relative w-full py-2.5 xs:py-3 sm:py-3.5 px-4 xs:px-6 rounded-xl bg-gradient-to-r from-[#68B955] via-[#63B550] to-[#5AA548] hover:from-[#72C65E] hover:via-[#68B955] hover:to-[#60AC4E] text-neutral-950 font-bold text-xs xs:text-sm tracking-wide shadow-lg shadow-[#68B955]/25 hover:shadow-xl hover:shadow-[#68B955]/35 active:scale-[0.99] transition-all duration-300 flex items-center justify-center gap-2 mt-3 xs:mt-4 cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
+                      className="group relative w-full min-h-[44px] py-2.5 xs:py-3 sm:py-3.5 px-4 xs:px-6 rounded-xl bg-gradient-to-r from-[#68B955] via-[#63B550] to-[#5AA548] hover:from-[#72C65E] hover:via-[#68B955] hover:to-[#60AC4E] text-neutral-950 font-bold text-xs xs:text-sm tracking-wide shadow-lg shadow-[#68B955]/25 hover:shadow-xl hover:shadow-[#68B955]/35 active:scale-[0.99] transition-all duration-300 flex items-center justify-center gap-2 mt-3 xs:mt-4 cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
                     >
                       {isSubmitting ? (
                         <span className="flex items-center gap-2">

@@ -60,7 +60,7 @@ export default function CookieConsentBanner() {
         {/* Glow ambient border shadow */}
         <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-600 via-secondary-500 to-teal-500 rounded-2xl blur opacity-25 dark:opacity-35 group-hover:opacity-40 transition duration-300" />
 
-        <div className="relative bg-white/95 dark:bg-[#1a2333]/95 backdrop-blur-xl border border-slate-200/90 dark:border-slate-700/90 rounded-2xl p-3 sm:p-4 shadow-xl text-slate-900 dark:text-white space-y-2.5">
+        <div className="relative bg-white/95 dark:bg-[#0d1526]/95 backdrop-blur-xl border border-slate-200/90 dark:border-white/10 rounded-2xl p-3 sm:p-4 shadow-xl text-slate-900 dark:text-white space-y-2.5">
           {/* Top Row: Icon + Title + Close Button */}
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2.5 min-w-0">

@@ -14,6 +14,10 @@ import {
   Wand2,
   Plus,
   Trash2,
+  Tag,
+  Sparkles,
+  BookOpenText,
+  ArrowUpRight,
 } from "lucide-react";
 import { CloudinaryUploader } from "@/components/admin/CloudinaryUploader";
 import { SeoChecklist } from "@/components/admin/SeoChecklist";
@@ -23,8 +27,8 @@ import { createClient } from "@/lib/supabase/client";
 const BlogEditor = dynamic(() => import("@/components/editor/Editor"), {
   ssr: false,
   loading: () => (
-    <div className="h-[460px] w-full animate-pulse bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-400 text-sm">
-      <Loader2 size={24} className="animate-spin text-emerald-500 mr-2" />
+    <div className="h-[460px] w-full animate-pulse bg-slate-50/80 dark:bg-[#07111e]/90 rounded-xl border border-slate-200/80 dark:border-white/10 flex items-center justify-center text-slate-400 text-sm">
+      <Loader2 size={24} className="animate-spin text-[#68b955] mr-2" />
       Loading editor...
     </div>
   ),
@@ -303,46 +307,133 @@ export default function BlogEditorForm({ initialBlog, blogId: propBlogId }: Blog
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
-      {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-2">
+    <div className="space-y-6">
+      {/* 1. Header Banner (Synchronized with CMS Standard) */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#0d1526] border border-slate-200/80 dark:border-white/10 rounded-2xl p-4 sm:p-5 lg:p-6 shadow-xs">
         <div className="flex items-center gap-3 sm:gap-4">
           <Link
             href="/admin/blog"
-            className="p-2 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-lg text-slate-500 transition-colors shrink-0"
-            title="Back to Blog List"
+            className="p-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors shrink-0 border border-slate-200/60 dark:border-white/10 shadow-2xs"
+            title="Back to Blog Management"
           >
-            <ArrowLeft size={20} />
+            <ArrowLeft size={18} />
           </Link>
-          <div>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
-              {isEditing ? "Edit Post" : "Add New Post"}
-            </h1>
-            <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-0.5">
-              Create and optimize your content
+          <div className="space-y-1">
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 dark:text-white tracking-tight font-sans">
+                {isEditing ? "Edit Article" : "Compose New Article"}
+              </h1>
+              <span className="px-3 py-0.5 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-600 dark:text-primary-400 text-xs font-semibold uppercase tracking-wider">
+                {formData.status.toUpperCase()}
+              </span>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-normal">
+              {isEditing
+                ? "Refine content, update SEO metadata, and optimize reader engagement."
+                : "Author and publish high-ranking digital marketing articles and insights."}
             </p>
           </div>
         </div>
 
-        <button
-          type="button"
-          onClick={handleSubmit}
-          disabled={isSaving}
-          className="flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2.5 px-6 rounded-xl transition-all disabled:opacity-70 shadow-md shadow-emerald-500/20 active:scale-95 text-sm cursor-pointer"
-        >
-          {isSaving ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
-          {isEditing ? "Update Post" : "Save Post"}
-        </button>
+        <div className="flex items-center gap-2.5 shrink-0">
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={isSaving}
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#68b955] hover:bg-[#4e993d] text-white font-bold rounded-xl text-xs sm:text-sm shadow-xs transition-all cursor-pointer disabled:opacity-70 active:scale-95"
+          >
+            {isSaving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
+            <span>{isSaving ? "Saving..." : isEditing ? "Update Article" : "Save Article"}</span>
+          </button>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-        {/* Main Content Area (2 Cols) */}
-        <div className="lg:col-span-2 space-y-6">
+      {/* 2. ROW 1: Three Summary Status Cards (Exact Dashboard Pattern) */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-5">
+        {/* Card 1: Article Status */}
+        <div className="bg-slate-50/70 dark:bg-[#07111e]/90 border border-slate-200/80 dark:border-white/10 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              Publication Status
+            </span>
+            <div className="w-9 h-9 rounded-full bg-primary-500/10 text-primary-600 dark:text-primary-400 flex items-center justify-center shadow-xs">
+              <BookOpenText className="w-4 h-4" />
+            </div>
+          </div>
+          <div>
+            <span className="block text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white capitalize font-sans">
+              {formData.status}
+            </span>
+            <div className="flex items-center gap-1 text-[11px] font-semibold text-primary-600 dark:text-primary-400 mt-1">
+              <ArrowUpRight className="w-3.5 h-3.5" />
+              <span>{formData.published_at ? "Scheduled / Release date configured" : "Draft workflow active"}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 2: Selected Category */}
+        <div className="bg-slate-50/70 dark:bg-[#07111e]/90 border border-slate-200/80 dark:border-white/10 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              Taxonomy Cluster
+            </span>
+            <div className="w-9 h-9 rounded-full bg-secondary-500/10 text-secondary-600 dark:text-secondary-400 flex items-center justify-center shadow-xs">
+              <Tag className="w-4 h-4" />
+            </div>
+          </div>
+          <div>
+            <span className="block text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white truncate font-sans">
+              {categories.find((c) => c.id === formData.category_id)?.name || "Uncategorized"}
+            </span>
+            <div className="flex items-center gap-1 text-[11px] font-semibold text-secondary-600 dark:text-secondary-400 mt-1">
+              <ArrowUpRight className="w-3.5 h-3.5" />
+              <span>Target audience grouping</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 3: Search Engine Readiness */}
+        <div className="bg-slate-50/70 dark:bg-[#07111e]/90 border border-slate-200/80 dark:border-white/10 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              Search Engine Readiness
+            </span>
+            <div className="w-9 h-9 rounded-full bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center shadow-xs">
+              <Sparkles className="w-4 h-4" />
+            </div>
+          </div>
+          <div>
+            <span className="block text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white font-sans">
+              {formData.slug ? "URL Ready" : "Awaiting Title"}
+            </span>
+            <div className="flex items-center gap-1 text-[11px] font-semibold text-sky-600 dark:text-sky-400 mt-1">
+              <ArrowUpRight className="w-3.5 h-3.5" />
+              <span>{formData.meta_keywords ? "Keywords configured" : "Live SEO checklist active"}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. ROW 2: Two Panels — Left Content Area (Col 8) + Right Control Sidebar (Col 4) */}
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
+        {/* Main Content Area (8 Cols) */}
+        <div className="xl:col-span-8 space-y-5">
           {/* Core Content Card */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-4 sm:p-6 space-y-5">
+          <div className="bg-white dark:bg-[#0d1526] border border-slate-200/80 dark:border-white/10 rounded-2xl shadow-xs p-4 sm:p-5 lg:p-6 space-y-5">
+            <div className="border-b border-slate-100 dark:border-white/10 pb-3 flex items-center justify-between">
+              <div>
+                <h2 className="text-base font-bold text-slate-900 dark:text-white font-sans">
+                  Article Content
+                </h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  Craft your post with rich formatting, heading hierarchy, and media.
+                </p>
+              </div>
+            </div>
+
             {/* Title */}
             <div>
-              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
                 Post Title *
               </label>
               <input
@@ -351,7 +442,7 @@ export default function BlogEditorForm({ initialBlog, blogId: propBlogId }: Blog
                 required
                 value={formData.title}
                 onChange={handleChange}
-                className="w-full px-4 py-3 text-lg font-bold border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:text-white"
+                className="w-full px-4 py-3 text-lg font-bold border border-slate-200/90 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-[#68b955]/30 focus:border-[#68b955] dark:bg-[#050b14]/80 dark:text-white outline-none transition-all placeholder:text-slate-400"
                 placeholder="Enter an engaging title..."
               />
             </div>
@@ -359,20 +450,20 @@ export default function BlogEditorForm({ initialBlog, blogId: propBlogId }: Blog
             {/* URL Slug with Optimize Button */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                   URL Slug *
                 </label>
                 <button
                   type="button"
                   onClick={handleOptimizeSlug}
-                  className="text-xs text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1 font-bold cursor-pointer"
+                  className="text-xs text-[#68b955] hover:text-[#4e993d] dark:text-[#68b955] dark:hover:text-[#83ce71] hover:underline flex items-center gap-1 font-bold cursor-pointer"
                 >
                   <Wand2 size={12} />
                   Optimize Slug
                 </button>
               </div>
-              <div className="flex flex-col sm:flex-row rounded-xl overflow-hidden border border-slate-300 dark:border-slate-700 focus-within:ring-2 focus-within:ring-emerald-500">
-                <span className="bg-slate-50 dark:bg-slate-800/80 px-3.5 py-2.5 text-slate-500 text-xs sm:text-sm flex items-center border-b sm:border-b-0 sm:border-r border-slate-300 dark:border-slate-700 font-mono select-none">
+              <div className="flex flex-col sm:flex-row rounded-xl overflow-hidden border border-slate-200/90 dark:border-white/10 focus-within:ring-2 focus-within:ring-[#68b955]/30 focus-within:border-[#68b955]">
+                <span className="bg-slate-50 dark:bg-[#07111e]/90 px-3.5 py-2.5 text-slate-500 dark:text-slate-400 text-xs sm:text-sm flex items-center border-b sm:border-b-0 sm:border-r border-slate-200/90 dark:border-white/10 font-mono select-none">
                   {domainPrefix}
                 </span>
                 <input
@@ -386,7 +477,7 @@ export default function BlogEditorForm({ initialBlog, blogId: propBlogId }: Blog
                       slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""),
                     }))
                   }
-                  className="flex-1 px-3.5 py-2.5 text-sm dark:bg-slate-900 dark:text-white outline-none font-mono"
+                  className="flex-1 px-3.5 py-2.5 min-h-[42px] text-base sm:text-sm dark:bg-[#050b14]/80 dark:text-white outline-none font-mono"
                   placeholder="e.g. 10-local-seo-strategies"
                 />
               </div>
@@ -394,10 +485,10 @@ export default function BlogEditorForm({ initialBlog, blogId: propBlogId }: Blog
 
             {/* Blog Content Rich Editor */}
             <div>
-              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                Blog Content
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
+                Article Body
               </label>
-              <div className="border border-slate-300 dark:border-slate-700 rounded-xl overflow-hidden bg-white dark:bg-slate-900">
+              <div className="border border-slate-200/90 dark:border-white/10 rounded-xl overflow-hidden bg-white dark:bg-[#050b14]/80 shadow-xs">
                 <BlogEditor
                   initialContent={formData.content}
                   onChange={handleEditorChange}
@@ -407,43 +498,43 @@ export default function BlogEditorForm({ initialBlog, blogId: propBlogId }: Blog
             </div>
 
             {/* FAQ Builder UI */}
-            <div className="bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 sm:p-6 mt-6">
+            <div className="bg-slate-50/70 dark:bg-[#07111e]/90 border border-slate-200/80 dark:border-white/10 rounded-2xl p-4 sm:p-5 mt-6">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
                 <div>
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                    <Wand2 size={18} className="text-emerald-500" />
-                    FAQ Builder
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2 font-sans">
+                    <Wand2 size={16} className="text-[#68b955]" />
+                    FAQ Structured Snippets
                   </h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                    FAQs will be automatically formatted and added to the article for rich SEO snippets.
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    FAQs will be automatically formatted and added to the article for rich Google snippet ranking.
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={() => setFaqs((prev) => [...prev, { q: "", a: "" }])}
-                  className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500 hover:text-slate-950 font-bold py-1.5 px-4 rounded-xl flex items-center gap-1.5 transition-all text-xs cursor-pointer"
+                  className="bg-[#68b955]/10 text-[#68b955] hover:bg-[#68b955] hover:text-white font-bold py-1.5 px-3.5 rounded-xl flex items-center gap-1.5 transition-all text-xs cursor-pointer"
                 >
                   <Plus size={15} /> Add Question
                 </button>
               </div>
 
               {faqs.length === 0 ? (
-                <div className="text-center py-8 border-2 border-dashed border-slate-300 dark:border-slate-700/80 rounded-xl bg-white/50 dark:bg-slate-900/50">
-                  <p className="text-slate-500 text-xs sm:text-sm mb-3">No FAQs added yet.</p>
+                <div className="text-center py-7 border-2 border-dashed border-slate-200/80 dark:border-white/10 rounded-xl bg-white/50 dark:bg-white/5">
+                  <p className="text-slate-500 text-xs sm:text-sm mb-2">No FAQs added yet.</p>
                   <button
                     type="button"
                     onClick={() => setFaqs([{ q: "", a: "" }])}
-                    className="text-emerald-600 dark:text-emerald-400 font-bold text-xs hover:underline cursor-pointer"
+                    className="text-[#68b955] hover:text-[#4e993d] dark:text-[#68b955] font-bold text-xs hover:underline cursor-pointer"
                   >
                     + Create your first FAQ
                   </button>
                 </div>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-3.5">
                   {faqs.map((faq, index) => (
                     <div
                       key={index}
-                      className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/80 rounded-xl p-4 relative group shadow-xs"
+                      className="bg-white dark:bg-[#0d1526] border border-slate-200/80 dark:border-white/10 rounded-xl p-4 relative group shadow-xs"
                     >
                       <button
                         type="button"
@@ -466,7 +557,7 @@ export default function BlogEditorForm({ initialBlog, blogId: propBlogId }: Blog
                               prev.map((f, i) => (i === index ? { ...f, q: e.target.value } : f))
                             )
                           }
-                          className="w-full px-3 py-2 text-sm border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:text-white font-medium"
+                          className="w-full px-3 py-2 min-h-[40px] text-base sm:text-sm border border-slate-200/90 dark:border-white/10 rounded-lg focus:ring-2 focus:ring-[#68b955]/30 focus:border-[#68b955] dark:bg-[#050b14]/80 dark:text-white font-medium"
                           placeholder="E.g. What is Local SEO?"
                         />
                       </div>
@@ -483,7 +574,7 @@ export default function BlogEditorForm({ initialBlog, blogId: propBlogId }: Blog
                             )
                           }
                           rows={3}
-                          className="w-full px-3 py-2 text-sm border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:text-white"
+                          className="w-full px-3 py-2 text-base sm:text-sm border border-slate-200/90 dark:border-white/10 rounded-lg focus:ring-2 focus:ring-[#68b955]/30 focus:border-[#68b955] dark:bg-[#050b14]/80 dark:text-white"
                           placeholder="Provide a clear, helpful answer..."
                         />
                       </div>
@@ -495,28 +586,35 @@ export default function BlogEditorForm({ initialBlog, blogId: propBlogId }: Blog
 
             {/* Excerpt */}
             <div>
-              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                Excerpt (Optional)
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
+                Summary Excerpt (Optional)
               </label>
               <textarea
                 name="excerpt"
                 value={formData.excerpt}
                 onChange={handleChange}
                 rows={3}
-                className="w-full px-3.5 py-2.5 text-sm border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:text-white"
-                placeholder="A short summary of the post..."
+                className="w-full px-3.5 py-2.5 text-base sm:text-sm border border-slate-200/90 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-[#68b955]/30 focus:border-[#68b955] dark:bg-[#050b14]/80 dark:text-white"
+                placeholder="A concise summary of the article for archive listings and RSS feeds..."
               />
             </div>
           </div>
 
           {/* SEO & Metadata Card */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-4 sm:p-6 space-y-4">
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
-              SEO & Metadata
-            </h2>
+          <div className="bg-white dark:bg-[#0d1526] border border-slate-200/80 dark:border-white/10 rounded-2xl shadow-xs p-4 sm:p-5 lg:p-6 space-y-4">
+            <div className="border-b border-slate-100 dark:border-white/10 pb-3 flex items-center justify-between">
+              <div>
+                <h2 className="text-base font-bold text-slate-900 dark:text-white font-sans">
+                  Search Engine Optimization (SEO) & Social Graph
+                </h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  Configure search engine visibility and social media preview tags.
+                </p>
+              </div>
+            </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                 Meta Title
               </label>
               <input
@@ -524,13 +622,13 @@ export default function BlogEditorForm({ initialBlog, blogId: propBlogId }: Blog
                 name="meta_title"
                 value={formData.meta_title}
                 onChange={handleChange}
-                className="w-full px-3 py-2.5 text-sm border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:text-white"
+                className="w-full px-3.5 py-2.5 min-h-[42px] text-base sm:text-sm border border-slate-200/90 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-[#68b955]/30 focus:border-[#68b955] dark:bg-[#050b14]/80 dark:text-white outline-none"
                 placeholder="Defaults to Post Title if empty"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                 Meta Description
               </label>
               <textarea
@@ -538,13 +636,13 @@ export default function BlogEditorForm({ initialBlog, blogId: propBlogId }: Blog
                 value={formData.meta_description}
                 onChange={handleChange}
                 rows={2}
-                className="w-full px-3 py-2.5 text-sm border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:text-white"
-                placeholder="Compelling description for search engines..."
+                className="w-full px-3.5 py-2.5 text-base sm:text-sm border border-slate-200/90 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-[#68b955]/30 focus:border-[#68b955] dark:bg-[#050b14]/80 dark:text-white outline-none"
+                placeholder="Compelling description for search engine result snippets..."
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                 Focus Keywords
               </label>
               <input
@@ -552,32 +650,32 @@ export default function BlogEditorForm({ initialBlog, blogId: propBlogId }: Blog
                 name="meta_keywords"
                 value={formData.meta_keywords}
                 onChange={handleChange}
-                className="w-full px-3 py-2.5 text-sm border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:text-white"
+                className="w-full px-3.5 py-2.5 min-h-[42px] text-base sm:text-sm border border-slate-200/90 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-[#68b955]/30 focus:border-[#68b955] dark:bg-[#050b14]/80 dark:text-white outline-none"
                 placeholder="seo, digital marketing, ads (comma separated)"
               />
             </div>
 
-            <div className="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-4">
-              <h3 className="text-sm font-bold text-slate-900 dark:text-white">
-                Open Graph (Social Media)
+            <div className="pt-4 border-t border-slate-100 dark:border-white/10 space-y-4">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white font-sans">
+                Open Graph (Social Media Cards)
               </h3>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                  OG Title
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
+                  Social Title (OG:Title)
                 </label>
                 <input
                   type="text"
                   name="og_title"
                   value={formData.og_title}
                   onChange={handleChange}
-                  className="w-full px-3 py-2.5 text-sm border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:text-white"
+                  className="w-full px-3.5 py-2.5 min-h-[42px] text-base sm:text-sm border border-slate-200/90 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-[#68b955]/30 focus:border-[#68b955] dark:bg-[#050b14]/80 dark:text-white outline-none"
                   placeholder="Defaults to Post Title"
                 />
               </div>
 
               <CloudinaryUploader
-                label="OG Image (Optional)"
+                label="OG Share Image (Optional)"
                 value={formData.og_image}
                 onChange={(url) => handleImageChange("og_image", url)}
                 blogId={id}
@@ -586,35 +684,35 @@ export default function BlogEditorForm({ initialBlog, blogId: propBlogId }: Blog
           </div>
         </div>
 
-        {/* Sidebar Settings (1 Col) */}
-        <div className="space-y-6">
+        {/* Sidebar Controls (4 Cols) */}
+        <div className="xl:col-span-4 space-y-5 xl:sticky xl:top-4">
           {/* Publishing Card */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-4 sm:p-6 space-y-4">
-            <h2 className="text-base font-bold text-slate-900 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-3">
-              Publishing
+          <div className="bg-white dark:bg-[#0d1526] border border-slate-200/80 dark:border-white/10 rounded-2xl shadow-xs p-4 sm:p-5 lg:p-6 space-y-4">
+            <h2 className="text-base font-bold text-slate-900 dark:text-white border-b border-slate-100 dark:border-white/10 pb-3 font-sans">
+              Publishing Controls
             </h2>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
-                Status
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
+                Visibility Status
               </label>
               <select
                 name="status"
                 value={formData.status}
                 onChange={handleChange}
-                className="w-full px-3 py-2.5 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:text-white font-semibold text-sm cursor-pointer"
+                className="w-full px-3.5 py-2.5 min-h-[42px] border border-slate-200/90 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-[#68b955]/30 focus:border-[#68b955] dark:bg-[#050b14]/80 dark:text-white font-semibold text-base sm:text-sm cursor-pointer outline-none"
               >
-                <option value="draft">Draft</option>
-                <option value="scheduled">Scheduled</option>
-                <option value="published">Published</option>
-                <option value="archived">Archived</option>
+                <option value="draft" className="dark:bg-[#0d1526] dark:text-white">Draft (Private)</option>
+                <option value="scheduled" className="dark:bg-[#0d1526] dark:text-white">Scheduled (Auto-Publish)</option>
+                <option value="published" className="dark:bg-[#0d1526] dark:text-white">Published (Live to Public)</option>
+                <option value="archived" className="dark:bg-[#0d1526] dark:text-white">Archived (Unlisted)</option>
               </select>
             </div>
 
             {(formData.status === "published" || formData.status === "scheduled") && (
-              <div className="p-3.5 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
+              <div className="p-3.5 bg-slate-50/70 dark:bg-[#07111e]/90 rounded-xl border border-slate-200/80 dark:border-white/10 space-y-2">
                 <label className="flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-300">
-                  <CalendarClock size={15} className="text-emerald-500" />
+                  <CalendarClock size={15} className="text-[#68b955]" />
                   Publish Date & Time
                 </label>
                 <input
@@ -622,10 +720,10 @@ export default function BlogEditorForm({ initialBlog, blogId: propBlogId }: Blog
                   name="published_at"
                   value={formData.published_at}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-emerald-500 dark:bg-slate-900 dark:text-white text-xs font-mono"
+                  className="w-full px-3 py-2 min-h-[40px] border border-slate-200/90 dark:border-white/10 rounded-lg focus:ring-2 focus:ring-[#68b955]/30 focus:border-[#68b955] dark:bg-[#050b14]/80 dark:text-white text-base sm:text-xs font-mono outline-none"
                 />
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-tight">
-                  If set in the future, the post will not appear on the live site until this exact time.
+                  If set in the future, the post will not appear on the live site until this exact timestamp.
                 </p>
               </div>
             )}
@@ -635,28 +733,28 @@ export default function BlogEditorForm({ initialBlog, blogId: propBlogId }: Blog
                 type="button"
                 onClick={handleSubmit}
                 disabled={isSaving}
-                className="w-full flex justify-center items-center gap-2 bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500 hover:text-slate-950 font-bold py-2.5 px-4 rounded-xl transition-all disabled:opacity-70 text-sm cursor-pointer"
+                className="w-full flex justify-center items-center gap-2 bg-[#68b955] hover:bg-[#4e993d] text-white font-bold py-2.5 px-4 min-h-[44px] rounded-xl transition-all shadow-xs disabled:opacity-70 text-sm cursor-pointer active:scale-95"
               >
                 <Send size={16} />
-                {formData.status === "published" ? "Publish Now" : "Save " + formData.status}
+                {formData.status === "published" ? "Publish Live" : "Save as " + formData.status}
               </button>
             </div>
           </div>
 
           {/* Author & Category Card */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-4 sm:p-6 space-y-4">
-            <h2 className="text-base font-bold text-slate-900 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-3">
+          <div className="bg-white dark:bg-[#0d1526] border border-slate-200/80 dark:border-white/10 rounded-2xl shadow-xs p-4 sm:p-5 lg:p-6 space-y-4">
+            <h2 className="text-base font-bold text-slate-900 dark:text-white border-b border-slate-100 dark:border-white/10 pb-3 font-sans">
               Author & Category
             </h2>
 
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                   Category
                 </label>
                 <Link
                   href="/admin/categories"
-                  className="text-xs text-emerald-600 dark:text-emerald-400 hover:underline font-semibold"
+                  className="text-xs text-[#68b955] hover:text-[#4e993d] hover:underline font-semibold"
                 >
                   Manage Categories
                 </Link>
@@ -665,11 +763,11 @@ export default function BlogEditorForm({ initialBlog, blogId: propBlogId }: Blog
                 name="category_id"
                 value={formData.category_id}
                 onChange={handleChange}
-                className="w-full px-3 py-2.5 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:text-white text-sm cursor-pointer"
+                className="w-full px-3.5 py-2.5 min-h-[42px] border border-slate-200/90 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-[#68b955]/30 focus:border-[#68b955] dark:bg-[#050b14]/80 dark:text-white text-base sm:text-sm cursor-pointer outline-none"
               >
-                <option value="">Select a category</option>
+                <option value="" className="dark:bg-[#0d1526] dark:text-white">Select a category</option>
                 {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
+                  <option key={cat.id} value={cat.id} className="dark:bg-[#0d1526] dark:text-white">
                     {cat.name}
                   </option>
                 ))}
@@ -677,18 +775,18 @@ export default function BlogEditorForm({ initialBlog, blogId: propBlogId }: Blog
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
-                Author Name (Optional)
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
+                Author Name
               </label>
               <input
                 type="text"
                 name="author_name"
                 value={formData.author_name}
                 onChange={handleChange}
-                placeholder="e.g. John Doe"
-                className="w-full px-3 py-2.5 border border-slate-300 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:text-white text-sm"
+                placeholder="e.g. NearGrow Team"
+                className="w-full px-3.5 py-2.5 min-h-[42px] border border-slate-200/90 dark:border-white/10 rounded-xl focus:ring-2 focus:ring-[#68b955]/30 focus:border-[#68b955] dark:bg-[#050b14]/80 dark:text-white text-base sm:text-sm outline-none"
               />
-              <p className="text-[11px] text-slate-400 mt-1">Leave blank to use &apos;Admin&apos;</p>
+              <p className="text-[11px] text-slate-400 mt-1">Leave blank to default to &apos;NearGrow Team&apos;</p>
             </div>
 
             <div>
@@ -703,9 +801,9 @@ export default function BlogEditorForm({ initialBlog, blogId: propBlogId }: Blog
           </div>
 
           {/* Featured Image Card */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-4 sm:p-6">
-            <h2 className="text-base font-bold text-slate-900 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
-              Featured Image
+          <div className="bg-white dark:bg-[#0d1526] border border-slate-200/80 dark:border-white/10 rounded-2xl shadow-xs p-4 sm:p-5 lg:p-6">
+            <h2 className="text-base font-bold text-slate-900 dark:text-white border-b border-slate-100 dark:border-white/10 pb-3 mb-4 font-sans">
+              Featured Media Asset
             </h2>
             <CloudinaryUploader
               label="Featured Image"

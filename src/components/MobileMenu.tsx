@@ -69,7 +69,7 @@ export default function MobileMenu({ navLinks, pathname, onClose }: MobileMenuPr
                 <Link
                   href={link.href}
                   onClick={onClose}
-                  className="group flex items-center justify-between w-full py-1.5 xs:py-2"
+                  className="group flex items-center justify-between w-full py-2.5 xs:py-3 min-h-[44px]"
                 >
                   <span className={cn(
                     "text-xl xs:text-2xl sm:text-3xl font-bold uppercase tracking-tight transition-all duration-200",
@@ -96,7 +96,7 @@ export default function MobileMenu({ navLinks, pathname, onClose }: MobileMenuPr
           {/* Theme Switcher for Mobile */}
           <motion.div 
             variants={itemVariants} 
-            className="py-2.5 xs:py-3 w-full flex items-center justify-between border-y border-slate-200/80 dark:border-slate-800/80 my-1"
+            className="py-2.5 xs:py-3 w-full flex items-center justify-between border-y border-slate-200/80 dark:border-slate-800/80 my-1 min-h-[44px]"
           >
             <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Appearance
@@ -118,7 +118,7 @@ export default function MobileMenu({ navLinks, pathname, onClose }: MobileMenuPr
                 onClose();
                 window.dispatchEvent(new Event("openLeadModal"));
               }}
-              className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 xs:py-3.5 text-xs xs:text-sm font-bold text-white bg-gradient-to-r from-emerald-500 via-[#68B955] to-teal-500 hover:from-emerald-400 hover:to-teal-400 rounded-full transition-all active:scale-95 shadow-lg shadow-emerald-500/25 cursor-pointer"
+              className="w-full min-h-[48px] inline-flex items-center justify-center gap-2 px-5 py-3 xs:py-3.5 text-xs xs:text-sm font-bold text-white bg-gradient-to-r from-emerald-500 via-[#68B955] to-teal-500 hover:from-emerald-400 hover:to-teal-400 rounded-full transition-all active:scale-95 shadow-lg shadow-emerald-500/25 cursor-pointer"
             >
               <span>Get Free Website Audit</span>
             </button>

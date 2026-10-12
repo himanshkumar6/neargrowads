@@ -54,9 +54,9 @@ export default function HomeBlog({ recentPosts = [] }: HomeBlogProps) {
         style={{ background: "radial-gradient(circle, rgba(6,182,212,0.07) 0%, transparent 70%)" }}
       />
 
-      {/* Galaxy background (dark only) */}
+      {/* Galaxy background (dark only, desktop/tablet only for GPU efficiency) */}
       <div
-        className="absolute hidden dark:block left-[-20%] top-[10%] w-150 h-150 md:w-300 md:h-300 pointer-events-none z-0 opacity-40 mix-blend-screen"
+        className="absolute hidden md:dark:block left-[-20%] top-[10%] w-150 h-150 md:w-300 md:h-300 pointer-events-none z-0 opacity-40 mix-blend-screen"
         style={{ transform: "rotateX(60deg) rotateY(15deg) rotateZ(-20deg)", transformStyle: "preserve-3d" }}
       >
         <div className="absolute inset-0 animate-[planetSpin_60s_linear_infinite]" style={{ transformStyle: "preserve-3d" }}>

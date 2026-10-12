@@ -116,8 +116,8 @@ export function SeoChecklist({
   };
 
   return (
-    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm p-4 sm:p-5">
-      <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 mb-4">
+    <div className="bg-white dark:bg-[#0d1526] border border-slate-200/80 dark:border-white/10 rounded-2xl shadow-xs p-4 sm:p-5 lg:p-6 space-y-4">
+      <div className="flex items-center justify-between border-b border-slate-200/80 dark:border-white/10 pb-3 mb-2">
         <div className="flex items-center gap-2">
           <Sparkles size={16} className="text-emerald-500" />
           <h2 className="text-base font-bold text-slate-900 dark:text-white">Live SEO Analysis</h2>
@@ -128,7 +128,7 @@ export function SeoChecklist({
       </div>
 
       {/* Progress Bar */}
-      <div className="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden mb-4">
+      <div className="w-full h-2 bg-slate-100 dark:bg-[#07111e] rounded-full overflow-hidden mb-4">
         <div
           className={`h-full transition-all duration-500 rounded-full ${
             score >= 80 ? 'bg-emerald-500' : score >= 50 ? 'bg-amber-500' : 'bg-rose-500'

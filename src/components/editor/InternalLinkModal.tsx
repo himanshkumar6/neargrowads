@@ -124,12 +124,12 @@ export default function InternalLinkModal({
       onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-lg bg-white dark:bg-[#0b1329] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl shadow-black/60 dark:shadow-[0_25px_70px_rgba(0,0,0,0.85)] overflow-hidden flex flex-col my-auto max-h-[88vh] animate-in zoom-in-95 duration-200"
+        className="relative w-full max-w-lg bg-white dark:bg-[#0d1526] border border-slate-200/80 dark:border-white/10 rounded-2xl shadow-2xl shadow-black/60 dark:shadow-[0_25px_70px_rgba(0,0,0,0.85)] overflow-hidden flex flex-col my-auto max-h-[88vh] animate-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-6 py-4.5 border-b border-gray-100 dark:border-white/10 bg-gray-50/70 dark:bg-[#0e1736]/80 backdrop-blur-sm">
+        <div className="flex items-center justify-between px-6 py-4.5 border-b border-gray-100 dark:border-white/10 bg-slate-50/80 dark:bg-[#07111e]/90 backdrop-blur-sm">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-primary-500/10 dark:bg-primary-500/15 border border-primary-500/20 flex items-center justify-center text-primary-600 dark:text-primary-400">
               <Link2 size={18} />
@@ -150,7 +150,7 @@ export default function InternalLinkModal({
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex border-b border-gray-200 dark:border-white/10 bg-white dark:bg-[#0b1329] px-6 pt-2">
+        <div className="flex border-b border-gray-200 dark:border-white/10 bg-white dark:bg-[#0d1526] px-6 pt-2">
           <button
             type="button"
             onClick={() => setActiveTab("internal")}
@@ -204,13 +204,13 @@ export default function InternalLinkModal({
                     }
                   }}
                   placeholder="Search articles or paste URL (e.g. /contact)..."
-                  className="w-full pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-[#070d1d] border border-gray-200 dark:border-slate-800 rounded-xl text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all"
+                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-[#050b14]/80 border border-slate-200/90 dark:border-white/10 rounded-xl text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-[#68b955]/30 focus:border-[#68b955] outline-none transition-all"
                   autoFocus
                 />
               </div>
 
               {/* Blog List with Smart URL Quick Action */}
-              <div className="border border-gray-100 dark:border-slate-800/80 rounded-xl overflow-hidden bg-gray-50/50 dark:bg-[#070d1d]/50 max-h-60 overflow-y-auto overflow-x-hidden no-scrollbar divide-y divide-gray-100 dark:divide-slate-800/60">
+              <div className="border border-slate-200/80 dark:border-white/10 rounded-xl overflow-hidden bg-slate-50/50 dark:bg-[#07111e]/50 max-h-60 overflow-y-auto overflow-x-hidden no-scrollbar divide-y divide-slate-100 dark:divide-white/10">
                 {searchTerm.trim().length > 0 && (searchTerm.startsWith("/") || searchTerm.startsWith("http") || searchTerm.includes(".")) && (
                   <button
                     type="button"
@@ -255,15 +255,15 @@ export default function InternalLinkModal({
                         className={`w-full text-left p-3.5 flex items-start justify-between gap-3 transition-colors cursor-pointer ${
                           isSelected
                             ? "bg-primary-50 dark:bg-primary-500/15"
-                            : "hover:bg-gray-100/70 dark:hover:bg-slate-800/50"
+                            : "hover:bg-slate-100/70 dark:hover:bg-white/5"
                         }`}
                       >
                         <div className="flex-1 min-w-0">
-                          <h4 className="font-semibold text-sm text-gray-900 dark:text-white line-clamp-1">
+                          <h4 className="font-semibold text-sm text-slate-900 dark:text-white line-clamp-1">
                             {blog.title}
                           </h4>
-                          <div className="flex items-center gap-2 mt-1 text-xs text-gray-400">
-                            <span className="px-1.5 py-0.5 rounded-md bg-gray-200/60 dark:bg-slate-800 text-[11px] font-medium text-gray-600 dark:text-gray-300">
+                          <div className="flex items-center gap-2 mt-1 text-xs text-slate-400">
+                            <span className="px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-[#050b14]/80 text-[11px] font-medium text-slate-600 dark:text-slate-300">
                               {blog.category || "General"}
                             </span>
                             <span className="truncate">/blog/{blog.slug}</span>
@@ -306,7 +306,7 @@ export default function InternalLinkModal({
                       }
                     }}
                     placeholder="https://example.com or /contact"
-                    className="w-full pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-[#070d1d] border border-gray-200 dark:border-slate-800 rounded-xl text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all"
+                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-[#050b14]/80 border border-slate-200/90 dark:border-white/10 rounded-xl text-sm text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-2 focus:ring-[#68b955]/30 focus:border-[#68b955] outline-none transition-all"
                     autoFocus
                   />
                 </div>
@@ -332,7 +332,7 @@ export default function InternalLinkModal({
         </div>
 
         {/* Modal Footer */}
-        <div className="flex items-center justify-between px-6 py-4 border-t border-gray-100 dark:border-white/10 bg-gray-50/70 dark:bg-[#0e1736]/80">
+        <div className="flex items-center justify-between px-6 py-4 border-t border-gray-100 dark:border-white/10 bg-slate-50/80 dark:bg-[#07111e]/90">
           <div>
             {isLinkActive && onRemoveLink && (
               <button

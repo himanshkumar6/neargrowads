@@ -52,7 +52,7 @@ export default function FAQ() {
           </motion.h2>
           <motion.p
             initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} variants={fadeUp}
-            className="font-sans font-normal sm:font-medium text-sm xs:text-base sm:text-lg md:text-xl uppercase tracking-tight text-slate-600 dark:text-slate-400"
+            className="font-sans font-normal sm:font-medium text-sm xs:text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-400"
           >
             Everything you need to know about working with <strong className="font-semibold text-slate-900 dark:text-white">NearGrow Ads</strong>.
           </motion.p>
@@ -92,7 +92,7 @@ export default function FAQ() {
                   aria-controls={panelId}
                 >
                   <span
-                    className={`font-sans font-semibold text-sm xs:text-base sm:text-lg md:text-xl uppercase tracking-tight transition-colors duration-300 flex-1 leading-snug pt-0.5 ${
+                    className={`font-sans font-semibold text-sm xs:text-base sm:text-lg md:text-xl tracking-tight transition-colors duration-300 flex-1 leading-snug pt-0.5 ${
                       isOpen
                         ? "text-secondary-600 dark:text-secondary-400"
                         : "text-slate-900 dark:text-white group-hover:text-secondary-600 dark:group-hover:text-secondary-400"

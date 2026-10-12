@@ -15,9 +15,9 @@ export const authors: AuthorData[] = founders.map(f => ({
   id: f.name.toLowerCase().replace(/\s+/g, '-'),
   name: f.name,
   role: f.position,
-  bio: f.story,
-  image: f.image,
-  linkedin: f.linkedin,
+  bio: f.story || '',
+  image: f.image || '',
+  linkedin: f.linkedin || '',
   email: f.email?.replace('mailto:', '')
 }));
 
