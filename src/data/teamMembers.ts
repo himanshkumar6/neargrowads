@@ -30,22 +30,16 @@ export const teamMembers: TeamMember[] = [
     role: "",
     image: "/assets/Aditya.jpeg",
   },
-  // {
-  //   id: "5",
-  //   name: "Michael Chang",
-  //   role: "Senior Strategist",
-  //   image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=800",
-  // },
-  // {
-  //   id: "6",
-  //   name: "Jessica Taylor",
-  //   role: "Operations Lead",
-  //   image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800",
-  // },
-  // {
-  //   id: "7",
-  //   name: "Ryan Gosling",
-  //   role: "Frontend Developer",
-  //   image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=800",
-  // },
+  {
+    id: "5",
+    name: "Bhawna Bankoti",
+    role: "",
+    image: "/assets/Bhawna Bankoti.png",
+  },
+  {
+    id: "6",
+    name: "Kasib",
+    role: "",
+    image: "/assets/file_000000002e4481fa8bcad3df655ae52a.png",
+  },
 ];
