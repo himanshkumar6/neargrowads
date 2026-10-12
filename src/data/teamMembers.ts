@@ -42,4 +42,10 @@ export const teamMembers: TeamMember[] = [
     role: "",
     image: "/assets/file_000000002e4481fa8bcad3df655ae52a.png",
   },
+  {
+    id: "7",
+    name: "Neelam",
+    role: "",
+    image: "/assets/neelam.jpg",
+  },
 ];
