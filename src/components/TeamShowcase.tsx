@@ -55,12 +55,12 @@ const Card = ({
     return normalized;
   });
 
-  // Center card is highlighted (1.04), side cards subtly dimmed (0.88)
-  const brightnessRaw = useTransform(normalizedAngle, [-55, 0, 55], [0.88, 1.04, 0.88]);
+  // Center card is highlighted, side cards subtly dimmed
+  const brightnessRaw = useTransform(normalizedAngle, [-60, 0, 60], [0.92, 1.02, 0.92]);
   const brightness = useSpring(brightnessRaw, { stiffness: 380, damping: 45 });
   
-  // Smoothly taper opacity so distant cards outside the viewing arc fade cleanly
-  const opacityRaw = useTransform(normalizedAngle, [-70, -55, -35, 0, 35, 55, 70], [0, 0.45, 0.88, 1, 0.88, 0.45, 0]);
+  // Smoothly taper opacity for cylinder turnaround while keeping 5 center/flanking cards crisp
+  const opacityRaw = useTransform(normalizedAngle, [-80, -65, -45, 0, 45, 65, 80], [0, 0.6, 1, 1, 1, 0.6, 0]);
   const opacity = useSpring(opacityRaw, { stiffness: 380, damping: 45 });
 
   const filter = useMotionTemplate`brightness(${brightness})`;
@@ -83,24 +83,24 @@ const Card = ({
         width: cardWidth,
         height: cardHeight,
       }}
-      className="group absolute inset-0 rounded-2xl md:rounded-3xl overflow-hidden shadow-[0_12px_36px_rgba(0,0,0,0.22)] dark:shadow-[0_16px_40px_rgba(0,0,0,0.45)] border border-black/5 dark:border-white/10 will-change-transform cursor-pointer select-none [mask-image:-webkit-radial-gradient(white,black)] [-webkit-mask-image:-webkit-radial-gradient(white,black)]"
+      className="group absolute inset-0 rounded-2xl sm:rounded-3xl lg:rounded-[28px] overflow-hidden shadow-[0_12px_36px_rgba(0,0,0,0.24)] dark:shadow-[0_16px_44px_rgba(0,0,0,0.5)] border border-black/5 dark:border-white/10 will-change-transform cursor-pointer select-none [mask-image:-webkit-radial-gradient(white,black)] [-webkit-mask-image:-webkit-radial-gradient(white,black)]"
     >
       <Image
         src={member.image}
         alt={member.name}
         fill
-        sizes="(max-width: 640px) 240px, (max-width: 1024px) 270px, (max-width: 1280px) 350px, (max-width: 1536px) 410px, 460px"
+        sizes="(max-width: 640px) 260px, (max-width: 1024px) 320px, (max-width: 1280px) 390px, (max-width: 1536px) 450px, 520px"
         style={{ objectPosition: member.objectPosition || "center 20%" }}
         className="object-cover pointer-events-none transition-transform duration-700 ease-out group-hover:scale-105"
-        priority={Math.abs(index - centerIndex) <= 1}
-        loading={Math.abs(index - centerIndex) > 1 ? "lazy" : undefined}
+        priority={Math.abs(index - centerIndex) <= 2}
+        loading={Math.abs(index - centerIndex) > 2 ? "lazy" : undefined}
       />
       
       {/* Refined gradient scrim for readable text without covering face */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none rounded-2xl md:rounded-3xl" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none rounded-2xl sm:rounded-3xl lg:rounded-[28px]" />
       
       {/* Member Name Label */}
-      <div className="absolute bottom-0 left-0 w-full p-4 sm:p-5 md:p-6 lg:p-7 text-left pointer-events-none transform translate-y-1 group-hover:translate-y-0 transition-transform duration-300">
+      <div className="absolute bottom-0 left-0 w-full p-4 sm:p-5 md:p-6 lg:p-7 xl:p-8 text-left pointer-events-none transform translate-y-0.5 group-hover:translate-y-0 transition-transform duration-300">
         <h3 className="text-white text-base sm:text-lg md:text-2xl lg:text-3xl font-bold tracking-tight drop-shadow-md leading-tight line-clamp-1">
           {member.name}
         </h3>
@@ -147,64 +147,64 @@ export default function TeamShowcase() {
   const activeDataIndex = ((centerIndex + activeStep) % teamMembers.length + teamMembers.length) % teamMembers.length;
   const activeMember = teamMembers[activeDataIndex];
 
-  // Responsive card width tuned to make portraits prominent, majestic, and balanced:
-  // - Mobile (<480px): clamp(215px, 64vw, 235px) (preserved)
-  // - Small Tablet (480-767px): 235px (preserved)
-  // - Tablet (768-1023px): 245px (preserved)
-  // - Desktop (1024-1279px): 270px -> 305px
-  // - Desktop (1280-1439px): 305px -> 330px
-  // - Desktop (1440-1535px): 330px -> 350px
-  // - Large Desktop (1536-1919px): 350px -> 375px
-  // - Desktop (1920-2559px): 375px -> 390px
-  // - Ultrawide (2560px+): Capped at 390px with bounded max-w-[1800px] container
+  // Fluid responsive card width matching reference proportions:
+  // - Mobile (<480px): 220px - 240px (preserved)
+  // - Small Tablet (480-767px): 245px (preserved)
+  // - Tablet (768-1023px): 285px
+  // - Desktop (1024-1279px): 320px -> 370px
+  // - Desktop (1280-1439px): 370px -> 415px
+  // - Desktop (1440-1535px): 415px -> 440px
+  // - Wide Desktop (1536-1919px): 440px -> 470px
+  // - Full HD (1920-2559px): 470px -> 480px (Target reference scale: ~470px wide)
+  // - Ultrawide (2560px+): Capped at 480px with bounded max width
   const cardWidth = 
     viewportWidth < 480 
-      ? Math.min(Math.max(Math.round(viewportWidth * 0.64), 215), 235)
+      ? Math.min(Math.max(Math.round(viewportWidth * 0.64), 220), 240)
       : viewportWidth < 768 
-        ? 235
+        ? 245
         : viewportWidth < 1024 
-          ? 245
+          ? 285
           : viewportWidth < 1280
-            ? Math.round(270 + ((viewportWidth - 1024) / (1280 - 1024)) * 35)
+            ? Math.round(320 + ((viewportWidth - 1024) / (1280 - 1024)) * 50)
             : viewportWidth < 1440 
-              ? Math.round(305 + ((viewportWidth - 1280) / (1440 - 1280)) * 25)
+              ? Math.round(370 + ((viewportWidth - 1280) / (1440 - 1280)) * 45)
               : viewportWidth < 1536
-                ? Math.round(330 + ((viewportWidth - 1440) / (1536 - 1440)) * 20)
+                ? Math.round(415 + ((viewportWidth - 1440) / (1536 - 1440)) * 25)
                 : viewportWidth < 1920
-                  ? Math.round(350 + ((viewportWidth - 1536) / (1920 - 1536)) * 25)
+                  ? Math.round(440 + ((viewportWidth - 1536) / (1920 - 1536)) * 30)
                   : viewportWidth < 2560
-                    ? Math.round(375 + ((viewportWidth - 1920) / (2560 - 1920)) * 15)
-                    : 390;
+                    ? Math.round(470 + ((viewportWidth - 1920) / (2560 - 1920)) * 10)
+                    : 480;
 
-  // Strict 3:4 portrait ratio
-  const cardHeight = Math.round(cardWidth * 1.333);
+  // Strict 3:4 portrait ratio (~470px wide -> ~627px tall)
+  const cardHeight = Math.round(cardWidth * (4 / 3));
 
-  // Responsive visual gap between cards (16px on mobile, 20px on tablet, 24px on 1024-1439px, 28px on 1440-1919px, 32px on 1920px+)
+  // Narrow, consistent visual gaps matching reference (approx 20-26px on desktop)
   const cardGap = 
     viewportWidth < 640 
       ? 16 
       : viewportWidth < 1024 
         ? 20 
         : viewportWidth < 1440
-          ? 24
+          ? 22
           : viewportWidth < 1920
-            ? 28
-            : 32;
+            ? 24
+            : 26;
 
   // Mathematically exact radius: chord distance between adjacent card centers = (cardWidth + cardGap)
   // Guarantees an exact, consistent visible gap between adjacent cards regardless of card size
   const effectiveSpacing = cardWidth + cardGap;
   const dynamicRadius = Math.round((effectiveSpacing / 2) / Math.sin(Math.PI / total));
 
-  // Dynamic perspective tuned for viewport
+  // Dynamic perspective tuned for smooth cylindrical curve
   const perspective = 
     viewportWidth < 768 
-      ? "2200px" 
+      ? "2000px" 
       : viewportWidth < 1280 
-        ? "2800px" 
+        ? "2600px" 
         : viewportWidth < 1920 
-          ? "3400px" 
-          : "3800px";
+          ? "3200px" 
+          : "3500px";
 
   // Preserve alignment on resize without resetting active member
   useEffect(() => {
@@ -291,7 +291,7 @@ export default function TeamShowcase() {
 
       {/* Centered, Bounded Carousel Container */}
       <div 
-        className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 relative flex flex-col items-center justify-center z-10"
+        className="w-full max-w-[2000px] mx-auto px-2 sm:px-4 lg:px-6 relative flex flex-col items-center justify-center z-10"
         style={{ perspective }}
       >
         <motion.div 
@@ -312,7 +312,7 @@ export default function TeamShowcase() {
               handleNext();
             }
           }}
-          className="relative flex items-center justify-center cursor-grab active:cursor-grabbing focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#68B955] rounded-2xl md:rounded-3xl"
+          className="relative flex items-center justify-center cursor-grab active:cursor-grabbing focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#68B955] rounded-2xl sm:rounded-3xl lg:rounded-[28px]"
           style={{ 
             width: cardWidth, 
             height: cardHeight, 
@@ -361,7 +361,7 @@ export default function TeamShowcase() {
         </motion.div>
 
         {/* Carousel Controls in Normal Layout Flow */}
-        <div className="flex items-center gap-4 sm:gap-6 mt-4 sm:mt-5 md:mt-6 relative z-30">
+        <div className="flex items-center gap-4 sm:gap-6 mt-6 sm:mt-8 md:mt-10 relative z-30">
           <button 
             type="button"
             onClick={handlePrev} 
