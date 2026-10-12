@@ -5,34 +5,45 @@ import { motion, useTransform, useSpring, useReducedMotion, useMotionTemplate, u
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { teamMembers } from "@/data/teamMembers";
-import { fadeUp } from "@/lib/animations";
+
+interface CardProps {
+  member: (typeof teamMembers)[0];
+  index: number;
+  total: number;
+  globalRotation: MotionValue<number>;
+  dynamicRadius: number;
+  cardWidth: number;
+  cardHeight: number;
+  onSelect: () => void;
+}
 
 const Card = ({ 
   member, 
   index, 
   total, 
   globalRotation,
-  isMobile 
-}: { 
-  member: (typeof teamMembers)[0]; 
-  index: number; 
-  total: number; 
-  globalRotation: MotionValue<number>;
-  isMobile: boolean;
-}) => {
+  dynamicRadius,
+  cardWidth,
+  cardHeight,
+  onSelect,
+}: CardProps) => {
   const prefersReducedMotion = useReducedMotion();
   const mounted = useSyncExternalStore(() => () => {}, () => true, () => false);
 
   const angleIncrement = 360 / total;
-  
   const centerIndex = Math.floor(total / 2);
+
+  // In LTR coordinate space with positive Z origin:
+  // (index - centerIndex) * angleIncrement:
+  // - index (k + 1) [NEXT member] has positive angle -> placed on RIGHT
+  // - index (k - 1) [PREVIOUS member] has negative angle -> placed on LEFT
   const cardAngle = (index - centerIndex) * angleIncrement;
 
   const rotateYRaw = useTransform(globalRotation, (y: number) => y + cardAngle);
   
   const rotateY = useSpring(rotateYRaw, { 
-    stiffness: prefersReducedMotion ? 1000 : 400, 
-    damping: prefersReducedMotion ? 100 : 50 
+    stiffness: prefersReducedMotion ? 1000 : 380, 
+    damping: prefersReducedMotion ? 100 : 45 
   });
 
   const normalizedAngle = useTransform(rotateYRaw, (y: number) => {
@@ -42,54 +53,55 @@ const Card = ({
     return normalized;
   });
 
-  const brightnessRaw = useTransform(normalizedAngle, [-60, 0, 60], [0.9, 1.1, 0.9]);
-  const brightness = useSpring(brightnessRaw, { stiffness: 400, damping: 50 });
+  // Center card is highlighted (1.04), side cards subtly dimmed (0.88)
+  const brightnessRaw = useTransform(normalizedAngle, [-55, 0, 55], [0.88, 1.04, 0.88]);
+  const brightness = useSpring(brightnessRaw, { stiffness: 380, damping: 45 });
   
-  const opacityRaw = useTransform(normalizedAngle, [-90, -70, 0, 70, 90], [0, 1, 1, 1, 0]);
-  const opacity = useSpring(opacityRaw, { stiffness: 400, damping: 50 });
+  // Smoothly taper opacity so distant cards outside the viewing arc fade cleanly
+  const opacityRaw = useTransform(normalizedAngle, [-70, -55, -35, 0, 35, 55, 70], [0, 0.45, 0.88, 1, 0.88, 0.45, 0]);
+  const opacity = useSpring(opacityRaw, { stiffness: 380, damping: 45 });
 
   const filter = useMotionTemplate`brightness(${brightness})`;
 
-  // Dynamic Radius Calculation for the Concave Bowl!
-  // Instead of hardcoding 720px, we mathematically compute the perfect radius so cards 
-  // always have a tight, consistent gap regardless of how many team members exist!
-  const cardWidth = isMobile ? 280 : 320;
-  // radius = (cardWidth / 2) / tan(PI / total)
-  const calculatedRadius = Math.round((cardWidth / 2) / Math.tan(Math.PI / total));
-  // Add a little extra padding for a visual gap between cards
-  const dynamicRadius = Math.max(isMobile ? 400 : 500, calculatedRadius + (isMobile ? 40 : 60));
-
   return (
     <motion.div
+      onClick={onSelect}
       style={{
         rotateY,
         opacity,
         filter,
-        // SENIOR FIX: The radius is now perfectly dynamic! It scales mathematically 
-        // to fit 3, 5, 7, or 50 cards without breaking layout or overlapping!
         transformOrigin: mounted
           ? `center center ${dynamicRadius}px`
-          : "center center 800px",
-        transformStyle: "preserve-3d"
+          : `center center ${dynamicRadius}px`,
+        transformStyle: "preserve-3d",
+        width: cardWidth,
+        height: cardHeight,
       }}
-      className="group absolute inset-0 w-full h-full rounded-2xl md:rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] will-change-transform [mask-image:-webkit-radial-gradient(white,black)] [-webkit-mask-image:-webkit-radial-gradient(white,black)]"
+      className="group absolute inset-0 rounded-2xl md:rounded-3xl overflow-hidden shadow-[0_12px_36px_rgba(0,0,0,0.22)] dark:shadow-[0_16px_40px_rgba(0,0,0,0.45)] border border-black/5 dark:border-white/10 will-change-transform cursor-pointer select-none [mask-image:-webkit-radial-gradient(white,black)] [-webkit-mask-image:-webkit-radial-gradient(white,black)]"
     >
       <Image
         src={member.image}
         alt={member.name}
         fill
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 320px, 350px"
-        className="object-cover pointer-events-none transition-transform duration-700 ease-out group-hover:scale-110"
-        priority={Math.abs(index - Math.floor(total / 2)) <= 2}
-        loading={Math.abs(index - Math.floor(total / 2)) > 2 ? "lazy" : undefined}
+        sizes="(max-width: 640px) 240px, (max-width: 1024px) 270px, (max-width: 1280px) 350px, (max-width: 1536px) 410px, 460px"
+        style={{ objectPosition: member.objectPosition || "center 20%" }}
+        className="object-cover pointer-events-none transition-transform duration-700 ease-out group-hover:scale-105"
+        priority={Math.abs(index - centerIndex) <= 1}
+        loading={Math.abs(index - centerIndex) > 1 ? "lazy" : undefined}
       />
       
-      <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black/90 via-black/40 to-transparent pointer-events-none opacity-100 rounded-b-2xl md:rounded-b-3xl" />
+      {/* Refined gradient scrim for readable text without covering face */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none rounded-2xl md:rounded-3xl" />
       
-      <div className="absolute bottom-0 left-0 w-full p-3.5 xs:p-4 md:p-6 text-left pointer-events-none transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-        <h3 className="text-white text-base xs:text-lg md:text-2xl font-bold tracking-tight mb-0.5 xs:mb-1 drop-shadow-md leading-tight">{member.name}</h3>
+      {/* Member Name Label */}
+      <div className="absolute bottom-0 left-0 w-full p-4 sm:p-5 md:p-6 lg:p-7 text-left pointer-events-none transform translate-y-1 group-hover:translate-y-0 transition-transform duration-300">
+        <h3 className="text-white text-base sm:text-lg md:text-2xl lg:text-3xl font-bold tracking-tight drop-shadow-md leading-tight line-clamp-1">
+          {member.name}
+        </h3>
         {member.role ? (
-          <p className="text-gray-200 text-[11px] xs:text-xs md:text-sm font-medium uppercase tracking-wider drop-shadow-md">{member.role}</p>
+          <p className="text-gray-200 text-xs sm:text-sm md:text-base font-medium uppercase tracking-wider drop-shadow-md mt-0.5 line-clamp-1">
+            {member.role}
+          </p>
         ) : null}
       </div>
     </motion.div>
@@ -97,30 +109,93 @@ const Card = ({
 };
 
 export default function TeamShowcase() {
-  const isMobile = useSyncExternalStore(
+  // Track viewport width for fluid, responsive calculations
+  const viewportWidth = useSyncExternalStore(
     (onStoreChange) => {
       window.addEventListener('resize', onStoreChange);
       return () => window.removeEventListener('resize', onStoreChange);
     },
-    () => window.innerWidth < 768,
-    () => false
+    () => (typeof window !== 'undefined' ? window.innerWidth : 1200),
+    () => 1200
   );
 
+  // Repeat team members 3 times to provide a seamless continuous carousel
   const loopedMembers = [...teamMembers, ...teamMembers, ...teamMembers];
-  const angleIncrement = 360 / loopedMembers.length;
+  const total = loopedMembers.length;
+  const angleIncrement = 360 / total; // ~17.14° per card
   const globalRotation = useMotionValue(0);
 
   const trackpadRef = useRef<HTMLDivElement>(null);
   const wheelTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  // Responsive card width tuned to make portraits prominent, majestic, and balanced:
+  // - Mobile (<480px): clamp(215px, 64vw, 235px) (preserved)
+  // - Small Tablet (480-767px): 235px (preserved)
+  // - Tablet (768-1023px): 245px (preserved)
+  // - Desktop (1024-1279px): 270px -> 305px
+  // - Desktop (1280-1439px): 305px -> 330px
+  // - Desktop (1440-1535px): 330px -> 350px
+  // - Large Desktop (1536-1919px): 350px -> 375px
+  // - Desktop (1920-2559px): 375px -> 390px
+  // - Ultrawide (2560px+): Capped at 390px with bounded max-w-[1800px] container
+  const cardWidth = 
+    viewportWidth < 480 
+      ? Math.min(Math.max(Math.round(viewportWidth * 0.64), 215), 235)
+      : viewportWidth < 768 
+        ? 235
+        : viewportWidth < 1024 
+          ? 245
+          : viewportWidth < 1280
+            ? Math.round(270 + ((viewportWidth - 1024) / (1280 - 1024)) * 35)
+            : viewportWidth < 1440 
+              ? Math.round(305 + ((viewportWidth - 1280) / (1440 - 1280)) * 25)
+              : viewportWidth < 1536
+                ? Math.round(330 + ((viewportWidth - 1440) / (1536 - 1440)) * 20)
+                : viewportWidth < 1920
+                  ? Math.round(350 + ((viewportWidth - 1536) / (1920 - 1536)) * 25)
+                  : viewportWidth < 2560
+                    ? Math.round(375 + ((viewportWidth - 1920) / (2560 - 1920)) * 15)
+                    : 390;
+
+  // Strict 3:4 portrait ratio
+  const cardHeight = Math.round(cardWidth * 1.333);
+
+  // Responsive visual gap between cards (16px on mobile, 20px on tablet, 24px on 1024-1439px, 28px on 1440-1919px, 32px on 1920px+)
+  const cardGap = 
+    viewportWidth < 640 
+      ? 16 
+      : viewportWidth < 1024 
+        ? 20 
+        : viewportWidth < 1440
+          ? 24
+          : viewportWidth < 1920
+            ? 28
+            : 32;
+
+  // Mathematically exact radius: chord distance between adjacent card centers = (cardWidth + cardGap)
+  // Guarantees an exact, consistent visible gap between adjacent cards regardless of card size
+  const effectiveSpacing = cardWidth + cardGap;
+  const dynamicRadius = Math.round((effectiveSpacing / 2) / Math.sin(Math.PI / total));
+
+  // Dynamic perspective tuned for viewport
+  const perspective = 
+    viewportWidth < 768 
+      ? "2200px" 
+      : viewportWidth < 1280 
+        ? "2800px" 
+        : viewportWidth < 1920 
+          ? "3400px" 
+          : "3800px";
 
   useEffect(() => {
     const element = trackpadRef.current;
     if (!element) return;
 
     const handleNativeWheel = (e: WheelEvent) => {
+      // Horizontal trackpad scrolling: swiping right advances track left (next), swiping left returns right (prev)
       if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
         e.preventDefault(); 
-        globalRotation.set(globalRotation.get() - e.deltaX * 0.15);
+        globalRotation.set(globalRotation.get() - e.deltaX * 0.12);
 
         if (wheelTimeout.current) clearTimeout(wheelTimeout.current);
         
@@ -136,55 +211,80 @@ export default function TeamShowcase() {
     return () => element.removeEventListener("wheel", handleNativeWheel);
   }, [globalRotation, angleIncrement]);
 
+  // Direction Semantics:
+  // Right arrow (NEXT team member):
+  // The next member sits on the right. Advancing to the next member rotates
+  // the cylinder so the track moves LEFT, bringing the next member into center.
   const handleNext = () => {
     globalRotation.set(globalRotation.get() - angleIncrement);
   };
 
+  // Left arrow (PREVIOUS team member):
+  // The previous member sits on the left. Returning to the previous member rotates
+  // the cylinder so the track moves RIGHT, bringing the previous member into center.
   const handlePrev = () => {
     globalRotation.set(globalRotation.get() + angleIncrement);
   };
 
   return (
-    <section className="relative min-h-[90vh] py-12 md:py-16 bg-white dark:bg-gray-950 flex flex-col justify-center items-center overflow-hidden">
+    <section 
+      id="team"
+      role="region"
+      aria-label="Leadership Team Showcase"
+      className="relative scroll-mt-16 sm:scroll-mt-20 py-8 sm:py-10 md:py-12 lg:py-14 bg-white dark:bg-gray-950 flex flex-col justify-center items-center overflow-hidden"
+    >
+      {/* Background Ambience */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-primary-500/10 via-transparent to-transparent opacity-80 dark:opacity-40 pointer-events-none" />
 
-      <div className="container mx-auto px-3 xs:px-4 md:px-8 text-center relative z-20 mb-8 xs:mb-10 md:mb-20 mt-4 xs:mt-6 md:mt-1">
-        <motion.span 
-          initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-          className="text-primary-600 dark:text-primary-400 font-semibold tracking-wider uppercase text-xs xs:text-sm"
-        >
+      {/* Section Header */}
+      <div className="container max-w-4xl mx-auto px-4 sm:px-6 md:px-8 text-center relative z-20 mb-4 sm:mb-6 md:mb-8">
+        <span className="text-[#68B955] font-semibold tracking-wider uppercase text-xs sm:text-sm block mb-1">
           Leadership Team
-        </motion.span>
-        <motion.h2 
-          initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-          className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mt-3 xs:mt-4 mb-3 xs:mb-4 md:mb-6 leading-tight tracking-tight"
-        >
+        </span>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mt-1.5 mb-2 sm:mb-2.5 leading-tight tracking-tight">
           Team Work Makes the Dream Work
-        </motion.h2>
-        <motion.p 
-          initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-          className="text-gray-600 dark:text-gray-300 text-sm xs:text-base md:text-xl max-w-2xl mx-auto leading-relaxed"
-        >
+        </h2>
+        <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
           Meet the brilliant minds behind our award-winning campaigns. We combine data-driven precision with world-class creativity to scale your brand.
-        </motion.p>
+        </p>
       </div>
 
+      {/* Centered, Bounded Carousel Container */}
       <div 
-        className="w-full relative flex flex-col items-center justify-center z-10"
-        style={{ perspective: "1500px" }}
+        className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 relative flex flex-col items-center justify-center z-10"
+        style={{ perspective }}
       >
         <motion.div 
           ref={trackpadRef}
-          className="relative w-[82vw] max-w-[340px] sm:w-[280px] md:w-[320px] lg:w-[350px] aspect-[4/5] sm:aspect-[3/4] mb-8 md:mb-12 cursor-grab active:cursor-grabbing"
-          style={{ transformStyle: "preserve-3d", touchAction: "pan-y" }}
+          tabIndex={0}
+          role="region"
+          aria-label="Team member carousel. Use Left and Right arrow keys to navigate."
+          onKeyDown={(e) => {
+            if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              handlePrev();
+            } else if (e.key === "ArrowRight") {
+              e.preventDefault();
+              handleNext();
+            }
+          }}
+          className="relative flex items-center justify-center cursor-grab active:cursor-grabbing focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#68B955] rounded-2xl md:rounded-3xl"
+          style={{ 
+            width: cardWidth, 
+            height: cardHeight, 
+            transformStyle: "preserve-3d", 
+            touchAction: "pan-y" 
+          }}
           drag="x"
           dragConstraints={{ left: 0, right: 0 }} 
           dragElastic={0} 
           onDrag={(e, info) => {
-            globalRotation.set(globalRotation.get() + info.delta.x * 0.15);
+            // Drag left (delta.x < 0) advances forward to next card (-rotation)
+            // Drag right (delta.x > 0) returns backward to previous card (+rotation)
+            globalRotation.set(globalRotation.get() + info.delta.x * 0.12);
           }}
           onDragEnd={(e, info) => {
-            const momentum = info.velocity.x * 0.05;
+            const momentum = info.velocity.x * 0.04;
             const target = globalRotation.get() + momentum;
             const nearestAngle = Math.round(target / angleIncrement) * angleIncrement;
             globalRotation.set(nearestAngle);
@@ -195,27 +295,41 @@ export default function TeamShowcase() {
               key={`${member.id}-${i}`} 
               member={member} 
               index={i} 
-              total={loopedMembers.length} 
+              total={total} 
               globalRotation={globalRotation} 
-              isMobile={isMobile}
+              dynamicRadius={dynamicRadius}
+              cardWidth={cardWidth}
+              cardHeight={cardHeight}
+              onSelect={() => {
+                const cardAngle = (i - Math.floor(total / 2)) * angleIncrement;
+                const current = globalRotation.get();
+                const diff = (current + cardAngle) % 360;
+                if (Math.abs(diff) > 2) {
+                  const target = current - diff;
+                  globalRotation.set(Math.round(target / angleIncrement) * angleIncrement);
+                }
+              }}
             />
           ))}
         </motion.div>
 
-        <div className="flex items-center gap-4 sm:gap-6 mt-2 sm:mt-4 relative z-50">
+        {/* Carousel Controls in Normal Layout Flow */}
+        <div className="flex items-center gap-4 sm:gap-6 mt-4 sm:mt-5 md:mt-6 relative z-30">
           <button 
+            type="button"
             onClick={handlePrev} 
-            className="w-11 h-11 sm:w-14 sm:h-14 rounded-full flex items-center justify-center bg-black/5 dark:bg-white/10 backdrop-blur-md border border-black/10 dark:border-white/10 text-gray-900 dark:text-white hover:bg-black/10 dark:hover:bg-white/20 transition-all shadow-sm hover:scale-105 active:scale-95 will-change-transform transform-gpu cursor-pointer"
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border border-slate-200/90 dark:border-white/10 text-gray-900 dark:text-white hover:bg-slate-50 dark:hover:bg-gray-800 hover:text-[#68B955] dark:hover:text-[#68B955] hover:border-[#68B955]/40 transition-all shadow-md hover:scale-105 active:scale-95 will-change-transform transform-gpu cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#68B955]"
             aria-label="Previous team member"
           >
-            <ChevronLeft className="w-5 h-5 sm:w-7 sm:h-7" />
+            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
           <button 
+            type="button"
             onClick={handleNext}
-            className="w-11 h-11 sm:w-14 sm:h-14 rounded-full flex items-center justify-center bg-black/5 dark:bg-white/10 backdrop-blur-md border border-black/10 dark:border-white/10 text-gray-900 dark:text-white hover:bg-black/10 dark:hover:bg-white/20 transition-all shadow-sm hover:scale-105 active:scale-95 will-change-transform transform-gpu cursor-pointer"
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border border-slate-200/90 dark:border-white/10 text-gray-900 dark:text-white hover:bg-slate-50 dark:hover:bg-gray-800 hover:text-[#68B955] dark:hover:text-[#68B955] hover:border-[#68B955]/40 transition-all shadow-md hover:scale-105 active:scale-95 will-change-transform transform-gpu cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#68B955]"
             aria-label="Next team member"
           >
-            <ChevronRight className="w-5 h-5 sm:w-7 sm:h-7" />
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
         </div>
       </div>
