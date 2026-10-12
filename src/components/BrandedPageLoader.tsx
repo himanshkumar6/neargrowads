@@ -297,9 +297,10 @@ export default function BrandedPageLoader() {
         return;
       }
 
-      // 10. Ignore current location (same pathname and search params)
+      // 10. Ignore current location (same pathname and search params, normalizing trailing slashes)
+      const norm = (p: string) => p.replace(/\/+$/, "") || "/";
       if (
-        targetUrl.pathname === window.location.pathname &&
+        norm(targetUrl.pathname) === norm(window.location.pathname) &&
         targetUrl.search === window.location.search
       ) {
         return;
@@ -312,8 +313,9 @@ export default function BrandedPageLoader() {
 
     // Listen to browser Back / Forward buttons
     const handlePopState = () => {
+      const norm = (p: string) => p.replace(/\/+$/, "") || "/";
       const destination = window.location.pathname + window.location.search;
-      if (destination !== currentUrlRef.current) {
+      if (norm(destination) !== norm(currentUrlRef.current)) {
         startTransition(destination);
       }
     };
