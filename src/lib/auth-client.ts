@@ -40,7 +40,12 @@ export async function handleSessionExpired() {
     duration: 4000,
   });
 
-  // Murphy's Law Guard #5: Immediate hard redirect to auth page
+  // Murphy's Law Guard #5: Immediate hard redirect to auth page with branded transition
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(
+      new CustomEvent('neargrow:navigation-start', { detail: { href: '/admin/login' } })
+    );
+  }
   // eslint-disable-next-line @next/next/no-location-assign-relative-destination
   window.location.href = '/admin/login';
 }

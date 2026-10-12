@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { toast } from "sonner";
+import { triggerPageTransition } from "@/components/BrandedPageLoader";
 import {
   Save,
   Loader2,
@@ -294,6 +295,7 @@ export default function BlogEditorForm({ initialBlog, blogId: propBlogId }: Blog
       toast.success(isEditing ? "Blog post updated successfully!" : "Blog post created successfully!");
 
       if (!isEditing && res.blogId) {
+        triggerPageTransition(`/admin/blog/${res.blogId}`);
         router.push(`/admin/blog/${res.blogId}`);
       } else {
         router.refresh();

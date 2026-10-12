@@ -9,6 +9,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Toaster, toast } from "sonner";
 
+import { triggerPageTransition } from "@/components/BrandedPageLoader";
+
 export default function LoginPage() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -24,9 +26,8 @@ export default function LoginPage() {
       } else if (result?.success) {
         toast.success("Login successful. Redirecting...");
         const targetRoute = result.redirectUrl || "/admin/dashboard";
-        setTimeout(() => {
-          router.push(targetRoute);
-        }, 600);
+        triggerPageTransition(targetRoute);
+        router.push(targetRoute);
       }
     });
   };

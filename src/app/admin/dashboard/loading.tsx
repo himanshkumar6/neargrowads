@@ -1,7 +1,9 @@
+import BrandedLoaderView from "@/components/BrandedLoaderView";
+
+/**
+ * Admin Dashboard Loading Boundary:
+ * Displays the NearGrow Ads branded loading screen while dashboard metrics and inquiry charts load.
+ */
 export default function DashboardLoading() {
-  return (
-    <div className="p-6 text-sm font-semibold text-slate-500 dark:text-slate-400">
-      Loading CMS dashboard...
-    </div>
-  );
+  return <BrandedLoaderView isServerFallback statusText="Loading CMS Dashboard..." />;
 }

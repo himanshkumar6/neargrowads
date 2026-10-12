@@ -19,6 +19,8 @@ import { useState, useEffect, useSyncExternalStore } from "react";
 import { toast } from "sonner";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
+import { triggerPageTransition } from "@/components/BrandedPageLoader";
+
 const subscribeSidebar = (callback: () => void) => {
   window.addEventListener("storage", callback);
   window.addEventListener("trisage_sidebar_toggle", callback);
@@ -38,21 +40,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const isCollapsed = useSyncExternalStore(subscribeSidebar, getSidebarSnapshot, getSidebarServerSnapshot);
   const [userEmail, setUserEmail] = useState<string>("hr@neargrowads.com");
-  const [isNavigating, setIsNavigating] = useState(false);
-  const [prevPathname, setPrevPathname] = useState(pathname);
-  if (prevPathname !== pathname) {
-    setPrevPathname(pathname);
-    setIsNavigating(false);
-  }
-
-  const [dots, setDots] = useState(".");
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDots((prev) => (prev.length >= 3 ? "." : prev + "."));
-    }, 350);
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -70,6 +57,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const handleLogout = async () => {
     const toastId = toast.loading("Signing out...");
+    triggerPageTransition("/admin/login");
     try {
       await supabase.auth.signOut();
       await fetch("/api/auth/logout", { method: "POST" });
@@ -77,9 +65,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       console.error("Logout Error:", e);
     }
     toast.success("Successfully signed out. Redirecting...", { id: toastId });
-    setTimeout(() => {
-      router.replace("/admin/login");
-    }, 400);
+    router.replace("/admin/login");
   };
 
   if (pathname === "/admin/login") {
@@ -153,9 +139,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <Link
                   key={idx}
                   href={item.href}
-                  onClick={() => {
-                    if (pathname !== item.href) setIsNavigating(true);
-                  }}
                   className={`group relative flex items-center rounded-xl transition-all ${
                     isActive
                       ? "bg-[#68b955] text-white shadow-sm shadow-[#68b955]/30 font-bold"
@@ -327,19 +310,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           className="flex-1 overflow-y-auto overflow-x-hidden relative z-10 w-full px-4 sm:px-6 lg:px-8 py-5 sm:py-6 lg:py-8 pb-[max(6rem,calc(5rem+env(safe-area-inset-bottom)))] md:pb-8"
           data-lenis-prevent="true"
         >
-          {isNavigating && (
-            <div className="fixed inset-0 z-50 bg-[#f8fafc]/95 dark:bg-[#050b14]/95 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-slate-900 dark:text-white font-sans animate-in fade-in duration-150">
-              <div className="flex flex-col items-center gap-4 text-center">
-                <div className="relative flex items-center justify-center">
-                  <div className="w-10 h-10 border-3 border-slate-200 dark:border-white/10 border-t-[#68b955] rounded-full animate-spin" />
-                </div>
-
-                <div className="text-sm font-medium text-slate-600 dark:text-slate-300 tracking-wide font-sans">
-                  Loading{dots}
-                </div>
-              </div>
-            </div>
-          )}
           {/* Unified Centralized Content Canvas */}
           <div className="w-full max-w-[1536px] mx-auto">
             {children}
@@ -359,9 +329,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <Link
                   key={idx}
                   href={item.href}
-                  onClick={() => {
-                    if (pathname !== item.href) setIsNavigating(true);
-                  }}
                   className={`flex flex-col items-center justify-center py-1 px-1.5 xs:px-2.5 transition-all relative group cursor-pointer min-h-[44px] min-w-[44px] ${
                     isActive
                       ? "text-[#68b955] dark:text-[#7ec269]"

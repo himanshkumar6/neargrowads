@@ -1374,6 +1374,16 @@ aside *::-webkit-scrollbar-thumb {
   }
 }
 
+.animate-liquid-wave {
+  animation: liquidWaveMove 2.4s linear infinite;
+  will-change: transform;
+}
+
+.animate-liquid-wave-reverse {
+  animation: liquidWaveMoveReverse 3.2s linear infinite;
+  will-change: transform;
+}
+
 .animate-liquid-fill-cycle {
   animation: liquidFillCycle 1.8s cubic-bezier(0.35, 0, 0.25, 1) infinite;
   will-change: transform, opacity;
