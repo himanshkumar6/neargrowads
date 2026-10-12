@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useSyncExternalStore } from "react";
+import { useState, useRef, useEffect, useSyncExternalStore } from "react";
 import { motion, useTransform, useSpring, useReducedMotion, useMotionTemplate, useMotionValue, type MotionValue } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
@@ -14,6 +14,7 @@ interface CardProps {
   dynamicRadius: number;
   cardWidth: number;
   cardHeight: number;
+  isActive: boolean;
   onSelect: () => void;
 }
 
@@ -25,6 +26,7 @@ const Card = ({
   dynamicRadius,
   cardWidth,
   cardHeight,
+  isActive,
   onSelect,
 }: CardProps) => {
   const prefersReducedMotion = useReducedMotion();
@@ -34,10 +36,10 @@ const Card = ({
   const centerIndex = Math.floor(total / 2);
 
   // In LTR coordinate space with positive Z origin:
-  // (index - centerIndex) * angleIncrement:
-  // - index (k + 1) [NEXT member] has positive angle -> placed on RIGHT
-  // - index (k - 1) [PREVIOUS member] has negative angle -> placed on LEFT
-  const cardAngle = (index - centerIndex) * angleIncrement;
+  // Negating the angle ensures:
+  // - index (k + 1) [NEXT member in data] has NEGATIVE angle -> placed on RIGHT (positive X)
+  // - index (k - 1) [PREVIOUS member in data] has POSITIVE angle -> placed on LEFT (negative X)
+  const cardAngle = -(index - centerIndex) * angleIncrement;
 
   const rotateYRaw = useTransform(globalRotation, (y: number) => y + cardAngle);
   
@@ -66,6 +68,10 @@ const Card = ({
   return (
     <motion.div
       onClick={onSelect}
+      data-member-name={member.name}
+      data-card-index={index}
+      data-is-active={isActive ? "true" : "false"}
+      aria-current={isActive ? "true" : undefined}
       style={{
         rotateY,
         opacity,
@@ -121,12 +127,25 @@ export default function TeamShowcase() {
 
   // Repeat team members 3 times to provide a seamless continuous carousel
   const loopedMembers = [...teamMembers, ...teamMembers, ...teamMembers];
-  const total = loopedMembers.length;
+  const total = loopedMembers.length; // 21
   const angleIncrement = 360 / total; // ~17.14° per card
+  const centerIndex = Math.floor(total / 2); // 10 (Aditya initially)
+
+  // Authoritative active-step navigation model:
+  // Step 0 = Aditya (centerIndex = 10)
+  // Step +1 = Bhawna Bankoti (Next member in data order)
+  // Step -1 = Harsh (Previous member in data order)
+  const currentStep = useRef(0);
+  const [activeStep, setActiveStep] = useState(0);
+  const lastClickTime = useRef(0);
   const globalRotation = useMotionValue(0);
 
   const trackpadRef = useRef<HTMLDivElement>(null);
   const wheelTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  // Compute active member in team data order
+  const activeDataIndex = ((centerIndex + activeStep) % teamMembers.length + teamMembers.length) % teamMembers.length;
+  const activeMember = teamMembers[activeDataIndex];
 
   // Responsive card width tuned to make portraits prominent, majestic, and balanced:
   // - Mobile (<480px): clamp(215px, 64vw, 235px) (preserved)
@@ -187,22 +206,31 @@ export default function TeamShowcase() {
           ? "3400px" 
           : "3800px";
 
+  // Preserve alignment on resize without resetting active member
+  useEffect(() => {
+    globalRotation.set(currentStep.current * angleIncrement);
+  }, [viewportWidth, angleIncrement, globalRotation]);
+
   useEffect(() => {
     const element = trackpadRef.current;
     if (!element) return;
 
     const handleNativeWheel = (e: WheelEvent) => {
-      // Horizontal trackpad scrolling: swiping right advances track left (next), swiping left returns right (prev)
+      // Horizontal trackpad scrolling:
+      // Swiping two fingers left (deltaX > 0) advances track left towards next card (+rotation)
+      // Swiping two fingers right (deltaX < 0) returns track right towards previous card (-rotation)
       if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
         e.preventDefault(); 
-        globalRotation.set(globalRotation.get() - e.deltaX * 0.12);
+        globalRotation.set(globalRotation.get() + e.deltaX * 0.12);
 
         if (wheelTimeout.current) clearTimeout(wheelTimeout.current);
         
         wheelTimeout.current = setTimeout(() => {
           const current = globalRotation.get();
-          const nearestAngle = Math.round(current / angleIncrement) * angleIncrement;
-          globalRotation.set(nearestAngle);
+          const nearestStep = Math.round(current / angleIncrement);
+          currentStep.current = nearestStep;
+          globalRotation.set(nearestStep * angleIncrement);
+          setActiveStep(nearestStep);
         }, 150);
       }
     };
@@ -211,19 +239,31 @@ export default function TeamShowcase() {
     return () => element.removeEventListener("wheel", handleNativeWheel);
   }, [globalRotation, angleIncrement]);
 
-  // Direction Semantics:
+  // Deterministic Navigation:
   // Right arrow (NEXT team member):
   // The next member sits on the right. Advancing to the next member rotates
   // the cylinder so the track moves LEFT, bringing the next member into center.
   const handleNext = () => {
-    globalRotation.set(globalRotation.get() - angleIncrement);
+    const now = Date.now();
+    if (now - lastClickTime.current < 160) return; // Debounce rapid click bounce
+    lastClickTime.current = now;
+
+    currentStep.current += 1;
+    globalRotation.set(currentStep.current * angleIncrement);
+    setActiveStep(currentStep.current);
   };
 
   // Left arrow (PREVIOUS team member):
   // The previous member sits on the left. Returning to the previous member rotates
   // the cylinder so the track moves RIGHT, bringing the previous member into center.
   const handlePrev = () => {
-    globalRotation.set(globalRotation.get() + angleIncrement);
+    const now = Date.now();
+    if (now - lastClickTime.current < 160) return; // Debounce rapid click bounce
+    lastClickTime.current = now;
+
+    currentStep.current -= 1;
+    globalRotation.set(currentStep.current * angleIncrement);
+    setActiveStep(currentStep.current);
   };
 
   return (
@@ -259,6 +299,10 @@ export default function TeamShowcase() {
           tabIndex={0}
           role="region"
           aria-label="Team member carousel. Use Left and Right arrow keys to navigate."
+          aria-roledescription="carousel"
+          data-active-step={activeStep}
+          data-active-member={activeMember.name}
+          data-active-index={activeDataIndex}
           onKeyDown={(e) => {
             if (e.key === "ArrowLeft") {
               e.preventDefault();
@@ -279,38 +323,41 @@ export default function TeamShowcase() {
           dragConstraints={{ left: 0, right: 0 }} 
           dragElastic={0} 
           onDrag={(e, info) => {
-            // Drag left (delta.x < 0) advances forward to next card (-rotation)
-            // Drag right (delta.x > 0) returns backward to previous card (+rotation)
-            globalRotation.set(globalRotation.get() + info.delta.x * 0.12);
+            // Drag left (delta.x < 0) advances track left towards next card (+rotation)
+            // Drag right (delta.x > 0) returns backward towards previous card (-rotation)
+            globalRotation.set(globalRotation.get() - info.delta.x * 0.12);
           }}
           onDragEnd={(e, info) => {
-            const momentum = info.velocity.x * 0.04;
+            const momentum = -info.velocity.x * 0.04;
             const target = globalRotation.get() + momentum;
-            const nearestAngle = Math.round(target / angleIncrement) * angleIncrement;
-            globalRotation.set(nearestAngle);
+            const nearestStep = Math.round(target / angleIncrement);
+            currentStep.current = nearestStep;
+            globalRotation.set(nearestStep * angleIncrement);
+            setActiveStep(nearestStep);
           }}
         >
-          {loopedMembers.map((member, i) => (
-            <Card 
-              key={`${member.id}-${i}`} 
-              member={member} 
-              index={i} 
-              total={total} 
-              globalRotation={globalRotation} 
-              dynamicRadius={dynamicRadius}
-              cardWidth={cardWidth}
-              cardHeight={cardHeight}
-              onSelect={() => {
-                const cardAngle = (i - Math.floor(total / 2)) * angleIncrement;
-                const current = globalRotation.get();
-                const diff = (current + cardAngle) % 360;
-                if (Math.abs(diff) > 2) {
-                  const target = current - diff;
-                  globalRotation.set(Math.round(target / angleIncrement) * angleIncrement);
-                }
-              }}
-            />
-          ))}
+          {loopedMembers.map((member, i) => {
+            const isActive = (i - centerIndex) === activeStep;
+            return (
+              <Card 
+                key={`${member.id}-${i}`} 
+                member={member} 
+                index={i} 
+                total={total} 
+                globalRotation={globalRotation} 
+                dynamicRadius={dynamicRadius}
+                cardWidth={cardWidth}
+                cardHeight={cardHeight}
+                isActive={isActive}
+                onSelect={() => {
+                  const targetStep = i - centerIndex;
+                  currentStep.current = targetStep;
+                  globalRotation.set(targetStep * angleIncrement);
+                  setActiveStep(targetStep);
+                }}
+              />
+            );
+          })}
         </motion.div>
 
         {/* Carousel Controls in Normal Layout Flow */}
