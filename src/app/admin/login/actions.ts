@@ -61,5 +61,11 @@ export async function login(formData: FormData) {
   // Clear rate limit on successful login
   rateLimitMap.delete(identifier);
 
-  return { success: true, redirectUrl: '/admin/dashboard' };
+  const returnUrlRaw = formData.get("returnUrl")?.toString();
+  const returnUrl =
+    returnUrlRaw && returnUrlRaw.startsWith("/admin") && !returnUrlRaw.startsWith("/admin/login")
+      ? returnUrlRaw
+      : "/admin/dashboard";
+
+  return { success: true, redirectUrl: returnUrl };
 }

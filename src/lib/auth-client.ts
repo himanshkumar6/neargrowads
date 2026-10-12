@@ -24,10 +24,20 @@ export async function handleSessionExpired() {
     return;
   }
 
-  // Murphy's Law Guard #3: Clean storage purge & Supabase Auth Cookie Destroy
+  // Murphy's Law Guard #3: Clean targeted Supabase storage purge & sign out
   try {
-    localStorage.clear();
-    sessionStorage.clear();
+    if (typeof window !== 'undefined') {
+      Object.keys(localStorage).forEach((key) => {
+        if (key.startsWith('sb-') || key.includes('supabase') || key.includes('auth-token')) {
+          localStorage.removeItem(key);
+        }
+      });
+      Object.keys(sessionStorage).forEach((key) => {
+        if (key.startsWith('sb-') || key.includes('supabase') || key.includes('auth-token')) {
+          sessionStorage.removeItem(key);
+        }
+      });
+    }
     const supabase = createClient();
     await supabase.auth.signOut().catch(() => {});
   } catch (err) {

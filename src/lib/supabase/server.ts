@@ -1,11 +1,10 @@
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 
-const THIRTY_DAYS_IN_SECONDS = 60 * 60 * 24 * 30; // 30 Days
-
 /**
  * Creates a server-side Supabase client using Next.js App Router cookies.
  * Safe for Server Components, Server Actions, and Route Handlers.
+ * Request-scoped with cookie Store setAll that strictly preserves deletion maxAge/expires.
  */
 export async function createClient() {
   const cookieStore = await cookies();
@@ -23,17 +22,16 @@ export async function createClient() {
         },
         setAll(cookiesToSet) {
           try {
-            cookiesToSet.forEach(({ name, value, options }) =>
+            cookiesToSet.forEach(({ name, value, options }) => {
               cookieStore.set(name, value, {
-                ...options,
-                maxAge: THIRTY_DAYS_IN_SECONDS,
-                sameSite: 'lax',
                 path: '/',
-              })
-            );
+                sameSite: 'lax',
+                ...options,
+              });
+            });
           } catch {
             // The `setAll` method was called from a Server Component.
-            // This can be ignored if you have middleware refreshing user sessions.
+            // This is expected and safe when middleware is responsible for refreshing user sessions.
           }
         },
       },

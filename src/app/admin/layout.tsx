@@ -35,19 +35,36 @@ const getSidebarServerSnapshot = () => false;
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const supabase = createClient();
   const pathname = usePathname();
 
   const isCollapsed = useSyncExternalStore(subscribeSidebar, getSidebarSnapshot, getSidebarServerSnapshot);
   const [userEmail, setUserEmail] = useState<string>("hr@neargrowads.com");
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      if (data?.user?.email) {
-        setUserEmail(data.user.email);
-      }
-    });
-  }, [supabase]);
+    let isMounted = true;
+    const supabase = createClient();
+
+    supabase.auth
+      .getUser()
+      .then(({ data, error }) => {
+        if (!isMounted) return;
+        if (data?.user?.email) {
+          setUserEmail(data.user.email);
+        } else if (error) {
+          if (
+            error.code === 'refresh_token_not_found' ||
+            error.message?.toLowerCase().includes('refresh token not found')
+          ) {
+            supabase.auth.signOut().catch(() => {});
+          }
+        }
+      })
+      .catch(() => {});
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const toggleSidebar = () => {
     const newState = !isCollapsed;
@@ -59,6 +76,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const toastId = toast.loading("Signing out...");
     triggerPageTransition("/admin/login");
     try {
+      const supabase = createClient();
       await supabase.auth.signOut();
       await fetch("/api/auth/logout", { method: "POST" });
     } catch (e) {
